@@ -24,7 +24,7 @@ namespace dae
 
 		virtual void Initialize(const std::string& filename, float xOffset = 0, float yOffset = 0);
 
-		virtual void Render() const;
+		virtual void Render() const override;
 
 		void SetOffset(float x, float y);
 

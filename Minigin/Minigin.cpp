@@ -1,7 +1,6 @@
 ﻿#include <stdexcept>
 #include <sstream>
 #include <iostream>
-#include <chrono>
 #include <thread>
 
 #if WIN32
@@ -94,32 +93,25 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	load();
 #ifndef __EMSCRIPTEN__
 
-	auto lastTime = std::chrono::high_resolution_clock::now();
-	
-
+	m_lastTime = std::chrono::high_resolution_clock::now();
 
 	while (!m_quit)
 	{
-		const auto currentTime = std::chrono::high_resolution_clock::now();
-		m_deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
-		lastTime = currentTime;
-		m_lag += m_deltaTime;
-
 		RunOneFrame();
-
-		const auto targetTime = currentTime + std::chrono::duration<float>(m_fixedTimeStep);
-		auto now = std::chrono::high_resolution_clock::now();
-		auto remaining = std::chrono::duration_cast<std::chrono::milliseconds>(targetTime - now);
-			
-		std::this_thread::sleep_for(remaining);
 	}
 #else
+	m_lastTime = std::chrono::high_resolution_clock::now();
 	emscripten_set_main_loop_arg(&LoopCallback, this, 0, true);
 #endif
 }
 
 void dae::Minigin::RunOneFrame()
 {
+	const auto currentTime = std::chrono::high_resolution_clock::now();
+	m_deltaTime = std::chrono::duration<float>(currentTime - m_lastTime).count();
+	m_lastTime = currentTime;
+	m_lag += m_deltaTime;
+
 	m_quit = !InputManager::GetInstance().ProcessInput();
 
 	while (m_lag >= m_fixedTimeStep)
@@ -129,4 +121,10 @@ void dae::Minigin::RunOneFrame()
 	}
 	SceneManager::GetInstance().Update(m_deltaTime);
 	Renderer::GetInstance().Render();
+
+	const auto targetTime = currentTime + std::chrono::duration<float>(m_fixedTimeStep);
+	auto now = std::chrono::high_resolution_clock::now();
+	auto remaining = std::chrono::duration_cast<std::chrono::milliseconds>(targetTime - now);
+
+	std::this_thread::sleep_for(remaining);
 }

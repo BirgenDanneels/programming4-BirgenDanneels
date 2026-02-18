@@ -1,5 +1,6 @@
 #include "FPSCounter.h"
-#include <format>
+#include <sstream>
+#include <iomanip>
 #include "TextComponent.h"
 #include "GameObject.h"
 
@@ -25,7 +26,10 @@ void dae::FPSCounter::Update(float deltaTime)
 	{
 		const float instantFPS = static_cast<float>(m_FrameCount) / m_Elapsed;
 
-		const std::string fpsText{ std::format("{:.1f}", instantFPS) };
+		std::ostringstream ss;
+		ss << std::fixed << std::setprecision(1) << instantFPS;
+		const std::string fpsText = ss.str();
+
 		if (m_ptrTextComponent)
 			m_ptrTextComponent->SetText(fpsText);
 

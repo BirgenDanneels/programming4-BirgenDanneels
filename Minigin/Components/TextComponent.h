@@ -24,6 +24,7 @@ namespace dae
 
 		virtual void Render() const override;
 
+		using TextureComponent::Initialize;
 		virtual void Initialize(const std::string& text, std::shared_ptr<dae::Font> font, float xOffset = 0, float yOffset = 0);
 
 		void SetText(const std::string& text);

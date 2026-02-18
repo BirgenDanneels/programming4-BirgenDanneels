@@ -2,6 +2,7 @@
 #include <string>
 #include <functional>
 #include <filesystem>
+#include <chrono>
 
 namespace dae
 {
@@ -13,6 +14,7 @@ namespace dae
 		float m_deltaTime{};
 		float m_fixedTimeStep{ 1.f / 60.f }; // 60 fps
 		float m_lag{};
+		std::chrono::steady_clock::time_point m_lastTime{};
 
 	public:
 		explicit Minigin(const std::filesystem::path& dataPath);
