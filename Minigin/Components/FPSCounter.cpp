@@ -1,6 +1,7 @@
 #include "FPSCounter.h"
 #include <format>
 #include "TextComponent.h"
+#include "GameObject.h"
 
 dae::FPSCounter::FPSCounter(dae::GameObject& refOwner)
 	:Component(refOwner, "FPSCounter")

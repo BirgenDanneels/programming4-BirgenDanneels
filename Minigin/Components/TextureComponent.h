@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "Texture2D.h"
-
+#include <memory>
 
 namespace dae
 {

@@ -3,12 +3,12 @@
 #include <string>
 #include <unordered_map>
 #include <glm/glm.hpp>
+#include "Components/Component.h"
 
 namespace dae
 {
 
 	class Texture2D;
-	class Component;
 	class TransformComponent;
 
 	class GameObject final

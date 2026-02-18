@@ -1,6 +1,6 @@
 #include "TextureComponent.h"
 #include "ResourceManager.h"
-#include "TransformComponent.h"
+#include "GameObject.h"
 #include "Renderer.h"
 
 dae::TextureComponent::TextureComponent(dae::GameObject& refOwner)
