@@ -1,24 +1,72 @@
-#include <string>
 #include "GameObject.h"
+#include <string>
 #include "ResourceManager.h"
 #include "Renderer.h"
 
+#include "Components/ComponentsInclude.h"
+
+
+dae::GameObject::GameObject()
+	:m_transformComponent{ std::make_unique<dae::TransformComponent>(*this)}
+{
+}
+
 dae::GameObject::~GameObject() = default;
 
-void dae::GameObject::Update(){}
+const glm::vec3& dae::GameObject::GetLocalPosition()
+{
+	return m_transformComponent->GetPosition();
+}
+
+void dae::GameObject::SetLocalPosition(const glm::vec3& localPos)
+{
+	m_transformComponent->SetPosition(localPos);
+}
+
+void dae::GameObject::SetLocalPosition(int x, int y)
+{
+	SetLocalPosition(glm::vec3(x, y, 0));
+}
+
+void dae::GameObject::Update(float deltaTime)
+{
+	for (const auto& [key, comp] : m_components)
+	{
+		comp->Update(deltaTime);
+	}
+}
+
+void dae::GameObject::FixedUpdate(float fixedDeltaTime)
+{
+	for (const auto& [key, comp] : m_components)
+	{
+		comp->FixedUpdate(fixedDeltaTime);
+	}
+}
 
 void dae::GameObject::Render() const
 {
-	const auto& pos = m_transform.GetPosition();
-	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
+	for (const auto& [key, comp] : m_components)
+	{
+		if (comp)
+		{
+			comp->Render();
+		}
+	}
 }
 
-void dae::GameObject::SetTexture(const std::string& filename)
+bool dae::GameObject::RemoveComponent(const std::string& componentName)
 {
-	m_texture = ResourceManager::GetInstance().LoadTexture(filename);
+	if (HasComponent(componentName))
+	{
+		m_components.erase(componentName);
+		return true;
+	}
+
+	return false;
 }
 
-void dae::GameObject::SetPosition(float x, float y)
+bool dae::GameObject::HasComponent(const std::string& customComponentName) const
 {
-	m_transform.SetPosition(x, y, 0.0f);
+	return (m_components.contains(customComponentName));
 }
