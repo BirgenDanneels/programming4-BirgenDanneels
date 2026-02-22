@@ -7,8 +7,6 @@
 
 namespace dae
 {
-
-	class Texture2D;
 	class TransformComponent;
 
 	class GameObject final
@@ -31,6 +29,10 @@ namespace dae
 		void SetLocalPosition(const glm::vec3& localPos);
 		
 		void SetLocalPosition(int x, int y);
+
+		//MARK FOR DELETE
+		void Delete() { m_markedForDelete = true; };
+		bool IsMarkedForDelete() const { return m_markedForDelete; }
 
 		//COMPONENT FUNCTIONS
 		template<std::derived_from<Component> TComponent>
@@ -78,5 +80,7 @@ namespace dae
 		std::unique_ptr<TransformComponent> m_transformComponent;
 
 		std::vector<std::shared_ptr<Component>> m_components;
+
+		bool m_markedForDelete = false;
 	};
 }

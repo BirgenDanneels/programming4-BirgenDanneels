@@ -32,6 +32,15 @@ void Scene::Update(float deltaTime)
 	{
 		object->Update(deltaTime);
 	}
+
+	//Remove marked objects 
+	m_objects.erase(
+		std::remove_if(
+			m_objects.begin(),
+			m_objects.end(),
+			[](const auto& ptr) { return ptr->IsMarkedForDelete(); }),
+		m_objects.end()
+	);
 }
 
 void dae::Scene::FixedUpdate(float fixedDeltaTime)
@@ -40,6 +49,15 @@ void dae::Scene::FixedUpdate(float fixedDeltaTime)
 	{
 		object->FixedUpdate(fixedDeltaTime);
 	}
+
+	//Remove marked objects 
+	m_objects.erase(
+		std::remove_if(
+			m_objects.begin(),
+			m_objects.end(),
+			[](const auto& ptr) { return ptr->IsMarkedForDelete(); }),
+		m_objects.end()
+	);
 }
 
 void Scene::Render() const
