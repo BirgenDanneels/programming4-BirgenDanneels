@@ -10,7 +10,7 @@ namespace dae
 	public:
 
 		Component() = delete;
-		Component(GameObject& refOwner, const std::string& componentName);
+		Component(GameObject& refOwner);
 
 		Component(const Component& other) = delete;
 		Component(Component&& other) = delete;
@@ -23,8 +23,6 @@ namespace dae
 		virtual void Update(float deltaTime) = 0;
 		virtual void Render() const = 0;
 
-		std::string GetComponentName() const;
-
 	protected:
 
 		GameObject* GetOwner() const;
@@ -32,7 +30,6 @@ namespace dae
 	private:
 
 		GameObject* m_ptrOwnerObject;
-		std::string m_componentName{};
 
 	};
 }

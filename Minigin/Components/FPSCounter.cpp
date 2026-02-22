@@ -5,9 +5,9 @@
 #include "GameObject.h"
 
 dae::FPSCounter::FPSCounter(dae::GameObject& refOwner)
-	:Component(refOwner, "FPSCounter")
+	:Component(refOwner)
 {
-	m_ptrTextComponent = GetOwner()->GetComponent<TextComponent>("TextComponent");
+	m_ptrTextComponent = GetOwner()->GetComponent<TextComponent>();
 
 	if (!m_ptrTextComponent)
 		m_ptrTextComponent = GetOwner()->AddComponent<TextComponent>();

@@ -5,7 +5,7 @@
 #include"Renderer.h"
 
 dae::TextComponent::TextComponent(dae::GameObject& refOwner)
-	:TextureComponent(refOwner, "TextComponent")
+	:TextureComponent(refOwner)
 {
 }
 

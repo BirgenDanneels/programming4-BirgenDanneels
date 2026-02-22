@@ -4,12 +4,7 @@
 #include "Renderer.h"
 
 dae::TextureComponent::TextureComponent(dae::GameObject& refOwner)
-	:Component(refOwner, "TextureComponent")
-{
-}
-
-dae::TextureComponent::TextureComponent(dae::GameObject& refOwner, const std::string& componentName)
-	:Component(refOwner, componentName)
+	:Component(refOwner)
 {
 }
 

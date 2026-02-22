@@ -1,7 +1,7 @@
 #include "TransformComponent.h"
 
 dae::TransformComponent::TransformComponent(dae::GameObject& refOwner)
-	:Component(refOwner, "TransformComponent")
+	:Component(refOwner)
 {
 }
 

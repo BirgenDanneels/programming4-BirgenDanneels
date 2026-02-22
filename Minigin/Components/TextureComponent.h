@@ -30,9 +30,6 @@ namespace dae
 
 	protected:
 
-		//Used for inheritance (dont add this type of constructor if there should not be multiple base and derived classes on the same game object)
-		TextureComponent(dae::GameObject& refOwner, const std::string& componentName);
-
 		int m_Depth{ 10 }; //0 is the top layer
 
 		void UpdateTexture(std::shared_ptr<dae::Texture2D> texture);

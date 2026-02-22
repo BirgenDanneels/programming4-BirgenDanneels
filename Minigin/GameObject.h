@@ -33,32 +33,50 @@ namespace dae
 		void SetLocalPosition(int x, int y);
 
 		//COMPONENT FUNCTIONS
-		template<typename TComponent>
+		template<std::derived_from<Component> TComponent>
 		TComponent* AddComponent()
 		{
-			auto component = std::shared_ptr<Component>(new TComponent{ *this });
-
-			m_components[component->GetComponentName()] = component;
-
+			auto component = std::make_shared<TComponent>(*this);
+			m_components.push_back(component);
 			return static_cast<TComponent*>(component.get());
 		}
 
-		template<typename TComponent>
-		TComponent* GetComponent(const std::string& componentName) const
+		template<std::derived_from<Component> TComponent>
+		TComponent* GetComponent() const
 		{
-			if (HasComponent(componentName))
+			for (const auto& comp : m_components)
 			{
-				return  static_cast<TComponent*>(m_components.find(componentName)->second.get());
+				if(auto ptr = dynamic_cast<TComponent*>(comp.get()))
+					return ptr;
 			}
+
 			return nullptr;
 		}
 
-		bool RemoveComponent(const std::string& componentName);
-		bool HasComponent(const std::string& componentName) const;
+		template<std::derived_from<Component> TComponent>
+		bool RemoveComponent()
+		{
+			for (size_t i = 0; i < m_components.size(); ++i)
+			{
+				if (dynamic_cast<TComponent*>(m_components[i].get()) != nullptr)
+				{
+					std::swap(m_components[i], m_components.back());
+					m_components.pop_back();
+					return true;
+				}
+			}
+			return false;
+		}
 
+		template<std::derived_from<Component> TComponent>
+		bool HasComponent() const
+		{
+			return GetComponent<TComponent>() != nullptr;
+		}
+		
 	private:
 		std::unique_ptr<TransformComponent> m_transformComponent;
 
-		std::unordered_map<std::string, std::shared_ptr<Component>> m_components;
+		std::vector<std::shared_ptr<Component>> m_components;
 	};
 }
