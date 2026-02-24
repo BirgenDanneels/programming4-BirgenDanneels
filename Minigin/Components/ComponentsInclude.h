@@ -4,3 +4,4 @@
 #include "TransformComponent.h"
 #include "TextComponent.h"
 #include "FPSCounter.h"
+#include "RotatorComponent.h"

@@ -34,8 +34,7 @@ void dae::TextureComponent::Render() const
 {
 	if (m_texture != nullptr)
 	{
-		//TODO: change to world pos instead of local position
-		const auto& pos = GetOwner()->GetLocalPosition();
+		const auto& pos = GetOwner()->GetWorldPosition();
 		dae::Renderer::GetInstance().RenderTexture(*m_texture, pos.r, pos.g);
 	}
 }
