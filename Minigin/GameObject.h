@@ -75,11 +75,28 @@ namespace dae
 		{
 			return GetComponent<TComponent>() != nullptr;
 		}
+
+		//HIERARCHY FUNCTIONS
+		void SetParent(GameObject* ptrParent);
+		const std::vector<GameObject*>& GetChildren() const;
 		
 	private:
-		std::unique_ptr<TransformComponent> m_transformComponent;
 
+		//COMPONENT MEMBER VARIABLES
+		std::unique_ptr<TransformComponent> m_transformComponent;
 		std::vector<std::shared_ptr<Component>> m_components;
+
+
+		//HIERARCHY MEMBER VARIABLES
+		GameObject* m_ptrParent;
+		std::vector<GameObject*> m_vectChildren;
+
+		//HIERARCHY FUNCTIONS
+		void RemoveChild(GameObject* ptrChild);
+		void AddChild(GameObject* ptrChild);
+		bool CheckIfParentIsValid(GameObject* ptrParent) const;
+		bool HasChild(GameObject* ptrChild) const;
+		bool IsDescendant(GameObject* ptrChild) const; //Checks deeper in the hierarchy
 
 		bool m_markedForDelete = false;
 	};
