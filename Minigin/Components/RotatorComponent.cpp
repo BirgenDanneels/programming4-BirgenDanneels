@@ -3,7 +3,7 @@
 #include "RotatorComponent.h"
 
 dae::RotatorComponent::RotatorComponent(dae::GameObject& refOwner)
-	:Component(refOwner), m_rotationSpeed{ 0 }, m_ptrTargetObject{ nullptr }
+	:Component(refOwner), m_ptrTargetObject{ nullptr }, m_rotationSpeed{ 0 }
 {
 }
 
