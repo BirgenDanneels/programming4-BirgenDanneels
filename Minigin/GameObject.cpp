@@ -18,9 +18,26 @@ const glm::vec3& dae::GameObject::GetLocalPosition()
 	return m_transformComponent->GetPosition();
 }
 
+const glm::vec3& dae::GameObject::GetWorldPosition()
+{
+	if (m_isPosDirty)
+	{
+		if (m_ptrParent == nullptr)
+			m_worldPosition = GetLocalPosition();
+		else
+			m_worldPosition = m_ptrParent->GetWorldPosition() + GetLocalPosition();
+
+		m_isPosDirty = false;
+	}
+
+	return m_worldPosition;
+}
+
 void dae::GameObject::SetLocalPosition(const glm::vec3& localPos)
 {
 	m_transformComponent->SetPosition(localPos);
+
+	SetPositionDirty();
 }
 
 void dae::GameObject::SetLocalPosition(int x, int y)
@@ -28,12 +45,38 @@ void dae::GameObject::SetLocalPosition(int x, int y)
 	SetLocalPosition(glm::vec3(x, y, 0));
 }
 
-void dae::GameObject::SetParent(GameObject* ptrParent)
+void dae::GameObject::SetWorldPosition(float x, float y)
+{
+	SetWorldPosition(glm::vec3(x, y, 0));
+}
+
+void dae::GameObject::SetWorldPosition(const glm::vec3& worldPos)
+{
+	if (m_ptrParent != nullptr)
+		m_transformComponent->SetPosition(worldPos - m_ptrParent->GetWorldPosition());
+	else
+		m_transformComponent->SetPosition(worldPos);
+
+	SetPositionDirty();
+}
+
+void dae::GameObject::SetParent(GameObject* ptrParent, bool keepWorldPos)
 {
 	if (!CheckIfParentIsValid(ptrParent))
 		return;
 
-	// Remove this GameObject from the current parent (if it has one)
+	//Adjust the local position to keep the world position the same
+	if (ptrParent == nullptr)
+		SetLocalPosition(GetWorldPosition());
+	else
+	{
+		if (keepWorldPos)
+			SetLocalPosition(GetWorldPosition() - ptrParent->GetWorldPosition());
+		else
+			SetPositionDirty();
+	}
+
+	//Remove this GameObject from the current parent (if it has one)
 	if(m_ptrParent != nullptr)
 		m_ptrParent->RemoveChild(this);
 
@@ -96,6 +139,13 @@ bool dae::GameObject::IsDescendant(GameObject* ptrChild) const
 		if (child->IsDescendant(ptrChild)) return true;
 	}
 	return false;
+}
+
+void dae::GameObject::SetPositionDirty()
+{
+	m_isPosDirty = true;
+
+	std::for_each(m_vectChildren.begin(), m_vectChildren.end(), [](GameObject* ptr) {ptr->SetPositionDirty(); });
 }
 
 void dae::GameObject::Update(float deltaTime)

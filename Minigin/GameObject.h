@@ -25,10 +25,12 @@ namespace dae
 
 		//POSITION FUNCTIONS
 		const glm::vec3& GetLocalPosition();
+		const glm::vec3& GetWorldPosition();
 
 		void SetLocalPosition(const glm::vec3& localPos);
-		
 		void SetLocalPosition(int x, int y);
+		void SetWorldPosition(float x, float y);
+		void SetWorldPosition(const glm::vec3& worldPos);
 
 		//MARK FOR DELETE
 		void Delete() { m_markedForDelete = true; };
@@ -77,15 +79,18 @@ namespace dae
 		}
 
 		//HIERARCHY FUNCTIONS
-		void SetParent(GameObject* ptrParent);
+		void SetParent(GameObject* ptrParent, bool keepWorldPos = true);
 		const std::vector<GameObject*>& GetChildren() const;
 		
 	private:
 
 		//COMPONENT MEMBER VARIABLES
-		std::unique_ptr<TransformComponent> m_transformComponent;
 		std::vector<std::shared_ptr<Component>> m_components;
 
+		//POSITION MEMBER VARIABLES
+		std::unique_ptr<TransformComponent> m_transformComponent;
+		glm::vec3 m_worldPosition;
+		bool m_isPosDirty{ true };
 
 		//HIERARCHY MEMBER VARIABLES
 		GameObject* m_ptrParent;
@@ -97,6 +102,9 @@ namespace dae
 		bool CheckIfParentIsValid(GameObject* ptrParent) const;
 		bool HasChild(GameObject* ptrChild) const;
 		bool IsDescendant(GameObject* ptrChild) const; //Checks deeper in the hierarchy
+
+		//POSITION FUNCTIONS
+		void SetPositionDirty();
 
 		bool m_markedForDelete = false;
 	};
