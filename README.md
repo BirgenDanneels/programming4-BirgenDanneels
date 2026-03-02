@@ -84,5 +84,5 @@ This project is build with github actions.
   - The url of that page will be `https://<username>.github.io/<repository>/`
 - You can embed this page with 
 
-<iframe style="position: absolute; top: 0px; left: 0px; width: 1024px; height: 576px;" src="https://birgendanneels.github.io/programming4-BirgenDanneels/" loading="lazy"></iframe>
+```<iframe style="position: absolute; top: 0px; left: 0px; width: 1024px; height: 576px;" src="https://<username>.github.io/<repository>/" loading="lazy"></iframe>```
 
