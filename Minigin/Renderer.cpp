@@ -9,6 +9,7 @@ void dae::Renderer::Init(SDL_Window* window)
 {
 	m_window = window;
 
+	//Set vysync (this locks it)
 	SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");
 
 #if defined(__EMSCRIPTEN__)

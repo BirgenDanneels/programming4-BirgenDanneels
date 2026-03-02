@@ -13,6 +13,7 @@ namespace dae
 		
 		float m_deltaTime{};
 		float m_fixedTimeStep{ 1.f / 60.f }; // 60 fps
+		float m_FPS{0 };
 		float m_lag{};
 		std::chrono::steady_clock::time_point m_lastTime{};
 
