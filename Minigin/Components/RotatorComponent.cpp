@@ -3,7 +3,7 @@
 #include "RotatorComponent.h"
 
 dae::RotatorComponent::RotatorComponent(dae::GameObject& refOwner)
-	:Component(refOwner), m_ptrTargetObject{ nullptr }, m_rotationSpeed{ 0 }
+	:Component(refOwner), m_rotationSpeed{ 0 }
 {
 }
 
@@ -16,12 +16,12 @@ void dae::RotatorComponent::Update(float deltaTime)
 {
 	float rotationSpeed{ 360.f * m_rotationSpeed * float(deltaTime) };
 
-	GetOwner()->SetWorldPosition(RotateAround(m_ptrTargetObject->GetWorldPosition(), rotationSpeed));
+	if (GameObject* parent{GetOwner()->GetParent()})
+		GetOwner()->SetWorldPosition(RotateAround(parent->GetWorldPosition(), rotationSpeed));
 }
 
-void dae::RotatorComponent::Initialize(dae::GameObject& targetObject, float rotationSpeed)
+void dae::RotatorComponent::Initialize(float rotationSpeed)
 {
-	m_ptrTargetObject = &targetObject;
 	m_rotationSpeed = rotationSpeed;
 }
 

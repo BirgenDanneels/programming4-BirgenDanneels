@@ -44,20 +44,20 @@ static void load()
 	scene.Add(std::move(fpsCounter));
 
 	//Rotation objects
-
 	auto pivot = std::make_unique<dae::GameObject>();
 	pivot->SetWorldPosition(100, 250);
 
 	auto blueTank = std::make_unique<dae::GameObject>();
+	blueTank->SetParent(pivot.get());
 	blueTank->SetWorldPosition(100, 280);
 	blueTank->AddComponent<dae::TextureComponent>()->Initialize("BlueTank.png");
-	blueTank->AddComponent<dae::RotatorComponent>()->Initialize(*pivot.get(), 1.73f);
+	blueTank->AddComponent<dae::RotatorComponent>()->Initialize(1.73f);
 
 	auto redTank = std::make_unique<dae::GameObject>();
 	redTank->SetParent(blueTank.get());
 	redTank->SetLocalPosition(50, 0);
 	redTank->AddComponent<dae::TextureComponent>()->Initialize("RedTank.png");
-	redTank->AddComponent<dae::RotatorComponent>()->Initialize(*blueTank.get(), 1.25f);
+	redTank->AddComponent<dae::RotatorComponent>()->Initialize(1.25f);
 
 
 	scene.Add(std::move(pivot));

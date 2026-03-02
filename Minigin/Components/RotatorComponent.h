@@ -21,13 +21,12 @@ namespace dae
 		virtual void Update(float deltaTime) override;
 		virtual void Render() const override {};
 
-		virtual void Initialize(dae::GameObject& targetObject, float rotationSpeed);
+		virtual void Initialize(float rotationSpeed);
 
 	private:
 
 		glm::vec3 RotateAround(const glm::vec3& pivot, float angle) const;
 
-		GameObject* m_ptrTargetObject;
 		float m_rotationSpeed;
 	};
 }

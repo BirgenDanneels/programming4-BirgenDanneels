@@ -81,6 +81,7 @@ namespace dae
 		//HIERARCHY FUNCTIONS
 		void SetParent(GameObject* ptrParent, bool keepWorldPos = true);
 		const std::vector<GameObject*>& GetChildren() const;
+		GameObject* GetParent() const { return m_ptrParent; }
 		
 	private:
 
