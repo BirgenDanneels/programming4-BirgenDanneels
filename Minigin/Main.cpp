@@ -54,6 +54,7 @@ static void load()
 	redTank->SetLocalPosition(50, 0);
 	redTank->AddComponent<dae::TextureComponent>()->Initialize("RedTank.png");
 	redTank->AddComponent<dae::RotatorComponent>()->Initialize(1.25f);
+	redTank->AddComponent<dae::ThrashCacheComponent>();
 }
 
 int main(int, char*[]) {

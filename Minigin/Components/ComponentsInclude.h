@@ -5,3 +5,4 @@
 #include "TextComponent.h"
 #include "FPSCounter.h"
 #include "RotatorComponent.h"
+#include "ThrashCacheComponent.h"

@@ -16,6 +16,7 @@ namespace dae
 		void Update(float deltaTime);
 		void FixedUpdate(float fixedDeltaTime);
 		void Render() const;
+		void RenderUI() const;
 
 		GameObject();
 		~GameObject();

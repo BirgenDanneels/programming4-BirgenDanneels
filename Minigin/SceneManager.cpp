@@ -17,11 +17,19 @@ void dae::SceneManager::FixedUpdate(float fixedDeltaTime)
 	}
 }
 
-void dae::SceneManager::Render()
+void dae::SceneManager::Render() const
 {
 	for (const auto& scene : m_scenes)
 	{
 		scene->Render();
+	}
+}
+
+void dae::SceneManager::RenderUI() const
+{
+	for (const auto& scene : m_scenes)
+	{
+		scene->RenderUI();
 	}
 }
 

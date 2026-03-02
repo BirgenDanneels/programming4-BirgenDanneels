@@ -224,3 +224,18 @@ void dae::GameObject::Render() const
 		child->Render();
 	}
 }
+
+void dae::GameObject::RenderUI() const
+{
+	for (const auto& comp : m_components)
+	{
+		if (comp)
+		{
+			comp->RenderUI();
+		}
+	}
+	for (const auto& child : m_vectChildren)
+	{
+		child->RenderUI();
+	}
+}
