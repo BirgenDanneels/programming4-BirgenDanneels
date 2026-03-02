@@ -1,7 +1,7 @@
 #include "GameObject.h"
 #include <string>
 #include "ResourceManager.h"
-#include "Renderer.h"
+#include "SceneManager.h"
 
 #include "Components/ComponentsInclude.h"
 
@@ -77,29 +77,49 @@ void dae::GameObject::SetParent(GameObject* ptrParent, bool keepWorldPos)
 	}
 
 	//Remove this GameObject from the current parent (if it has one)
+	std::unique_ptr<dae::GameObject> selfPtr = nullptr;
+
 	if(m_ptrParent != nullptr)
-		m_ptrParent->RemoveChild(this);
+		selfPtr = m_ptrParent->RemoveChild(this);
+	else 
+		selfPtr = m_pScene->Remove(*this);
+
+	assert(selfPtr && "GameObject not found in parent or scene when setting parent.");
 
 	m_ptrParent = ptrParent;
 	if (m_ptrParent != nullptr)
-		m_ptrParent->AddChild(this);
+		m_ptrParent->AddChild(std::move(selfPtr));
+	else
+	{
+		//If the new parent is null then we need to add this GameObject to the scene root
+		m_pScene->Add(std::move(selfPtr));
+	}
 }
 
-const std::vector<dae::GameObject*>& dae::GameObject::GetChildren() const
+const std::vector<std::unique_ptr<dae::GameObject>>& dae::GameObject::GetChildren() const
 {
 	return m_vectChildren;
 }
 
-void dae::GameObject::RemoveChild(GameObject* ptrChild)
+std::unique_ptr<dae::GameObject> dae::GameObject::RemoveChild(GameObject* ptrChild)
 {
-	auto it = std::find(m_vectChildren.begin(), m_vectChildren.end(), ptrChild);
-	if (it != m_vectChildren.end())
-		m_vectChildren.erase(it);
+	auto it = std::find_if(m_vectChildren.begin(), m_vectChildren.end(),
+		[ptrChild](const std::unique_ptr<GameObject>& child) { return child.get() == ptrChild; });
+	
+	if (it == m_vectChildren.end())
+		return nullptr;
+
+	std::unique_ptr<GameObject> result = std::move(*it);
+	m_vectChildren.erase(it);
+
+	return result;
 }
 
-void dae::GameObject::AddChild(GameObject* ptrChild)
+void dae::GameObject::AddChild(std::unique_ptr<dae::GameObject> child)
 {
-	m_vectChildren.push_back(ptrChild);
+	child->SetScene(m_pScene);
+
+	m_vectChildren.push_back(std::move(child));
 }
 
 bool dae::GameObject::CheckIfParentIsValid(GameObject* ptrParent) const
@@ -121,7 +141,7 @@ bool dae::GameObject::HasChild(GameObject* ptrChild) const
 
 	//use find_if to check if the vector already contains the given pointer
 	auto childIt = std::find_if(m_vectChildren.begin(), m_vectChildren.end(),
-		[ptrChild](GameObject* ptr) {return ptr == ptrChild; });
+		[ptrChild](const std::unique_ptr<GameObject>& ptr) { return ptr.get() == ptrChild; });
 
 	//if the iterator equals the the end of the child vector then the parent isnt in the child vector
 	if (childIt != m_vectChildren.end())
@@ -133,19 +153,34 @@ bool dae::GameObject::HasChild(GameObject* ptrChild) const
 bool dae::GameObject::IsDescendant(GameObject* ptrChild) const
 {
 	if (ptrChild == nullptr) return false;
-	for (auto child : m_vectChildren)
+	for (auto& child : m_vectChildren)
 	{
-		if (child == ptrChild) return true;
+		if (child.get() == ptrChild) return true;
 		if (child->IsDescendant(ptrChild)) return true;
 	}
 	return false;
+}
+
+void dae::GameObject::SetScene(Scene* scene)
+{
+	m_pScene = scene;
+
+	for (auto& child : m_vectChildren)
+	{
+		child->SetScene(scene);
+	}
+}
+
+dae::Scene* dae::GameObject::GetScene() const
+{
+	return m_pScene;
 }
 
 void dae::GameObject::SetPositionDirty()
 {
 	m_isPosDirty = true;
 
-	std::for_each(m_vectChildren.begin(), m_vectChildren.end(), [](GameObject* ptr) {ptr->SetPositionDirty(); });
+	std::for_each(m_vectChildren.begin(), m_vectChildren.end(), [](std::unique_ptr<dae::GameObject>& ptr) {ptr->SetPositionDirty(); });
 }
 
 void dae::GameObject::Update(float deltaTime)
@@ -154,6 +189,11 @@ void dae::GameObject::Update(float deltaTime)
 	{
 		comp->Update(deltaTime);
 	}
+
+	for (const auto& child : m_vectChildren)
+	{
+		child->Update(deltaTime);
+	}
 }
 
 void dae::GameObject::FixedUpdate(float fixedDeltaTime)
@@ -161,6 +201,11 @@ void dae::GameObject::FixedUpdate(float fixedDeltaTime)
 	for (const auto& comp : m_components)
 	{
 		comp->FixedUpdate(fixedDeltaTime);
+	}
+
+	for (const auto& child : m_vectChildren)
+	{
+		child->FixedUpdate(fixedDeltaTime);
 	}
 }
 
@@ -172,5 +217,10 @@ void dae::GameObject::Render() const
 		{
 			comp->Render();
 		}
+	}
+
+	for (const auto& child : m_vectChildren)
+	{
+		child->Render();
 	}
 }

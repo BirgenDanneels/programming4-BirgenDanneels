@@ -6,19 +6,33 @@ using namespace dae;
 void Scene::Add(std::unique_ptr<GameObject> object)
 {
 	assert(object != nullptr && "Cannot add a null GameObject to the scene.");
+
+	object->SetScene(this);
 	m_objects.emplace_back(std::move(object));
 }
 
-void Scene::Remove(const GameObject& object)
+GameObject* dae::Scene::CreateGameObject()
 {
-	m_objects.erase(
-		std::remove_if(
-			m_objects.begin(),
-			m_objects.end(),
-			[&object](const auto& ptr) { return ptr.get() == &object; }
-		),
-		m_objects.end()
-	);
+	auto temp = std::make_unique<dae::GameObject>();
+	GameObject* ptr = temp.get();
+
+	Add(std::move(temp));
+
+	return ptr;
+}
+
+std::unique_ptr<dae::GameObject> Scene::Remove(const GameObject& object)
+{
+	auto it = std::find_if(m_objects.begin(), m_objects.end(),
+		[&object](const std::unique_ptr<GameObject>& child) { return child.get() == &object; });
+
+	if (it == m_objects.end())
+		return nullptr;
+
+	std::unique_ptr<GameObject> result = std::move(*it);
+	m_objects.erase(it);
+
+	return result;
 }
 
 void Scene::RemoveAll()

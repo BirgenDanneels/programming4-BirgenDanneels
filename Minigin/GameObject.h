@@ -8,6 +8,7 @@
 namespace dae
 {
 	class TransformComponent;
+	class Scene;
 
 	class GameObject final
 	{
@@ -80,8 +81,11 @@ namespace dae
 
 		//HIERARCHY FUNCTIONS
 		void SetParent(GameObject* ptrParent, bool keepWorldPos = true);
-		const std::vector<GameObject*>& GetChildren() const;
+		const std::vector<std::unique_ptr<dae::GameObject>>& GetChildren() const;
 		GameObject* GetParent() const { return m_ptrParent; }
+
+		void SetScene(Scene* scene);
+		Scene* GetScene() const;
 		
 	private:
 
@@ -95,11 +99,13 @@ namespace dae
 
 		//HIERARCHY MEMBER VARIABLES
 		GameObject* m_ptrParent;
-		std::vector<GameObject*> m_vectChildren;
+		std::vector<std::unique_ptr<GameObject>> m_vectChildren;
+
+		Scene* m_pScene = nullptr;
 
 		//HIERARCHY FUNCTIONS
-		void RemoveChild(GameObject* ptrChild);
-		void AddChild(GameObject* ptrChild);
+		std::unique_ptr<dae::GameObject> RemoveChild(GameObject* ptrChild);
+		void AddChild(std::unique_ptr<dae::GameObject> child);
 		bool CheckIfParentIsValid(GameObject* ptrParent) const;
 		bool HasChild(GameObject* ptrChild) const;
 		bool IsDescendant(GameObject* ptrChild) const; //Checks deeper in the hierarchy
