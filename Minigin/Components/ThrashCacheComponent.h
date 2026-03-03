@@ -48,7 +48,9 @@ namespace dae
 		bool m_ex22Finished{ false };
 
 		int m_nrOfSamplesEx1{ 10'000'000 };
-		int m_nrOfSamplesEx2{ 10'000'000 };
+		int m_nrOfSamplesEx2{ 1'000'000 };
+
+		int m_nrOfRepeats{ 50 }; //this is the times it gets repeated for each stepsize, so we can remove outliers and get a more accurate average time
 
 		std::vector<float> m_exercise1Data{};
 		std::vector<float> m_exercise21Data{};
@@ -61,5 +63,8 @@ namespace dae
 
 		void DrawGraph(std::vector<float> dataVector, ImColor clr) const;
 		void DrawCombinedGraph(ImColor clr1, ImColor clr2) const;
+
+		void RemoveOutliers(std::vector<float>& timingVect, float percentage);
+		float CalculateAverage(const std::vector<float>& timingVect);
 	};
 }

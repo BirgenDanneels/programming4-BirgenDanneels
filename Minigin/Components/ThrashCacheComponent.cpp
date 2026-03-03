@@ -2,6 +2,8 @@
 #include <imgui.h>
 #include <imgui_plot.h>
 #include <chrono>
+#include <algorithm>
+#include <numeric>
 
 dae::ThrashCacheComponent::ThrashCacheComponent(GameObject& owner)
 	: Component(owner)
@@ -122,14 +124,27 @@ void dae::ThrashCacheComponent::TrashTheCacheEx1()
 
 	for (int stepsize{ 1 }; stepsize <= 1024; stepsize *= 2, ++vectorIdx)
 	{
-		const auto startTime = std::chrono::high_resolution_clock().now();
-		for (int i = 0; i < m_nrOfSamplesEx1; i += stepsize)
-		{
-			arr[i] *= 2;
-		}
-		const auto endTime = std::chrono::high_resolution_clock().now();
+		std::vector<float> timingVect;
+		timingVect.reserve(m_nrOfRepeats);
 
-		m_exercise1Data[vectorIdx] = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime).count());
+		for (int r = 0; r < m_nrOfRepeats; r++)
+		{
+
+			const auto startTime = std::chrono::high_resolution_clock().now();
+			for (int i = 0; i < m_nrOfSamplesEx1; i += stepsize)
+			{
+				arr[i] *= 2;
+			}
+			const auto endTime = std::chrono::high_resolution_clock().now();
+
+			timingVect.push_back(
+				static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(
+					endTime - startTime).count()));
+		}
+
+		RemoveOutliers(timingVect, 0.1f); // Remove top and bottom 10%
+
+		m_exercise1Data[vectorIdx] = CalculateAverage(timingVect);
 
 	}
 
@@ -147,14 +162,27 @@ void dae::ThrashCacheComponent::TrashTheCacheEx21()
 
 	for (int stepsize{ 1 }; stepsize <= 1024; stepsize *= 2, ++vectorIdx)
 	{
-		const auto startTime = std::chrono::high_resolution_clock().now();
-		for (int i = 0; i < m_nrOfSamplesEx2; i += stepsize)
-		{
-			arr[i].ID *= 2;
-		}
-		const auto endTime = std::chrono::high_resolution_clock().now();
+		std::vector<float> timingVect;
+		timingVect.reserve(m_nrOfRepeats);
 
-		m_exercise21Data[vectorIdx] = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime).count());
+		for (int r = 0; r < m_nrOfRepeats; r++)
+		{
+
+			const auto startTime = std::chrono::high_resolution_clock().now();
+			for (int i = 0; i < m_nrOfSamplesEx2; i += stepsize)
+			{
+				arr[i].ID *= 2;
+			}
+			const auto endTime = std::chrono::high_resolution_clock().now();
+
+			timingVect.push_back(
+				static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(
+					endTime - startTime).count()));
+		}
+
+		RemoveOutliers(timingVect, 0.1f); // Remove top and bottom 10%
+
+		m_exercise21Data[vectorIdx] = CalculateAverage(timingVect);
 
 	}
 
@@ -172,15 +200,27 @@ void dae::ThrashCacheComponent::TrashTheCacheEx22()
 
 	for (int stepsize{ 1 }; stepsize <= 1024; stepsize *= 2, ++vectorIdx)
 	{
-		const auto startTime = std::chrono::high_resolution_clock().now();
-		for (int i = 0; i < m_nrOfSamplesEx2; i += stepsize)
+		std::vector<float> timingVect;
+		timingVect.reserve(m_nrOfRepeats);
+
+		for (int r = 0; r < m_nrOfRepeats; r++)
 		{
-			arr[i].ID *= 2;
+
+			const auto startTime = std::chrono::high_resolution_clock().now();
+			for (int i = 0; i < m_nrOfSamplesEx2; i += stepsize)
+			{
+				arr[i].ID *= 2;
+			}
+			const auto endTime = std::chrono::high_resolution_clock().now();
+
+			timingVect.push_back(
+				static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(
+					endTime - startTime).count()));
 		}
-		const auto endTime = std::chrono::high_resolution_clock().now();
+		
+		RemoveOutliers(timingVect, 0.1f); // Remove top and bottom 10%
 
-		m_exercise22Data[vectorIdx] = static_cast<float>(std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime).count());
-
+		m_exercise22Data[vectorIdx] = CalculateAverage(timingVect);
 	}
 
 	m_trash22TheCachePressed = false;
@@ -263,4 +303,22 @@ void dae::ThrashCacheComponent::DrawCombinedGraph(ImColor clr1, ImColor clr2) co
 
 	delete[] conf.values.ys_list;
 	delete[] conf.values.colors;
+}
+
+void dae::ThrashCacheComponent::RemoveOutliers(std::vector<float>& timingVect, float percentage)
+{
+	if (timingVect.empty())
+		return;
+	std::sort(timingVect.begin(), timingVect.end());
+	int removeCount = static_cast<int>(timingVect.size() * percentage);
+	timingVect.erase(timingVect.begin(), timingVect.begin() + removeCount);
+	timingVect.erase(timingVect.end() - removeCount, timingVect.end());
+}
+
+float dae::ThrashCacheComponent::CalculateAverage(const std::vector<float>& timingVect)
+{
+	if (timingVect.empty())
+		return 0.0f;
+	float sum = std::accumulate(timingVect.begin(), timingVect.end(), 0.0f);
+	return sum / static_cast<float>(timingVect.size());
 }
