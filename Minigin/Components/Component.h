@@ -22,7 +22,7 @@ namespace dae
 		virtual void FixedUpdate(float fixedDeltaTime) = 0;
 		virtual void Update(float deltaTime) = 0;
 		virtual void Render() const = 0;
-		virtual void RenderUI() const {};
+		virtual void RenderUI() {};
 
 	protected:
 

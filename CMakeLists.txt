@@ -30,8 +30,8 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Minigin/Components/TextureComponent.cpp
   Minigin/Components/TextComponent.cpp
   Minigin/Components/FPSCounter.cpp
- Minigin/Components/RotatorComponent.cpp
- Minigin/Components/ThrashCacheComponent.cpp)
+  Minigin/Components/RotatorComponent.cpp
+  Minigin/Components/ThrashCacheComponent.cpp)
 
 # enable c++20 features
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_20)
@@ -108,7 +108,7 @@ if(NOT SDL3_ttf_FOUND)
   endif()
 endif()
 
-# Dear ImGui
+# Add Dear ImGui
 FetchContent_Declare(
   imgui
   GIT_REPOSITORY https://github.com/ocornut/imgui
@@ -129,6 +129,18 @@ add_library(imgui STATIC
 
 target_include_directories(imgui PUBLIC ${imgui_SOURCE_DIR} ${sdl3_SOURCE_DIR}/include)
 target_link_libraries(imgui PUBLIC SDL3::SDL3)
+
+# Add imgui-plot
+FetchContent_Declare(
+    imgui_plot
+    GIT_REPOSITORY https://github.com/soulthreads/imgui-plot
+    GIT_TAG master
+)
+FetchContent_MakeAvailable(imgui_plot)
+
+target_include_directories(imgui_plot PUBLIC ${imgui_SOURCE_DIR})
+target_link_libraries(imgui_plot PUBLIC imgui)
+
 # enable c++20 features
 target_compile_features(imgui PUBLIC cxx_std_20)
 
@@ -145,6 +157,7 @@ target_include_directories("${TARGET_NAME}" PUBLIC
   ${CMAKE_SOURCE_DIR}/Minigin/
   ${imgui_SOURCE_DIR}
   ${VLD_INCLUDE_DIR}
+  ${imgui_plot_SOURCE_DIR}
 )
 
 target_link_libraries("${TARGET_NAME}" PUBLIC
@@ -152,6 +165,7 @@ target_link_libraries("${TARGET_NAME}" PUBLIC
   SDL3_ttf::SDL3_ttf
   glm::glm
   imgui
+  imgui_plot
   ${VLD_LIBRARIES}
 )
 
