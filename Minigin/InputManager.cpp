@@ -1,6 +1,7 @@
 #include <SDL3/SDL.h>
 #include <backends/imgui_impl_sdl3.h>
 #include "InputManager.h"
+#include "Input/InputMap.h"
 
 bool dae::InputManager::ProcessInput()
 {
@@ -22,5 +23,12 @@ bool dae::InputManager::ProcessInput()
 
 	}
 
+	m_keyboard.Update();
+
 	return true;
+}
+
+void dae::InputManager::BindMapToKeyboard(std::unique_ptr<InputMap> inputMap)
+{
+	m_keyboard.SetInputMap(std::move(inputMap));
 }

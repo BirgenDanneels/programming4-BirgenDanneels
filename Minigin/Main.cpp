@@ -50,11 +50,9 @@ static void load()
 	blueTank->AddComponent<dae::RotatorComponent>()->Initialize(1.73f);
 
 	auto redTank = scene.CreateGameObject();
-	redTank->SetParent(blueTank);
-	redTank->SetLocalPosition(50, 0);
+	redTank->SetWorldPosition(300, 100);
 	redTank->AddComponent<dae::TextureComponent>()->Initialize("RedTank.png");
-	redTank->AddComponent<dae::RotatorComponent>()->Initialize(1.25f);
-	redTank->AddComponent<dae::ThrashCacheComponent>();
+	redTank->AddComponent<dae::GameActor>();
 }
 
 int main(int, char*[]) {

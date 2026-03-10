@@ -43,8 +43,9 @@ namespace dae
 		TComponent* AddComponent()
 		{
 			auto component = std::make_unique<TComponent>(*this);
+			TComponent* ptr = static_cast<TComponent*>(component.get());
 			m_components.push_back(std::move(component));
-			return static_cast<TComponent*>(component.get());
+			return static_cast<TComponent*>(ptr);
 		}
 
 		template<std::derived_from<Component> TComponent>
