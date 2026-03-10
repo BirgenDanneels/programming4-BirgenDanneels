@@ -42,8 +42,8 @@ namespace dae
 		template<std::derived_from<Component> TComponent>
 		TComponent* AddComponent()
 		{
-			auto component = std::make_shared<TComponent>(*this);
-			m_components.push_back(component);
+			auto component = std::make_unique<TComponent>(*this);
+			m_components.push_back(std::move(component));
 			return static_cast<TComponent*>(component.get());
 		}
 
@@ -91,7 +91,7 @@ namespace dae
 	private:
 
 		//COMPONENT MEMBER VARIABLES
-		std::vector<std::shared_ptr<Component>> m_components;
+		std::vector<std::unique_ptr<Component>> m_components;
 
 		//POSITION MEMBER VARIABLES
 		std::unique_ptr<TransformComponent> m_transformComponent;
