@@ -13,10 +13,8 @@ void dae::InputMap::Evaluate()
 	{
 		float value = 0.f;
 
-		if (m_pDevice->GetKeyState(binding.m_negative, InputState::Down))
-			value -= 1.f;
-		if (m_pDevice->GetKeyState(binding.m_positive, InputState::Down))
-			value += 1.f;
+		value -= m_pDevice->GetAxisValue(binding.m_negative);
+		value += m_pDevice->GetAxisValue(binding.m_positive);;
 
 		binding.m_pCommand->SetAxisValue(value);
 		binding.m_pCommand->Execute();
@@ -25,14 +23,11 @@ void dae::InputMap::Evaluate()
 	for (auto& binding : m_Axis2DBindings)
 	{
 		glm::vec3 value{ 0.f };
-		if (m_pDevice->GetKeyState(binding.m_negativeX, InputState::Down))
-			value.x -= 1.f;
-		if (m_pDevice->GetKeyState(binding.m_positiveX, InputState::Down))
-			value.x += 1.f;
-		if (m_pDevice->GetKeyState(binding.m_negativeY, InputState::Down))
-			value.y -= 1.f;
-		if (m_pDevice->GetKeyState(binding.m_positiveY, InputState::Down))
-			value.y += 1.f;
+
+		value.x -= m_pDevice->GetAxisValue(binding.m_negativeX);
+		value.x += m_pDevice->GetAxisValue(binding.m_positiveX);
+		value.y -= m_pDevice->GetAxisValue(binding.m_negativeY);
+		value.y += m_pDevice->GetAxisValue(binding.m_positiveY);
 
 		binding.m_pCommand->SetAxisValue(value);
 		binding.m_pCommand->Execute();

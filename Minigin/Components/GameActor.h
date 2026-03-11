@@ -23,6 +23,7 @@ namespace dae
 			virtual void Render() const override {};
 
 			void SetSpeed(float speed) { m_speed = speed; }
+			float GetSpeed() const { return m_speed; }
 			void Move(const glm::vec2& direction);
 
 		private:

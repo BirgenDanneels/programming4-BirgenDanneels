@@ -8,6 +8,7 @@ namespace dae
 	{
 	private:
 		GameActor* m_actor{ nullptr };
+		float m_cachedSpeed{ 100.f };
 
 	public:
 		Move2DCommand(GameActor& actor);

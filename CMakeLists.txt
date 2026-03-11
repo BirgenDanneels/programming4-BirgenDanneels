@@ -35,7 +35,9 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Minigin/Components/GameActor.cpp
   Minigin/Input/InputDevice.cpp
   Minigin/Input/Keyboard.cpp
-  Minigin/Input/InputMap.cpp "Minigin/Commands/MoveCommands.cpp")
+  Minigin/Input/InputMap.cpp
+  Minigin/Commands/MoveCommands.cpp
+  Minigin/Input/Gamepad.cpp)
 
 # enable c++20 features
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_20)
@@ -151,6 +153,7 @@ target_compile_features(imgui PUBLIC cxx_std_20)
 if (WIN32)
   # Add VLD (Visual Leak Detector) for memory leak detection on Windows
   find_package(VLD CONFIG)
+  target_link_libraries("${TARGET_NAME}" PRIVATE xinput)
 endif()
 
 # Add steam if available

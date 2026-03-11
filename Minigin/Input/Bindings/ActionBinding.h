@@ -1,5 +1,5 @@
 #include <memory>
-#include "Commands/command.h"
+#include "Commands/Command.h"
 #include "Input/Bindings/InputStates.h"
 
 namespace dae
@@ -31,7 +31,9 @@ namespace dae
 		int m_positiveX{ -1 };
 		int m_negativeY{ -1 };
 		int m_positiveY{ -1 };
+
 		std::unique_ptr<Axis2DCommand> m_pCommand{ nullptr };
+
 		Axis2DBinding(int negativeX, int positiveX, int negativeY, int positiveY, std::unique_ptr<Axis2DCommand> command)
 			: m_negativeX(negativeX), m_positiveX(positiveX), m_negativeY(negativeY), m_positiveY(positiveY), m_pCommand(std::move(command)) { }
 	};
