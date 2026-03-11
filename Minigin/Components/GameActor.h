@@ -1,9 +1,12 @@
 #pragma once
 #include "Component.h"
 #include <glm/glm.hpp>
+#include <memory>
 
 namespace dae
 {
+	class Move2DCommand;
+
 	class GameActor : public Component
 	{
 		public:
@@ -30,5 +33,7 @@ namespace dae
 
 			float m_speed{ 100.0f };
 			glm::vec2 m_direction{ 0.0f, 0.0f };
+
+			std::unique_ptr<Move2DCommand> m_pMoveCommand;
 	};
 }

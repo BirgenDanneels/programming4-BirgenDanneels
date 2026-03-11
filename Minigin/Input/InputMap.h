@@ -16,20 +16,26 @@ namespace dae
 		InputMap(InputMap&&) = delete;
 		InputMap& operator=(InputMap&&) = delete;
 
-		void BindAction(int key, InputState state, std::unique_ptr<Command> command)
+		void BindAction(const std::string& name, int key, InputState state, Command& command)
 		{
-			m_ActionBindings.emplace_back(key, state, std::move(command));
+			m_ActionBindings.emplace_back(name, key, state, command);
 		};
 
-		void BindAxis(int keyLeft, int keyRight, std::unique_ptr<Axis1DCommand> command)
+		void BindAxis(const std::string& name, int keyLeft, int keyRight, Axis1DCommand& command)
 		{
-			m_AxisBindings.emplace_back(keyLeft, keyRight, std::move(command));
+			m_AxisBindings.emplace_back(name, keyLeft, keyRight, command);
 		};
 
-		void BindAxis2D(int keyLeft, int keyRight, int keyUp, int keyDown, std::unique_ptr<Axis2DCommand> command)
+		void BindAxis2D(const std::string& name, int keyLeft, int keyRight, int keyUp, int keyDown, Axis2DCommand& command)
 		{
-			m_Axis2DBindings.emplace_back(keyLeft, keyRight, keyUp, keyDown, std::move(command));
+			m_Axis2DBindings.emplace_back(name, keyLeft, keyRight, keyUp, keyDown, command);
 		};
+
+
+		//Unbinding should be just by name and its probably better if it just binded with a pointer or ref to an input action and then the user is responsible for the ownership and can unbind it using a string or the pointer. Still to be determined.
+		void UnbindAction(const std::string& name);
+		void UnbindAxis(const std::string& name);
+		void UnbindAxis2D(const std::string& name);
 
 		void SetDevice(InputDevice* device) { m_pDevice = device; }
 

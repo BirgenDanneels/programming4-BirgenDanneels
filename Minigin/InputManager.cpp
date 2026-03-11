@@ -48,9 +48,19 @@ void dae::InputManager::BindMapToKeyboard(std::unique_ptr<InputMap> inputMap)
 	m_keyboard.SetInputMap(std::move(inputMap));
 }
 
+void dae::InputManager::UnbindMapFromKeyboard()
+{
+	m_keyboard.SetInputMap(nullptr);
+}
+
 void dae::InputManager::BindMapToGamepad(int controllerIdx, std::unique_ptr<InputMap> inputMap)
 {
 	assert(controllerIdx >= 0 && controllerIdx < static_cast<int>(m_gamepads.size()));
 
 	m_gamepads[controllerIdx]->SetInputMap(std::move(inputMap));
+}
+
+void dae::InputManager::UnbindMapFromGamepad(int controllerIdx)
+{
+	m_gamepads[controllerIdx]->SetInputMap(nullptr);
 }

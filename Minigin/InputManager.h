@@ -14,8 +14,13 @@ namespace dae
 
 		bool ProcessInput();
 
+		// Currently only supports binding one map per device, but this can be easily changed in the future if needed
+
 		void BindMapToKeyboard(std::unique_ptr<InputMap> inputMap);
+		void UnbindMapFromKeyboard();
+
 		void BindMapToGamepad(int controllerIdx, std::unique_ptr<InputMap> inputMap);
+		void UnbindMapFromGamepad(int controllerIdx);
 
 	private:
 

@@ -6,13 +6,14 @@
 #include "InputManager.h"
 
 dae::GameActor::GameActor(dae::GameObject& refOwner)
-	: Component(refOwner)
+	: Component(refOwner), m_pMoveCommand(std::make_unique<Move2DCommand>(*this))
 {
 	//Bind movement this is temp and will be removed
 	auto map = std::make_unique<InputMap>();
 	
 	//map->BindAxis2D(SDL_SCANCODE_A, SDL_SCANCODE_D,SDL_SCANCODE_W, SDL_SCANCODE_S, std::make_unique<Move2DCommand>(*this));
-	map->BindAxis2D((int)GamepadInput::LeftThumb, (int)GamepadInput::LeftStickRight, (int)GamepadInput::LeftStickUp, (int)GamepadInput::LeftStickDown, std::make_unique<Move2DCommand>(*this));
+	map->BindAxis2D("Move", (int)GamepadInput::LeftStickLeft, (int)GamepadInput::LeftStickRight, (int)GamepadInput::LeftStickUp, (int)GamepadInput::LeftStickDown, *m_pMoveCommand.get());
+	//map->UnbindAxis2D("Move");
 
 	InputManager::GetInstance().BindMapToGamepad(0, std::move(map));
 }
