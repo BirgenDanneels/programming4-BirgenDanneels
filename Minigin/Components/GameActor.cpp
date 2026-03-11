@@ -6,16 +6,8 @@
 #include "InputManager.h"
 
 dae::GameActor::GameActor(dae::GameObject& refOwner)
-	: Component(refOwner), m_pMoveCommand(std::make_unique<Move2DCommand>(*this))
+	: Component(refOwner)
 {
-	//Bind movement this is temp and will be removed
-	auto map = std::make_unique<InputMap>();
-	
-	//map->BindAxis2D(SDL_SCANCODE_A, SDL_SCANCODE_D,SDL_SCANCODE_W, SDL_SCANCODE_S, std::make_unique<Move2DCommand>(*this));
-	map->BindAxis2D("Move", (int)GamepadInput::LeftStickLeft, (int)GamepadInput::LeftStickRight, (int)GamepadInput::LeftStickUp, (int)GamepadInput::LeftStickDown, *m_pMoveCommand.get());
-	//map->UnbindAxis2D("Move");
-
-	InputManager::GetInstance().BindMapToGamepad(0, std::move(map));
 }
 
 void dae::GameActor::Update(float deltaTime)
@@ -36,4 +28,28 @@ void dae::GameActor::Update(float deltaTime)
 void dae::GameActor::Move(const glm::vec2& direction)
 {
 	m_direction += direction;
+}
+
+void dae::GameActor::Initialize(bool isKeyboard, float speed)
+{
+	m_speed = speed;
+
+	m_pMoveCommand = std::make_unique<Move2DCommand>(*this);
+
+	//Bind movement this is temp and will be removed
+	auto map = std::make_unique<InputMap>();
+
+	if (isKeyboard)
+	{
+		map->BindAxis2D("Move", SDL_SCANCODE_A, SDL_SCANCODE_D, SDL_SCANCODE_W, SDL_SCANCODE_S, *m_pMoveCommand);
+		InputManager::GetInstance().BindMapToKeyboard(std::move(map));
+	}
+	else
+	{
+		map->BindAxis2D("MoveLS", (int)GamepadInput::LeftStickLeft, (int)GamepadInput::LeftStickRight, (int)GamepadInput::LeftStickUp, (int)GamepadInput::LeftStickDown, *m_pMoveCommand);
+		map->BindAxis2D("MoveLS", (int)GamepadInput::LeftStickLeft, (int)GamepadInput::LeftStickRight, (int)GamepadInput::LeftStickUp, (int)GamepadInput::LeftStickDown, *m_pMoveCommand);
+		map->BindAxis2D("MoveDpad", (int)GamepadInput::DPadLeft, (int)GamepadInput::DPadRight, (int)GamepadInput::DPadUp, (int)GamepadInput::DPadDown, *m_pMoveCommand);
+
+		InputManager::GetInstance().BindMapToGamepad(0, std::move(map));
+	}
 }

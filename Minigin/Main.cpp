@@ -39,20 +39,31 @@ static void load()
 	fpsCounter->AddComponent<dae::TextComponent>()->Initialize("0", font);
 	fpsCounter->AddComponent<dae::FPSCounter>()->Initialize();
 
-	//Rotation objects
-	auto pivot = scene.CreateGameObject();
-	pivot->SetWorldPosition(100, 250);
-
 	auto blueTank = scene.CreateGameObject();
-	blueTank->SetParent(pivot);
 	blueTank->SetWorldPosition(100, 280);
 	blueTank->AddComponent<dae::TextureComponent>()->Initialize("BlueTank.png");
-	blueTank->AddComponent<dae::RotatorComponent>()->Initialize(1.73f);
+	blueTank->AddComponent<dae::GameActor>()->Initialize(true, 100.f);
 
 	auto redTank = scene.CreateGameObject();
 	redTank->SetWorldPosition(300, 100);
 	redTank->AddComponent<dae::TextureComponent>()->Initialize("RedTank.png");
-	redTank->AddComponent<dae::GameActor>();
+	redTank->AddComponent<dae::GameActor>()->Initialize(false, 200.f);
+
+	// Controls Text
+	auto font2 = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 15);
+
+	auto textAnchor = scene.CreateGameObject();
+	textAnchor->SetLocalPosition(10, 100);
+
+	auto wasdText = scene.CreateGameObject();
+	wasdText->SetParent(textAnchor);
+	wasdText->SetLocalPosition(0, 0);
+	wasdText->AddComponent<dae::TextComponent>()->Initialize("Use WASD to move the blue tank.", font2);
+
+	auto controllerText = scene.CreateGameObject();
+	controllerText->SetParent(textAnchor);
+	controllerText->SetLocalPosition(0, 20);
+	controllerText->AddComponent<dae::TextComponent>()->Initialize("Use D-Pad or left stick to move the red tank.", font2);
 }
 
 int main(int, char*[]) {

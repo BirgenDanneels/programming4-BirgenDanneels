@@ -3,6 +3,8 @@
 #include <glm/glm.hpp>
 #include <memory>
 
+// THE WAY INPUT IS HANDLED IN THIS CLASS IS TEMPORARY FOR THE ASSIGNMENT, ITS INTEDED THAT YOU MAKE ANOTHER COMPONENT THAT HANDLES INPUT FOR YOU CHARACTER
+
 namespace dae
 {
 	class Move2DCommand;
@@ -13,6 +15,8 @@ namespace dae
 
 			GameActor() = delete;
 			GameActor(dae::GameObject& refOwner);
+
+			void Initialize(bool isKeyboard, float speed);
 
 			GameActor(const GameActor& other) = delete;
 			GameActor(GameActor&& other) = delete;

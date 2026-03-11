@@ -7,6 +7,9 @@ dae::Move2DCommand::Move2DCommand(GameActor& actor)
 
 void dae::Move2DCommand::Execute()
 {
+	if (!(glm::length(GetAxisValue()) > 0.f)) return;
+
 	m_actor->Move(glm::vec2(GetAxisValue().x, GetAxisValue().y));
+	
 	m_actor->SetSpeed(m_cachedSpeed * glm::length(GetAxisValue()));
 }

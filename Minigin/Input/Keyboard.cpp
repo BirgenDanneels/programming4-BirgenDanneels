@@ -63,5 +63,5 @@ bool dae::Keyboard::GetKeyState(int key, InputState state) const
 
 float dae::Keyboard::GetAxisValue(int key) const
 {
-	return IsKeyPressed(key) ? 1.f : 0.f;
+	return IsKeyDown(key) ? 1.f : 0.f;
 }
