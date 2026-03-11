@@ -38,9 +38,13 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Minigin/Input/InputMap.cpp
   Minigin/Commands/MoveCommands.cpp
   Minigin/Input/Gamepad.cpp
-  Minigin/Input/XInputGamepadImpl.cpp
-   Minigin/Input/SDL3GamepadImpl.cpp)
+  Minigin/Input/SDL3GamepadImpl.cpp)
 
+
+if(WIN32)
+    target_sources(${TARGET_NAME} PRIVATE
+        Minigin/Input/XInputGamepadImpl.cpp)
+endif()
 # enable c++20 features
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_20)
 
