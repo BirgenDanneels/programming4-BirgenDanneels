@@ -2,13 +2,13 @@
 #include "GamepadImpl.h"
 #include "Input/InputMap.h"
 
-#ifdef _WIN32
+#ifdef __EMSCRIPTEN__
+// SDL backend for non-Windows platforms
+#include "SDL3GamepadImpl.h"
+using GamepadImplType = dae::SDL3GamepadImpl;
+#else
 	#include "XInputGamepadImpl.h"
 	using GamepadImplType = dae::XInputGamepadImpl;
-#else
-	// SDL backend for non-Windows platforms
-	#include "SDL3GamepadImpl.h"
-	using GamepadImplType = dae::SDL3GamepadImpl;
 #endif
 
 dae::Gamepad::Gamepad(int controllerIdx)
