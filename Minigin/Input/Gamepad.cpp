@@ -16,6 +16,8 @@ dae::Gamepad::Gamepad(int controllerIdx)
 {
 }
 
+dae::Gamepad::~Gamepad() = default;
+
 void dae::Gamepad::Update()
 {
 	m_pImpl->Update();
