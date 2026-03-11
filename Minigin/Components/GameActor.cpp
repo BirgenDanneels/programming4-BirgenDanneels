@@ -10,6 +10,8 @@ dae::GameActor::GameActor(dae::GameObject& refOwner)
 {
 }
 
+dae::GameActor::~GameActor() = default;
+
 void dae::GameActor::Update(float deltaTime)
 {
 	if(!(glm::length(m_direction) > 0.f))

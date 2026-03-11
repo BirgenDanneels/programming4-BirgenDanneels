@@ -23,7 +23,7 @@ namespace dae
 			GameActor& operator=(const GameActor& other) = delete;
 			GameActor& operator=(GameActor&& other) = delete;
 
-			~GameActor() = default;
+			~GameActor();
 
 			void Update(float deltaTime) override; //using this update since at this moment we arent using physics
 			virtual void FixedUpdate(float deltaTime) override { (void)deltaTime; };

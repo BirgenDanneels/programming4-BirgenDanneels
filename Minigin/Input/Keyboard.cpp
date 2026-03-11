@@ -10,6 +10,8 @@ dae::Keyboard::Keyboard()
 		m_previousState[i] = m_pCurrentState[i];
 }
 
+dae::Keyboard::~Keyboard() = default;
+
 bool dae::Keyboard::IsKeyDown(int key) const
 {
 	return m_pCurrentState[key];

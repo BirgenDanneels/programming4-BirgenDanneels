@@ -7,7 +7,7 @@ namespace dae
 	{
 	public:
 		Keyboard();
-		~Keyboard() = default;
+		~Keyboard();
 
 		void Update() override;
 
