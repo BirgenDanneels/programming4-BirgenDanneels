@@ -12,7 +12,7 @@ dae::GameActor::GameActor(dae::GameObject& refOwner)
 	auto map = std::make_unique<InputMap>();
 	
 	//map->BindAxis2D(SDL_SCANCODE_A, SDL_SCANCODE_D,SDL_SCANCODE_W, SDL_SCANCODE_S, std::make_unique<Move2DCommand>(*this));
-	map->BindAxis2D((int)Gamepad::Input::LeftStickLeft, (int)Gamepad::Input::LeftStickRight, (int)Gamepad::Input::LeftStickUp, (int)Gamepad::Input::LeftStickDown, std::make_unique<Move2DCommand>(*this));
+	map->BindAxis2D((int)GamepadInput::LeftThumb, (int)GamepadInput::LeftStickRight, (int)GamepadInput::LeftStickUp, (int)GamepadInput::LeftStickDown, std::make_unique<Move2DCommand>(*this));
 
 	InputManager::GetInstance().BindMapToGamepad(0, std::move(map));
 }
