@@ -16,9 +16,9 @@ dae::SDL3GamepadImpl::SDL3GamepadImpl(int controllerIdx)
 	int numGamepads = 0;
 	SDL_JoystickID* gamepads = SDL_GetGamepads(&numGamepads);
 	
-	if (gamepads && controllerIdx < numGamepads)
+	if (gamepads && m_controllerIdx < numGamepads)
 	{
-		m_pGamepad = SDL_OpenGamepad(gamepads[controllerIdx]);
+		m_pGamepad = SDL_OpenGamepad(gamepads[m_controllerIdx]);
 	}
 	
 	if (gamepads)
