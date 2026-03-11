@@ -11,7 +11,7 @@ namespace dae
 	{
 	public:
 		Gamepad(int controllerIdx);
-		~Gamepad() = default;
+		~Gamepad();
 
 		void Update() override;
 
