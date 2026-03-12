@@ -35,6 +35,8 @@ namespace dae
 		bool GetAnalogButtonState(int key, bool usePrevious) const;
 		float GetRawAxisValue(int key, const GamepadState& state) const;
 
+		SDL_Gamepad* FindGamepadByIndex(int index) const;
+
 		// Convert platform-agnostic key to SDL button/axis
 		static SDL_GamepadButton ToSDLButton(int key);
 	};

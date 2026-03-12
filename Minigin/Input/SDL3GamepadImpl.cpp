@@ -6,25 +6,7 @@
 dae::SDL3GamepadImpl::SDL3GamepadImpl(int controllerIdx)
 	: m_controllerIdx(controllerIdx)
 {
-	// Initialize SDL gamepad subsystem (if not already)
-	if (!SDL_WasInit(SDL_INIT_GAMEPAD))
-	{
-		SDL_InitSubSystem(SDL_INIT_GAMEPAD);
-	}
-
-	// Get available gamepads
-	int numGamepads = 0;
-	SDL_JoystickID* gamepads = SDL_GetGamepads(&numGamepads);
-	
-	if (gamepads && m_controllerIdx < numGamepads)
-	{
-		m_pGamepad = SDL_OpenGamepad(gamepads[m_controllerIdx]);
-	}
-	
-	if (gamepads)
-	{
-		SDL_free(gamepads);
-	}
+	m_pGamepad = FindGamepadByIndex(m_controllerIdx);
 }
 
 dae::SDL3GamepadImpl::~SDL3GamepadImpl()
@@ -41,7 +23,12 @@ void dae::SDL3GamepadImpl::Update()
 	m_previousState = m_currentState;
 
 	if (!m_pGamepad)
-		return;
+	{
+		//TODO: This should be changed and be bound to a controller connected event instead of being polled every frame. (If you want hot-plug support ofc)
+		m_pGamepad = FindGamepadByIndex(m_controllerIdx);
+		if (!m_pGamepad)  
+			return;
+	}
 
 	// Update button states
 	for (int i = 0; i < static_cast<int>(SDL_GAMEPAD_BUTTON_COUNT); ++i)
@@ -176,6 +163,26 @@ float dae::SDL3GamepadImpl::GetRawAxisValue(int key, const GamepadState& state) 
 	}
 
 	return value;
+}
+
+SDL_Gamepad* dae::SDL3GamepadImpl::FindGamepadByIndex(int index) const
+{
+	SDL_Gamepad* gamepad{ nullptr };
+
+	// Get available gamepads
+	int numGamepads = 0;
+	SDL_JoystickID* gamepads = SDL_GetGamepads(&numGamepads);
+
+	if (gamepads && index < numGamepads)
+	{
+		gamepad = SDL_OpenGamepad(gamepads[index]);
+	}
+
+	if (gamepads)
+	{
+		SDL_free(gamepads);
+	}
+	return gamepad;
 }
 
 float dae::SDL3GamepadImpl::GetAxisValue(int key) const
