@@ -214,15 +214,43 @@ SDL_Gamepad* dae::SDL3GamepadImpl::FindGamepadByIndex(int index) const
 	int numGamepads = 0;
 	SDL_JoystickID* gamepads = SDL_GetGamepads(&numGamepads);
 
-	if (gamepads && index < numGamepads)
-	{
-		gamepad = SDL_OpenGamepad(gamepads[index]);
-	}
-
 	if (gamepads)
 	{
+		int validIndex = 0;
+
+		for (int i = 0; i < numGamepads; ++i)
+		{
+			SDL_JoystickID id = gamepads[i];
+
+			if (!SDL_IsGamepad(id))
+				continue;
+
+			SDL_Gamepad* tempPad = SDL_OpenGamepad(id);
+			if (!tempPad)
+				continue;
+
+			//Filter non gamepads since headsets, like my HyperX Cloud 3 wirelesss can connect as a gamepad. (The way its checked now only allows for controllers that are in the list of sdl, so unknown controllers wont work. For this we should check axis to confirm its a real gamepad. But I think that goes too far.)
+			SDL_GamepadType type = SDL_GetGamepadType(tempPad);
+
+			if (type == SDL_GAMEPAD_TYPE_UNKNOWN || type == SDL_GAMEPAD_TYPE_STANDARD)
+			{
+				SDL_CloseGamepad(tempPad);
+				continue;
+			}
+
+			if (validIndex == index)
+			{
+				gamepad = tempPad;
+				break;
+			}
+
+			++validIndex;
+			SDL_CloseGamepad(tempPad);
+		}
+
 		SDL_free(gamepads);
 	}
+
 	return gamepad;
 }
 

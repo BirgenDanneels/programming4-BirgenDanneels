@@ -20,6 +20,35 @@ bool dae::InputManager::ProcessInput()
 		if (e.type == SDL_EVENT_QUIT) {
 			return false;
 		}
+		
+		/*
+		if (e.type == SDL_EVENT_GAMEPAD_ADDED) {
+			SDL_Log("Gamepad Connected! ID: %u", e.gdevice.which);
+			SDL_Log("IsGamepad: %d", SDL_IsGamepad(e.gdevice.which));
+
+			SDL_Gamepad* pad = SDL_OpenGamepad(e.gdevice.which);
+
+			if (!pad)
+			{
+				SDL_Log("Failed to open gamepad");
+				break;
+			}
+
+			SDL_JoystickID instance = SDL_GetGamepadID(pad);
+
+			SDL_Log("Opened gamepad:");
+			SDL_Log("Name: %s", SDL_GetGamepadName(pad));
+			SDL_Log("Instance ID: %d", instance);
+			SDL_Log("Player index: %d", SDL_GetGamepadPlayerIndex(pad));
+			SDL_Log("Vendor: %04x", SDL_GetGamepadVendor(pad));
+			SDL_Log("Product: %04x", SDL_GetGamepadProduct(pad));
+			SDL_Log("Type: %s", SDL_GetGamepadStringForType(SDL_GetGamepadType(pad)));
+
+		}
+		else if (e.type == SDL_EVENT_JOYSTICK_ADDED) {
+			SDL_Log("Joystick Connected! ID: %u (If a gamepad isn't assigned, SDL is missing its web mapping)", e.jdevice.which);
+		}*/
+		
 		if (e.type == SDL_EVENT_KEY_DOWN) {
 			
 		}

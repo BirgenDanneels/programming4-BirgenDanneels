@@ -65,9 +65,9 @@ dae::Minigin::Minigin(const std::filesystem::path& dataPath)
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
 
-	if (!SDL_InitSubSystem(SDL_INIT_GAMEPAD))
+	if (!SDL_InitSubSystem(SDL_INIT_JOYSTICK | SDL_INIT_GAMEPAD))
 	{
-		SDL_Log("Gamepad error: %s", SDL_GetError());
+		SDL_Log("Gamepad/Joystick error: %s", SDL_GetError());
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
 
