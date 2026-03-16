@@ -11,6 +11,8 @@ dae::InputManager::InputManager()
 	{
 		m_gamepads.emplace_back(std::make_unique<Gamepad>(i));  // Creates Gamepad with controller index
 	}
+
+	m_keyboard = std::make_unique<Keyboard>();
 }
 
 bool dae::InputManager::ProcessInput()
@@ -62,7 +64,7 @@ bool dae::InputManager::ProcessInput()
 
 	}
 
-	m_keyboard.Update();
+	m_keyboard->Update();
 
 	for(const auto& gamepad : m_gamepads)
 	{
@@ -74,12 +76,12 @@ bool dae::InputManager::ProcessInput()
 
 void dae::InputManager::BindMapToKeyboard(std::unique_ptr<InputMap> inputMap)
 {
-	m_keyboard.SetInputMap(std::move(inputMap));
+	m_keyboard->SetInputMap(std::move(inputMap));
 }
 
 void dae::InputManager::UnbindMapFromKeyboard()
 {
-	m_keyboard.SetInputMap(nullptr);
+	m_keyboard->SetInputMap(nullptr);
 }
 
 void dae::InputManager::BindMapToGamepad(int controllerIdx, std::unique_ptr<InputMap> inputMap)
@@ -92,4 +94,9 @@ void dae::InputManager::BindMapToGamepad(int controllerIdx, std::unique_ptr<Inpu
 void dae::InputManager::UnbindMapFromGamepad(int controllerIdx)
 {
 	m_gamepads[controllerIdx]->SetInputMap(nullptr);
+}
+
+dae::Gamepad* dae::InputManager::GetGamepad(int controllerIdx) const
+{
+	return m_gamepads[controllerIdx].get();
 }

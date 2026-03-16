@@ -10,6 +10,7 @@
 #include "ResourceManager.h"
 #include "Scene.h"
 #include "Components/ComponentsInclude.h"
+#include "InputManager.h"
 
 #include <filesystem>
 namespace fs = std::filesystem;
@@ -42,12 +43,12 @@ static void load()
 	auto blueTank = scene.CreateGameObject();
 	blueTank->SetWorldPosition(100, 280);
 	blueTank->AddComponent<dae::TextureComponent>()->Initialize("BlueTank.png");
-	blueTank->AddComponent<dae::GameActor>()->Initialize(true, 100.f);
+	blueTank->AddComponent<dae::TankComponent>()->Initialize(dae::InputManager::GetInstance().GetKeyboard(), 100.f);
 
 	auto redTank = scene.CreateGameObject();
 	redTank->SetWorldPosition(300, 100);
 	redTank->AddComponent<dae::TextureComponent>()->Initialize("RedTank.png");
-	redTank->AddComponent<dae::GameActor>()->Initialize(false, 200.f);
+	redTank->AddComponent<dae::TankComponent>()->Initialize(dae::InputManager::GetInstance().GetGamepad(0), 200.f);
 
 	// Controls Text
 	auto font2 = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 15);

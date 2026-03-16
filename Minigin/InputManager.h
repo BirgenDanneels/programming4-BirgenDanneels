@@ -22,9 +22,12 @@ namespace dae
 		void BindMapToGamepad(int controllerIdx, std::unique_ptr<InputMap> inputMap);
 		void UnbindMapFromGamepad(int controllerIdx);
 
+		Keyboard* GetKeyboard() const { return m_keyboard.get(); }
+		Gamepad* GetGamepad(int controllerIdx) const;
+
 	private:
 
-		Keyboard m_keyboard{};
+		std::unique_ptr<Keyboard> m_keyboard{};
 		std::vector<std::unique_ptr<Gamepad>> m_gamepads;
 	};
 

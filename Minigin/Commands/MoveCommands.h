@@ -1,17 +1,18 @@
 #pragma once
-
-#include "Commands/GameActorCommand.h"
+#include "Command.h"
 
 namespace dae
 {
+	class CharacterController;
+
 	class Move2DCommand : public Axis2DCommand
 	{
 	private:
-		GameActor* m_actor{ nullptr };
+		CharacterController* m_characterController{ nullptr };
 		float m_cachedSpeed{ 100.f };
 
 	public:
-		Move2DCommand(GameActor& actor);
+		Move2DCommand(CharacterController& actor);
 		void Execute() override;
 	};
 

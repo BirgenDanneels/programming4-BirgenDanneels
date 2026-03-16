@@ -6,4 +6,5 @@
 #include "FPSCounter.h"
 #include "RotatorComponent.h"
 #include "ThrashCacheComponent.h"
-#include "GameActor.h"
+#include "CharacterController.h"
+#include "TankComponent.h"
