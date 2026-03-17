@@ -3,9 +3,9 @@
 #include "Input/InputMap.h"
 
 #ifdef __EMSCRIPTEN__
-// SDL backend for non-Windows platforms
-#include "SDL3GamepadImpl.cpp"
-using GamepadImplType = dae::SDL3GamepadImpl;
+	// SDL backend for non-Windows platforms
+	#include "SDL3GamepadImpl.cpp"
+	using GamepadImplType = dae::SDL3GamepadImpl;
 #else
 	#include "XInputGamepadImpl.cpp"
 	using GamepadImplType = dae::XInputGamepadImpl;
