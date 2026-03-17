@@ -38,6 +38,7 @@ namespace dae
 		float GetRawAxisValue(int key, const GamepadState& state) const;
 
 		SDL_Gamepad* FindGamepadByIndex(int index) const;
+		bool IsRealGamepad(SDL_Gamepad* pad) const;
 
 		// Convert platform-agnostic key to SDL button/axis
 		static SDL_GamepadButton ToSDLButton(int key);
@@ -229,10 +230,9 @@ SDL_Gamepad* dae::SDL3GamepadImpl::FindGamepadByIndex(int index) const
 			if (!tempPad)
 				continue;
 
-			//Filter non gamepads since headsets, like my HyperX Cloud 3 wirelesss can connect as a gamepad. (The way its checked now only allows for controllers that are in the list of sdl, so unknown controllers wont work. For this we should check axis to confirm its a real gamepad. But I think that goes too far.)
-			SDL_GamepadType type = SDL_GetGamepadType(tempPad);
+			//Filter non gamepads since headsets, like my HyperX Cloud 3 wirelesss can connect as a gamepad. This way is pretty arbitrary.
 
-			if (type == SDL_GAMEPAD_TYPE_UNKNOWN || type == SDL_GAMEPAD_TYPE_STANDARD)
+			if (!IsRealGamepad(tempPad))
 			{
 				SDL_CloseGamepad(tempPad);
 				continue;
@@ -252,6 +252,24 @@ SDL_Gamepad* dae::SDL3GamepadImpl::FindGamepadByIndex(int index) const
 	}
 
 	return gamepad;
+}
+
+bool dae::SDL3GamepadImpl::IsRealGamepad(SDL_Gamepad* pad) const
+{
+	if(!pad)
+		return false;
+
+	SDL_Joystick* joystick = SDL_GetGamepadJoystick(pad);
+	if (!joystick)
+		return false;
+
+	int numButtons = SDL_GetNumJoystickButtons(joystick);
+	int numAxes = SDL_GetNumJoystickAxes(joystick);
+
+	if (numButtons < 4 || numAxes < 2) // Arbitrary thresholds for a "real" gamepad
+		return false;
+
+	return true;
 }
 
 float dae::SDL3GamepadImpl::GetAxisValue(int key) const
