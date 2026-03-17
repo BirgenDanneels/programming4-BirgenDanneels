@@ -29,7 +29,7 @@ namespace dae
 
 		void NotifyObservers(Args... args)
 		{
-			for (Observer* observer : m_Observers)
+			for (Observer<Args...>* observer : m_Observers)
 			{
 				observer->OnNotify(args...);
 			}

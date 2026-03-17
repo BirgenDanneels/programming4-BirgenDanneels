@@ -8,3 +8,5 @@
 #include "ThrashCacheComponent.h"
 #include "CharacterController.h"
 #include "TankComponent.h"
+#include "HealthComponent.h"
+#include "StatsComponent.h"

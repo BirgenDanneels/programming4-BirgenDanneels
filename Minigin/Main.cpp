@@ -43,13 +43,13 @@ static void load()
 	auto blueTank = scene.CreateGameObject();
 	blueTank->SetWorldPosition(100, 280);
 	blueTank->AddComponent<dae::TextureComponent>()->Initialize("BlueTank.png");
-	blueTank->AddComponent<dae::TankComponent>()->Initialize(dae::InputManager::GetInstance().GetKeyboard(), 100.f);
+	dae::HealthComponent* blueHealth = blueTank->AddComponent<dae::HealthComponent>();
 
 	auto redTank = scene.CreateGameObject();
 	redTank->SetWorldPosition(300, 100);
 	redTank->AddComponent<dae::TextureComponent>()->Initialize("RedTank.png");
-	redTank->AddComponent<dae::TankComponent>()->Initialize(dae::InputManager::GetInstance().GetGamepad(0), 200.f);
-
+	dae::HealthComponent* redHealth = redTank->AddComponent<dae::HealthComponent>();
+	
 	// Controls Text
 	auto font2 = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 15);
 
@@ -59,12 +59,33 @@ static void load()
 	auto wasdText = scene.CreateGameObject();
 	wasdText->SetParent(textAnchor);
 	wasdText->SetLocalPosition(0, 0);
-	wasdText->AddComponent<dae::TextComponent>()->Initialize("Use WASD to move the blue tank.", font2);
+	wasdText->AddComponent<dae::TextComponent>()->Initialize("Use WASD to move the blue tank, C to inflict damage", font2);
 
 	auto controllerText = scene.CreateGameObject();
 	controllerText->SetParent(textAnchor);
 	controllerText->SetLocalPosition(0, 20);
-	controllerText->AddComponent<dae::TextComponent>()->Initialize("Use D-Pad or left stick to move the red tank.", font2);
+	controllerText->AddComponent<dae::TextComponent>()->Initialize("Use D-Pad or left stick to move the red tank, X to inflict damage", font2);
+
+	// Blue Tank Lives Text
+	auto livesText1 = scene.CreateGameObject();
+	livesText1->SetParent(textAnchor);
+	livesText1->SetLocalPosition(0, 60);
+	dae::StatsComponent* lives1 = livesText1->AddComponent<dae::StatsComponent>();
+	lives1->Initialize("#Red Tank Lives: ");
+	blueHealth->OnHealthChanged().AddObserver(lives1);
+
+	// Red Tank Lives Text
+	auto livesText2 = scene.CreateGameObject();
+	livesText2->SetParent(textAnchor);
+	livesText2->SetLocalPosition(0, 80);
+	dae::StatsComponent* lives2 = livesText2->AddComponent<dae::StatsComponent>();
+	lives2->Initialize("#Red Tank Lives: ");
+	redHealth->OnHealthChanged().AddObserver(lives2);
+
+	//Init tanks
+	blueTank->AddComponent<dae::TankComponent>()->Initialize(dae::InputManager::GetInstance().GetKeyboard(), 100.f, 3);
+	redTank->AddComponent<dae::TankComponent>()->Initialize(dae::InputManager::GetInstance().GetGamepad(0), 200.f, 3);
+	
 }
 
 int main(int, char*[]) {
