@@ -1,3 +1,6 @@
+#pragma once
+
+#include <algorithm>
 #include <vector>
 #include "Observer.h"
 
@@ -9,7 +12,7 @@ namespace dae
 	public:
 		void AddObserver(Observer<Args...>* observer)
 		{
-			auto it = std::find(m_Observers.begin(), m_Observers.end(), observer);
+			const auto it = std::find(m_Observers.begin(), m_Observers.end(), observer);
 
 			if (it == m_Observers.end())
 			{
@@ -19,7 +22,7 @@ namespace dae
 
 		void RemoveObserver(Observer<Args...>* observer)
 		{
-			auto it = std::find(m_Observers.begin(), m_Observers.end(), observer);
+			const auto it = std::find(m_Observers.begin(), m_Observers.end(), observer);
 
 			if (it != m_Observers.end())
 			{

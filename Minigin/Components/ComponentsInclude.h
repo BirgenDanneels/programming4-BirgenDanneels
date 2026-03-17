@@ -10,3 +10,4 @@
 #include "TankComponent.h"
 #include "HealthComponent.h"
 #include "StatsComponent.h"
+#include "PointsComponent.h"
