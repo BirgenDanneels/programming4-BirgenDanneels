@@ -17,6 +17,8 @@ void dae::InputMap::Evaluate()
 		value -= m_pDevice->GetAxisValue(binding->m_negative);
 		value += m_pDevice->GetAxisValue(binding->m_positive);;
 
+		value = std::clamp(value, -1.f, 1.f);
+
 		binding->m_pCommand->SetAxisValue(value);
 		binding->m_pCommand->Execute();
 	}
@@ -29,6 +31,8 @@ void dae::InputMap::Evaluate()
 		value.x += m_pDevice->GetAxisValue(binding->m_positiveX);
 		value.y -= m_pDevice->GetAxisValue(binding->m_negativeY);
 		value.y += m_pDevice->GetAxisValue(binding->m_positiveY);
+
+		value = glm::clamp(value, glm::vec3(-1.f), glm::vec3(1.f));
 
 		binding->m_pCommand->SetAxisValue(value);
 		binding->m_pCommand->Execute();

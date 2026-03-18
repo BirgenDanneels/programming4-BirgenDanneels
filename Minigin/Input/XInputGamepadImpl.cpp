@@ -32,6 +32,8 @@ namespace dae
 		bool GetAnalogButtonState(int key, bool usePrevious) const;
 		float GetRawAxisValue(int key, bool usePrevious) const;
 
+		float ApplyDeadzoneStick(float targetAxis, float otherAxis) const;
+
 		// Convert platform-agnostic key to XInput button
 		static int ToXInputButton(int key);
 	};
@@ -115,10 +117,6 @@ float dae::XInputGamepadImpl::GetAxisValue(int key) const
 
 	float value{ GetRawAxisValue(key, false) };
 
-	// Apply deadzone
-	if (std::abs(value) < m_deadzone)
-		return 0.0f;
-
 	return value;
 }
 
@@ -155,36 +153,36 @@ float dae::XInputGamepadImpl::GetRawAxisValue(int key, bool usePrevious) const
 		break;
 
 	case GamepadInput::LeftStickLeft:
-		value = static_cast<float>(state.Gamepad.sThumbLX) / 32767.0f;
+		value = ApplyDeadzoneStick(state.Gamepad.sThumbLX, state.Gamepad.sThumbLY);
 		value = value < 0.0f ? -value : 0.0f;
 		break;
 	case GamepadInput::LeftStickRight:
-		value = static_cast<float>(state.Gamepad.sThumbLX) / 32767.0f;
+		value = ApplyDeadzoneStick(state.Gamepad.sThumbLX, state.Gamepad.sThumbLY);
 		value = value > 0.0f ? value : 0.0f;
 		break;
 	case GamepadInput::LeftStickUp:
-		value = static_cast<float>(state.Gamepad.sThumbLY) / 32767.0f;
+		value = ApplyDeadzoneStick(state.Gamepad.sThumbLY, state.Gamepad.sThumbLX);
 		value = value > 0.0f ? value : 0.0f;
 		break;
 	case GamepadInput::LeftStickDown:
-		value = static_cast<float>(state.Gamepad.sThumbLY) / 32767.0f;
+		value = ApplyDeadzoneStick(state.Gamepad.sThumbLY, state.Gamepad.sThumbLX);
 		value = value < 0.0f ? -value : 0.0f;
 		break;
 
 	case GamepadInput::RightStickLeft:
-		value = static_cast<float>(state.Gamepad.sThumbRX) / 32767.0f;
+		value = ApplyDeadzoneStick(state.Gamepad.sThumbRX, state.Gamepad.sThumbRY);
 		value = value < 0.0f ? -value : 0.0f;
 		break;
 	case GamepadInput::RightStickRight:
-		value = static_cast<float>(state.Gamepad.sThumbRX) / 32767.0f;
+		value = ApplyDeadzoneStick(state.Gamepad.sThumbRX, state.Gamepad.sThumbRY);
 		value = value > 0.0f ? value : 0.0f;
 		break;
 	case GamepadInput::RightStickUp:
-		value = static_cast<float>(state.Gamepad.sThumbRY) / 32767.0f;
+		value = ApplyDeadzoneStick(state.Gamepad.sThumbRY, state.Gamepad.sThumbRX);
 		value = value > 0.0f ? value : 0.0f;
 		break;
 	case GamepadInput::RightStickDown:
-		value = static_cast<float>(state.Gamepad.sThumbRY) / 32767.0f;
+		value = ApplyDeadzoneStick(state.Gamepad.sThumbRY, state.Gamepad.sThumbRX);
 		value = value < 0.0f ? -value : 0.0f;
 		break;
 
@@ -194,4 +192,12 @@ float dae::XInputGamepadImpl::GetRawAxisValue(int key, bool usePrevious) const
 	}
 
 	return value;
+}
+
+float dae::XInputGamepadImpl::ApplyDeadzoneStick(float targetAxis, float otherAxis) const
+{
+	if(glm::length(glm::vec2(targetAxis / 32767.0f, otherAxis / 32767.0f)) >= m_deadzone)
+		return targetAxis / 32767.0f;
+
+	return 0.0f;
 }

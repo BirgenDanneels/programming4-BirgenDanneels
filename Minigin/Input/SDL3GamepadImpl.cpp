@@ -36,6 +36,7 @@ namespace dae
 		bool IsAnalogInput(int key) const;
 		bool GetAnalogButtonState(int key, bool usePrevious) const;
 		float GetRawAxisValue(int key, const GamepadState& state) const;
+		float ApplyDeadzoneStick(float targetAxis, float otherAxis) const;
 
 		SDL_Gamepad* FindGamepadByIndex(int index) const;
 		bool IsRealGamepad(SDL_Gamepad* pad) const;
@@ -160,38 +161,38 @@ float dae::SDL3GamepadImpl::GetRawAxisValue(int key, const GamepadState& state) 
 		break;
 
 	case GamepadInput::LeftStickLeft:
-		value = state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_LEFTX)];
+		value = ApplyDeadzoneStick(state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_LEFTX)], state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_LEFTY)]);
 		value = value < 0.0f ? -value : 0.0f;
 		break;
 	case GamepadInput::LeftStickRight:
-		value = state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_LEFTX)];
+		value = ApplyDeadzoneStick(state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_LEFTX)], state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_LEFTY)]);
 		value = value > 0.0f ? value : 0.0f;
 		break;
 	case GamepadInput::LeftStickUp:
 
 		// SDL Y axis: negative is up
-		value = state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_LEFTY)];
+		value = ApplyDeadzoneStick(state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_LEFTY)], state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_LEFTX)]);
 		value = value < 0.0f ? -value : 0.0f;
 		break;
 	case GamepadInput::LeftStickDown:
-		value = state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_LEFTY)];
+		value = ApplyDeadzoneStick(state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_LEFTY)], state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_LEFTX)]);
 		value = value > 0.0f ? value : 0.0f;
 		break;
 
 	case GamepadInput::RightStickLeft:
-		value = state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_RIGHTX)];
+		value = ApplyDeadzoneStick(state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_RIGHTX)], state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_RIGHTY)]);
 		value = value < 0.0f ? -value : 0.0f;
 		break;
 	case GamepadInput::RightStickRight:
-		value = state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_RIGHTX)];
+		value = ApplyDeadzoneStick(state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_RIGHTX)], state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_RIGHTY)]);
 		value = value > 0.0f ? value : 0.0f;
 		break;
 	case GamepadInput::RightStickUp:
-		value = state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_RIGHTY)];
+		value = ApplyDeadzoneStick(state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_RIGHTY)], state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_RIGHTX)]);
 		value = value < 0.0f ? -value : 0.0f;
 		break;
 	case GamepadInput::RightStickDown:
-		value = state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_RIGHTY)];
+		value = ApplyDeadzoneStick(state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_RIGHTY)], state.axes[static_cast<int>(SDL_GAMEPAD_AXIS_RIGHTX)]);
 		value = value > 0.0f ? value : 0.0f;
 		break;
 
@@ -205,6 +206,14 @@ float dae::SDL3GamepadImpl::GetRawAxisValue(int key, const GamepadState& state) 
 	}
 
 	return value;
+}
+
+float dae::SDL3GamepadImpl::ApplyDeadzoneStick(float targetAxis, float otherAxis) const
+{
+	if (glm::length(glm::vec2(targetAxis, otherAxis)) >= m_deadzone)
+		return targetAxis;
+
+	return 0.0f;
 }
 
 SDL_Gamepad* dae::SDL3GamepadImpl::FindGamepadByIndex(int index) const
@@ -278,10 +287,6 @@ float dae::SDL3GamepadImpl::GetAxisValue(int key) const
 		return 0.0f;
 
 	float value = GetRawAxisValue(key, m_currentState);
-
-	// Apply deadzone
-	if (std::abs(value) < m_deadzone)
-		return 0.0f;
 
 	return value;
 }
