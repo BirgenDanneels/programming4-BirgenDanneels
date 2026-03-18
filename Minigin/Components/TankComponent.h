@@ -19,8 +19,6 @@ namespace dae
 	class HealthComponent;
 	class InputDevice;
 	class PointsComponent;
-	struct SubscriptionHandle;
-	struct Event;
 
 	class TankComponent final : public Component
 	{
@@ -37,9 +35,6 @@ namespace dae
 		void RequestOrbPickUp();
 
 		void Initialize(InputDevice* device, float speed, int lives);
-
-
-		void TestEvent(const Event& event);
 		
 		Subject<TankEvents>& OnTankEvent() { return m_onTankEventSubject; }
 
@@ -57,6 +52,5 @@ namespace dae
 		Subject<TankEvents> m_onTankEventSubject;
 
 		InputDevice* m_pInputDevice{ nullptr };
-		SubscriptionHandle m_killSubscriptionHandle;
 	};
 }

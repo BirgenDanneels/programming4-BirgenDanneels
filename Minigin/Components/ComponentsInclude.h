@@ -11,3 +11,9 @@
 #include "HealthComponent.h"
 #include "StatsComponent.h"
 #include "PointsComponent.h"
+
+#ifdef USE_STEAMWORKS
+
+#include "AchievementSystem.h"
+
+#endif // USE_STEAMWORKS

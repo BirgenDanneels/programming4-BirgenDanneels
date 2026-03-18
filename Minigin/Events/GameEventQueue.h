@@ -12,6 +12,7 @@ namespace dae
 	{
 		unsigned int eventId{};
 		int subscriptionId{};
+		bool isGlobal{};
 	};
 
 	class GameEventQueue final
@@ -20,7 +21,11 @@ namespace dae
 		using Handler = std::function<void(const Event&)>;
 
 		SubscriptionHandle Subscribe(unsigned int id, Handler handler);
+		//This should be made so the handler cannot change game state
+		SubscriptionHandle SubscribeAll(Handler handler);
 		void Unsubscribe(SubscriptionHandle handle);
+
+
 
 		void Enqueue(const Event& event);
 		void Enqueue(Event&& event);
@@ -44,6 +49,7 @@ namespace dae
 		int m_capacity{ DefaultQueueCapacity };
 
 		std::unordered_map<unsigned int, std::vector<Subscription>> m_subscribers{};
+		std::vector<Subscription> m_globalSubscribers{};
 		int m_nextSubscriptionId{ 1 };
 	};
 }

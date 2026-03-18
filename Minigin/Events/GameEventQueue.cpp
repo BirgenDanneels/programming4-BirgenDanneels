@@ -7,11 +7,30 @@ dae::SubscriptionHandle dae::GameEventQueue::Subscribe(unsigned int id, Handler 
 {
 	const int subscriptionId{ m_nextSubscriptionId++ };
 	m_subscribers[id].push_back(Subscription{ subscriptionId, std::move(handler)});
-	return SubscriptionHandle{ id, subscriptionId };
+	return SubscriptionHandle{ id, subscriptionId, false };
+}
+
+dae::SubscriptionHandle dae::GameEventQueue::SubscribeAll(Handler handler)
+{
+	const int subscriptionId{ m_nextSubscriptionId++ };
+	m_globalSubscribers.push_back(Subscription{ subscriptionId, std::move(handler)});
+	return SubscriptionHandle{ 0, subscriptionId, true };
+
 }
 
 void dae::GameEventQueue::Unsubscribe(SubscriptionHandle handle)
 {
+	if (handle.isGlobal)
+	{
+		m_globalSubscribers.erase(
+			std::remove_if(
+				m_globalSubscribers.begin(),
+				m_globalSubscribers.end(),
+				[handle](const Subscription& subscription) { return subscription.id == handle.subscriptionId; }),
+			m_globalSubscribers.end());
+		return;
+	}
+
 	const auto it = m_subscribers.find(handle.eventId);
 	if (it == m_subscribers.end()) return;
 
@@ -67,9 +86,15 @@ void dae::GameEventQueue::Dispatch()
 		--m_count;
 
 		const auto it = m_subscribers.find(event.id);
-		if (it == m_subscribers.end()) continue;
+		if (it != m_subscribers.end())
+		{
+			for (const Subscription& subscription : it->second)
+			{
+				if (subscription.handler) subscription.handler(event);
+			}
+		}
 
-		for (const Subscription& subscription : it->second)
+		for (const Subscription& subscription : m_globalSubscribers)
 		{
 			if (subscription.handler) subscription.handler(event);
 		}
@@ -83,5 +108,6 @@ void dae::GameEventQueue::Clear()
 	m_count = 0;
 
 	m_subscribers.clear();
+	m_globalSubscribers.clear();
 	m_nextSubscriptionId = 1;
 }

@@ -6,9 +6,6 @@
 #include "InputManager.h"
 #include "Input/InputMap.h"
 #include "Commands/MoveCommands.h"
-#include "Events/Event.h"
-#include "Scene.h"
-#include <functional>
 
 namespace dae
 {
@@ -97,8 +94,6 @@ void dae::TankComponent::Update(float deltaTime)
 void dae::TankComponent::RequestEnemyKill()
 {
 	m_onTankEventSubject.NotifyObservers(TankEvents::KillEnemy);
-
-	GetOwner()->GetScene()->GetGameEventQueue().Enqueue(Event{ make_sdbm_hash("KillEnemy"), { GetOwner() } });
 }
 
 void dae::TankComponent::RequestOrbPickUp()
@@ -145,15 +140,4 @@ void dae::TankComponent::Initialize(InputDevice* device, float speed, int lives)
 
 		m_pInputDevice->SetInputMap(std::move(inputMap));
 	}
-
-	m_killSubscriptionHandle = GetOwner()->GetScene()->GetGameEventQueue().Subscribe(make_sdbm_hash("KillEnemy"), [this](const Event& event) { TestEvent(event); });
-}
-
-void dae::TankComponent::TestEvent(const dae::Event& event)
-{
-	if (event.id != make_sdbm_hash("KillEnemy"))
-		return;
-
-	GameObject* ptr = std::get<GameObject*>(event.args[0]);
-	ptr->Delete();
 }

@@ -51,6 +51,12 @@ static void load()
 	redTank->AddComponent<dae::TextureComponent>()->Initialize("RedTank.png");
 	dae::HealthComponent* redHealth = redTank->AddComponent<dae::HealthComponent>();
 	dae::PointsComponent* redPoints = redTank->AddComponent<dae::PointsComponent>();
+
+	// Achievement System
+#ifdef USE_STEAMWORKS
+	auto achievementSystem = scene.CreateGameObject();
+	achievementSystem->AddComponent<dae::AchievementSystem>();
+#endif
 	
 	// Controls Text
 	auto font2 = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 15);

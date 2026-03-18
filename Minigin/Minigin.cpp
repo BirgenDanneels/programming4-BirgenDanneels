@@ -21,6 +21,9 @@
 #pragma warning (push)
 #pragma warning (disable:4996)
 #include <steam_api.h>
+#include "Steam/SteamAchievements.h"
+extern CSteamAchievements* g_SteamAchievements;
+extern Achievement_t g_Achievements[];
 #pragma warning (pop)
 #endif
 
@@ -93,6 +96,8 @@ dae::Minigin::Minigin(const std::filesystem::path& dataPath)
 #if USE_STEAMWORKS
 	if (!SteamAPI_Init())
 		throw std::runtime_error(std::string("Fatal Error - Steam must be running to play this game (SteamAPI_Init() failed)."));
+
+	g_SteamAchievements = new CSteamAchievements(g_Achievements, 4);
 #endif
 
 	Renderer::GetInstance().Init(g_window);
@@ -108,6 +113,10 @@ dae::Minigin::~Minigin()
 	// Destroy Steam
 #if USE_STEAMWORKS
 	SteamAPI_Shutdown();
+
+	// Delete the SteamAchievements object
+	if (g_SteamAchievements)
+		delete g_SteamAchievements;
 #endif
 
 	SDL_DestroyWindow(g_window);
