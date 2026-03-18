@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <utility>
 
-dae::SubscriptionHandle dae::GameEventQueue::Subscribe(unsigned int id, Handler handler)
+dae::SubscriptionHandle dae::GameEventQueue::Subscribe(EventID id, Handler handler)
 {
 	const int subscriptionId{ m_nextSubscriptionId++ };
 	m_subscribers[id].push_back(Subscription{ subscriptionId, std::move(handler)});
@@ -85,7 +85,7 @@ void dae::GameEventQueue::Dispatch()
 		m_head = (m_head + 1) % m_capacity;
 		--m_count;
 
-		const auto it = m_subscribers.find(event.id);
+		const auto it = m_subscribers.find(event.GetId());
 		if (it != m_subscribers.end())
 		{
 			for (const Subscription& subscription : it->second)

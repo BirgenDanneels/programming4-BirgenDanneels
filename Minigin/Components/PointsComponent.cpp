@@ -1,5 +1,6 @@
 #include "PointsComponent.h"
 #include "TankComponent.h"
+#include "Utils/HashUtil.h"
 #include "Scene.h"
 
 dae::PointsComponent::PointsComponent(GameObject& pOwner)
@@ -35,5 +36,5 @@ void dae::PointsComponent::AddPoints(int points)
 	m_onPointsChangedSubject.NotifyObservers(m_Points);
 	
 	//Broadcast a game event
-	GetOwner()->GetScene()->GetGameEventQueue().Enqueue(Event{ make_sdbm_hash("PointsChanged"), {m_Points } });
+	GetOwner()->GetScene()->GetGameEventQueue().Enqueue(Event{ Event::ToEventID("PointsChanged"), {m_Points } });
 }

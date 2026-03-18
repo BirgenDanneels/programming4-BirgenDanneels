@@ -43,7 +43,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Minigin/Components/HealthComponent.cpp
   Minigin/Components/StatsComponent.cpp
   Minigin/Components/PointsComponent.cpp
-  Minigin/Events/GameEventQueue.cpp)
+  Minigin/Events/GameEventQueue.cpp )
 
 # enable c++20 features
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_20)

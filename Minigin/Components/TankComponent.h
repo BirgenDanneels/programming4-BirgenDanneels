@@ -2,7 +2,6 @@
 #include <memory>
 #include "Commands/Command.h"
 #include "Events/Subject.h"
-#include "Events/GameEventQueue.h"
 
 //Components should have an awake method so the getcomponents can be used without worrying about order of creation.
 

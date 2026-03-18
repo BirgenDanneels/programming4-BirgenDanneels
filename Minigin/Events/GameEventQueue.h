@@ -20,7 +20,7 @@ namespace dae
 	public:
 		using Handler = std::function<void(const Event&)>;
 
-		SubscriptionHandle Subscribe(unsigned int id, Handler handler);
+		SubscriptionHandle Subscribe(EventID id, Handler handler);
 		//This should be made so the handler cannot change game state
 		SubscriptionHandle SubscribeAll(Handler handler);
 		void Unsubscribe(SubscriptionHandle handle);
@@ -48,7 +48,7 @@ namespace dae
 		int m_count{ 0 };
 		int m_capacity{ DefaultQueueCapacity };
 
-		std::unordered_map<unsigned int, std::vector<Subscription>> m_subscribers{};
+		std::unordered_map<EventID, std::vector<Subscription>> m_subscribers{};
 		std::vector<Subscription> m_globalSubscribers{};
 		int m_nextSubscriptionId{ 1 };
 	};

@@ -1,6 +1,6 @@
 #include "AchievementSystem.h"
 #include "Scene.h"
-
+#include "Utils/HashUtil.h"
 #include "Steam/SteamAchievements.h"
 extern CSteamAchievements* g_SteamAchievements;
 
@@ -31,7 +31,7 @@ dae::AchievementSystem::~AchievementSystem() = default;
 
 void dae::AchievementSystem::CheckPointsForWinAchievement(const Event& event)
 {
-	if (std::get<int>(event.args[0]) >= m_pointsForWin)
+	if (std::get<int>(event.GetArgs()[0]) >= m_pointsForWin)
 	{
 		UnlockAchievement("ACH_WIN_ONE_GAME");
 

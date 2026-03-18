@@ -1,16 +1,15 @@
 #pragma once
-
-#include <cstdint>
-#include <initializer_list>
 #include <string>
-#include <string_view>
 #include <variant>
 #include <vector>
+#include "Utils/HashUtil.h"
 
 namespace dae
 {
 	class GameObject;
 	class Component;
+
+	using EventID = unsigned int;
 
 	using EventArg = std::variant<
 		int,
@@ -21,31 +20,33 @@ namespace dae
 		Component*
 	>;
 
-	constexpr unsigned int make_sdbm_hash(const char* str)
+	class Event final
 	{
-		unsigned int hash = 0;
-		int c;
-		while ((c = *str++)) {
-			hash = c + (hash << 6) + (hash << 16) - hash;
-		}
-		return hash;
-	}
-
-	struct Event final
-	{
-		unsigned int id{};
-		std::vector<EventArg> args{};
-
+	public:
 		Event() = default;
 
-		explicit Event(unsigned int eventId)
-			: id(eventId)
+		explicit Event(EventID id)
+			: m_id(id)
 		{
 		}
 
-		Event(unsigned int eventId, std::initializer_list<EventArg> payload)
-			: id(eventId), args(payload)
+		Event(EventID id, std::initializer_list<EventArg> payload)
+			: m_id(id), m_args(payload)
 		{
 		}
+
+		template <size_t N>
+		static consteval EventID ToEventID(const char(&eventName)[N])
+		{
+			return make_sdbm_hash(eventName);
+		}
+
+		EventID GetId() const noexcept { return m_id; }
+		const std::vector<EventArg>& GetArgs() const noexcept { return m_args; }
+
+	private:
+
+		EventID m_id{};
+		std::vector<EventArg> m_args{};
 	};
 }
