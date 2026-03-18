@@ -6,6 +6,9 @@
 #include "InputManager.h"
 #include "Input/InputMap.h"
 #include "Commands/MoveCommands.h"
+#include "Events/Event.h"
+#include "Scene.h"
+#include <functional>
 
 namespace dae
 {
@@ -71,7 +74,20 @@ dae::TankComponent::TankComponent(GameObject& pOwner)
 		m_pPointsComponent = GetOwner()->AddComponent<PointsComponent>();
 }
 
-dae::TankComponent::~TankComponent() = default;
+dae::TankComponent::~TankComponent()
+{
+	if (m_pInputDevice)
+	{
+		InputMap* inputMap = m_pInputDevice->GetInputMap();
+		if (inputMap)
+		{
+			inputMap->UnbindAxis2D("Move");
+			inputMap->UnbindAction("Damage");
+			inputMap->UnbindAction("FirePickUpEvent");
+			inputMap->UnbindAction("FireKillEvent");
+		}
+	}
+}
 
 void dae::TankComponent::Update(float deltaTime)
 {
@@ -81,6 +97,8 @@ void dae::TankComponent::Update(float deltaTime)
 void dae::TankComponent::RequestEnemyKill()
 {
 	m_onTankEventSubject.NotifyObservers(TankEvents::KillEnemy);
+
+	GetOwner()->GetScene()->GetGameEventQueue().Enqueue(Event{ make_sdbm_hash("KillEnemy"), { GetOwner() } });
 }
 
 void dae::TankComponent::RequestOrbPickUp()
@@ -101,12 +119,14 @@ void dae::TankComponent::Initialize(InputDevice* device, float speed, int lives)
 	m_pPickupCommand = std::make_unique<FirePickupEventCommand>(*this);
 	m_pKillCommand = std::make_unique<FireKillEventCommand>(*this);
 
-	if (device)
+	m_pInputDevice = device;
+
+	if (m_pInputDevice)
 	{
 		//Bind the input map to the device
 		auto inputMap = std::make_unique<InputMap>();
 
-		if (dynamic_cast<Keyboard*>(device))
+		if (dynamic_cast<Keyboard*>(m_pInputDevice))
 		{
 			inputMap->BindAxis2D("Move", SDL_SCANCODE_A, SDL_SCANCODE_D, SDL_SCANCODE_W, SDL_SCANCODE_S, *m_pMoveCommand);
 			inputMap->BindAction("Damage", SDL_SCANCODE_C, InputState::Pressed, *m_pDamageCommand);
@@ -123,6 +143,17 @@ void dae::TankComponent::Initialize(InputDevice* device, float speed, int lives)
 		}
 
 
-		device->SetInputMap(std::move(inputMap));
+		m_pInputDevice->SetInputMap(std::move(inputMap));
 	}
+
+	m_killSubscriptionHandle = GetOwner()->GetScene()->GetGameEventQueue().Subscribe(make_sdbm_hash("KillEnemy"), [this](const Event& event) { TestEvent(event); });
+}
+
+void dae::TankComponent::TestEvent(const dae::Event& event)
+{
+	if (event.id != make_sdbm_hash("KillEnemy"))
+		return;
+
+	GameObject* ptr = std::get<GameObject*>(event.args[0]);
+	ptr->Delete();
 }

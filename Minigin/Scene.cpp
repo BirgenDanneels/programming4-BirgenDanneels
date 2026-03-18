@@ -90,3 +90,8 @@ void dae::Scene::RenderUI() const
 	}
 }
 
+void dae::Scene::DispatchGameEvents()
+{
+	m_gameEventQueue.Dispatch();
+}
+

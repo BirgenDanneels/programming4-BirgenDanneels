@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "GameObject.h"
+#include "Events/GameEventQueue.h"
 
 namespace dae
 {
@@ -18,6 +19,7 @@ namespace dae
 		void FixedUpdate(float fixedDeltaTime);
 		void Render() const;
 		void RenderUI() const;
+		void DispatchGameEvents();
 
 		~Scene() = default;
 		Scene(const Scene& other) = delete;
@@ -25,11 +27,14 @@ namespace dae
 		Scene& operator=(const Scene& other) = delete;
 		Scene& operator=(Scene&& other) = delete;
 
+		GameEventQueue& GetGameEventQueue() { return m_gameEventQueue; }
+
 	private:
 		friend class SceneManager;
 		explicit Scene() = default;
 
 		std::vector < std::unique_ptr<GameObject>> m_objects{};
+		GameEventQueue m_gameEventQueue{};
 	};
 
 }

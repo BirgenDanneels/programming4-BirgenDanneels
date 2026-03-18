@@ -17,6 +17,8 @@ namespace dae
 		void FixedUpdate(float fixedDeltaTime);
 		void Render() const;
 		void RenderUI() const;
+		void DispatchGameEvents();
+		void DestroyAllScenes();
 
 	private:
 		friend class Singleton<SceneManager>;

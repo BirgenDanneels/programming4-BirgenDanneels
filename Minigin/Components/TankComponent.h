@@ -2,7 +2,7 @@
 #include <memory>
 #include "Commands/Command.h"
 #include "Events/Subject.h"
-
+#include "Events/GameEventQueue.h"
 
 //Components should have an awake method so the getcomponents can be used without worrying about order of creation.
 
@@ -19,6 +19,8 @@ namespace dae
 	class HealthComponent;
 	class InputDevice;
 	class PointsComponent;
+	struct SubscriptionHandle;
+	struct Event;
 
 	class TankComponent final : public Component
 	{
@@ -35,6 +37,9 @@ namespace dae
 		void RequestOrbPickUp();
 
 		void Initialize(InputDevice* device, float speed, int lives);
+
+
+		void TestEvent(const Event& event);
 		
 		Subject<TankEvents>& OnTankEvent() { return m_onTankEventSubject; }
 
@@ -50,5 +55,8 @@ namespace dae
 		std::unique_ptr<Command> m_pKillCommand;
 
 		Subject<TankEvents> m_onTankEventSubject;
+
+		InputDevice* m_pInputDevice{ nullptr };
+		SubscriptionHandle m_killSubscriptionHandle;
 	};
 }

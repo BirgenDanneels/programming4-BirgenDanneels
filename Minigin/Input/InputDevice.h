@@ -18,6 +18,8 @@ namespace dae
 		virtual bool GetKeyState(int key, InputState state) const = 0;
 		virtual float GetAxisValue(int key) const = 0;
 
+		InputMap* GetInputMap() const {return m_pInputMap.get(); }
+
 	protected:
 
 		std::unique_ptr<InputMap> m_pInputMap{}; //Can be made compatible with holding multiple input maps, but for now we will just use one
