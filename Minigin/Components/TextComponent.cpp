@@ -3,6 +3,7 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include <stdexcept>
 #include"Renderer.h"
+#include "ResourceManager.h"
 
 dae::TextComponent::TextComponent(dae::GameObject& refOwner)
 	:TextureComponent(refOwner)
@@ -61,6 +62,49 @@ void dae::TextComponent::SetColor(const SDL_Color& color)
 {
 	m_color = color;
 	m_needsUpdate = true;
+}
+
+void dae::TextComponent::Load(const ParamMap& params)
+{
+	std::string text{};
+	SDL_Color color{ 255, 255, 255, 255 };
+	uint8_t size{ 20 };
+	std::string fontFile{};
+
+	if (auto it = params.find("text"); it != params.end())
+	{
+		text = std::get<std::string>(it->second);
+	}
+	else
+	{
+		throw std::runtime_error("TextComponent requires 'text' parameter");
+	}
+
+	//dont throw error if color is missing, just use default white
+	if (auto it = params.find("color"); it != params.end())
+	{
+		color.r = static_cast<Uint8>(std::get<std::vector<int>>(it->second)[0]);
+		color.g = static_cast<Uint8>(std::get<std::vector<int>>(it->second)[1]);
+		color.b = static_cast<Uint8>(std::get<std::vector<int>>(it->second)[2]);
+		color.a = static_cast<Uint8>(std::get<std::vector<int>>(it->second)[3]);
+	}
+
+	if (auto it = params.find("font"); it != params.end())
+	{
+		fontFile = std::get<std::string>(it->second);
+	}
+	else
+	{
+		throw std::runtime_error("TextComponent requires 'font' parameter");
+	}
+
+	if (auto it = params.find("size"); it != params.end())
+	{
+		size = static_cast<uint8_t>(std::get<int>(it->second));
+	}
+
+	Initialize(text, dae::ResourceManager::GetInstance().LoadFont(fontFile, size), 0, 0);
+	SetColor(color);
 }
 
 

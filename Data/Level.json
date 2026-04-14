@@ -1,0 +1,90 @@
+{
+  "scene": {
+    "objects": [
+      {
+        "name": "background",
+        "parent": "",
+        "position": [ 0, 0 ],
+        "components": [
+          {
+            "type": "TextureComponent",
+            "params": {
+              "texture": "background.png"
+            }
+          }
+        ]
+      },
+      {
+        "name": "progText",
+        "parent": "",
+        "position":[292, 20],
+        "components":[
+          {
+            "type": "TextComponent",
+            "params": {
+              "text": "Programming 4 Assignment",
+              "font": "Lingua.otf",
+              "size": 25,
+              "color": [ 255, 255, 0, 255]
+            }
+          }
+        ]
+      }, 
+      {
+        "name": "progSubText",
+        "parent": "progText",
+        "position":[0, 20],
+        "components":[
+          {
+            "type": "TextComponent",
+            "params": {
+              "text": "ParentTest",
+              "font": "Lingua.otf",
+              "size": 10,
+              "color": [ 255, 255, 0, 255]
+            }
+          }
+        ]
+      },
+      {
+        "name": "blueTank",
+        "parent": "",
+        "position": [100, 280],
+        "components":[
+          {
+            "type": "TextureComponent",
+            "params":{
+              "texture":"BlueTank.png"
+            }
+          },
+          { 
+            "type": "HealthComponent",
+            "params":{
+              "health": 3
+            }
+          }
+        ]
+      },
+      {
+        "name": "blueTankLivesText",
+        "parent":"",
+        "position": [10,100],
+        "components":[
+          {
+            "type": "StatsComponent",
+            "params":{
+              "text": "#Blue Tank Lives: "
+            },
+            "links": [
+              {
+                "targetObject": "blueTank",
+                "targetComponent": "HealthComponent",
+                "event": "OnHealthChanged"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -5,8 +5,14 @@
 
 namespace dae
 {
+	class IObserver
+	{
+	public:
+		virtual ~IObserver() = default;
+	};
+
 	template<typename... Args>
-	class Observer
+	class Observer : public IObserver
 	{
 	public:
 		virtual ~Observer() = default;

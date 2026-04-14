@@ -16,6 +16,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "Loading/SceneLoader.h"
 
 #if USE_STEAMWORKS
 #pragma warning (push)
@@ -66,6 +67,7 @@ void PrintSDLVersion()
 }
 
 dae::Minigin::Minigin(const std::filesystem::path& dataPath)
+	: m_dataPath(dataPath)
 {
 	PrintSDLVersion();
 	
@@ -101,7 +103,7 @@ dae::Minigin::Minigin(const std::filesystem::path& dataPath)
 #endif
 
 	Renderer::GetInstance().Init(g_window);
-	ResourceManager::GetInstance().Init(dataPath);
+	ResourceManager::GetInstance().Init(m_dataPath);
 }
 
 dae::Minigin::~Minigin()
@@ -127,6 +129,27 @@ dae::Minigin::~Minigin()
 void dae::Minigin::Run(const std::function<void()>& load)
 {
 	load();
+
+#ifndef __EMSCRIPTEN__
+
+	m_lastTime = std::chrono::high_resolution_clock::now();
+
+	while (!m_quit)
+	{
+		RunOneFrame();
+	}
+#else
+	m_lastTime = std::chrono::high_resolution_clock::now();
+	emscripten_set_main_loop_arg(&LoopCallback, this, 0, true);
+#endif
+}
+
+void dae::Minigin::Run(const std::string& sceneFile)
+{
+	SceneLoader loader{m_componentFactory};
+
+	const auto scenePath = m_dataPath / sceneFile;
+	loader.LoadFromFile(scenePath.string());
 
 #ifndef __EMSCRIPTEN__
 

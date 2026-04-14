@@ -1,5 +1,6 @@
 #include "HealthComponent.h"
 #include "GameObject.h"
+#include <stdexcept>
 
 dae::HealthComponent::HealthComponent(GameObject& pOwner)
 	: Component(pOwner), m_onDeadSubject()
@@ -33,4 +34,66 @@ void dae::HealthComponent::TakeDamage(int damage)
 	}
 
 	m_onHealthChangedSubject.NotifyObservers(m_Health);
+}
+
+void dae::HealthComponent::Load(const ParamMap& params)
+{
+	if (auto it = params.find("health"); it != params.end())
+	{
+		if (std::holds_alternative<int>(it->second))
+		{
+			Initialize(std::get<int>(it->second));
+		}
+		else
+		{
+			throw std::runtime_error("HealthComponent Load: 'health' parameter is not an int.");
+		}
+	}
+	else
+	{
+		throw std::runtime_error("HealthComponent Load: Missing required 'health' parameter.");
+	}
+}
+
+bool dae::HealthComponent::Bind(const std::string& eventName, IObserver* observer)
+{
+	if (eventName == "OnHealthChanged")
+	{
+		if (auto* obs = static_cast<Observer<int>*>(observer))
+		{
+			OnHealthChanged().AddObserver(obs);
+			return true;
+		}
+	}
+	else if (eventName == "OnDead")
+	{
+		if (auto* obs = static_cast<Observer<GameObject*>*>(observer))
+		{
+			OnDead().AddObserver(obs);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool dae::HealthComponent::Unbind(const std::string& eventName, IObserver* observer)
+{
+	if (eventName == "OnHealthChanged")
+	{
+		if (auto* obs = dynamic_cast<Observer<int>*>(observer))
+		{
+			OnHealthChanged().RemoveObserver(obs);
+			return true;
+		}
+	}
+	else if (eventName == "OnDead")
+	{
+		if (auto* obs = dynamic_cast<Observer<GameObject*>*>(observer))
+		{
+			OnDead().RemoveObserver(obs);
+			return true;
+		}
+	}
+	return false;
 }

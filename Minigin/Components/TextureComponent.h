@@ -2,10 +2,11 @@
 #include "Component.h"
 #include "Texture2D.h"
 #include <memory>
+#include "Loading/Interfaces/IComponentLoadable.h"
 
 namespace dae
 {
-	class TextureComponent : public	Component
+	class TextureComponent : public	Component, public IComponentLoadable
 	{
 	public:
 
@@ -27,6 +28,9 @@ namespace dae
 		virtual void Render() const override;
 
 		void SetOffset(float x, float y);
+
+		// Inherited via IComponentLoadable
+		virtual void Load(const ParamMap& params) override;
 
 	protected:
 

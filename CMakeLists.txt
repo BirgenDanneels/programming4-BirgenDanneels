@@ -43,7 +43,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Minigin/Components/HealthComponent.cpp
   Minigin/Components/StatsComponent.cpp
   Minigin/Components/PointsComponent.cpp
-  Minigin/Events/GameEventQueue.cpp )
+  Minigin/Events/GameEventQueue.cpp  "Minigin/Loading/SceneLoader.cpp")
 
 # enable c++20 features
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_20)
@@ -60,6 +60,15 @@ if(NOT glm_FOUND)
   )
   FetchContent_MakeAvailable(glm)
 endif()
+
+# Add nlohmann/json
+FetchContent_Declare(
+  nlohmann_json
+  GIT_REPOSITORY https://github.com/nlohmann/json.git
+  GIT_TAG v3.11.3
+)
+FetchContent_MakeAvailable(nlohmann_json)
+
 
 # Add SDL3
 find_package(SDL3 3.4 CONFIG QUIET)
@@ -186,6 +195,7 @@ target_link_libraries("${TARGET_NAME}" PUBLIC
   glm::glm
   imgui
   imgui_plot
+  nlohmann_json::nlohmann_json
   ${VLD_LIBRARIES}
 )
 

@@ -1,0 +1,54 @@
+#pragma once
+#include <string>
+#include <functional>
+#include <unordered_map>
+#include "Components/Component.h"
+#include "GameObject.h"
+
+namespace dae
+{
+    class ComponentFactory
+    {
+    public:
+
+		ComponentFactory() = default;
+		~ComponentFactory() = default;
+
+        template<typename T>
+        void Register(const std::string& type)
+        {
+            ComponentEntry entry;
+
+            entry.create = [](GameObject& obj)
+                {
+                    return obj.AddComponent<T>();
+                };
+
+            entry.get = [](GameObject& obj)
+                {
+                    return obj.GetComponent<T>();
+                };
+
+            m_entries[type] = entry;
+        }
+
+        Component* Create(const std::string& type, GameObject& obj)
+        {
+            return m_entries.at(type).create(obj);
+        }
+
+        Component* Get(const std::string& type, GameObject& obj)
+        {
+            return m_entries.at(type).get(obj);
+		}
+
+    private:
+        struct ComponentEntry
+        {
+            std::function<Component*(GameObject&)> create;
+            std::function<Component*(GameObject&)> get;
+        };
+
+        std::unordered_map<std::string, ComponentEntry> m_entries;
+    };
+}
