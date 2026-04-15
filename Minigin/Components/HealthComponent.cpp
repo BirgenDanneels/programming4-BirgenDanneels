@@ -11,6 +11,11 @@ dae::HealthComponent::~HealthComponent()
 {
 }
 
+void dae::HealthComponent::Start()
+{
+	OnHealthChanged().NotifyObservers(m_Health);
+}
+
 void dae::HealthComponent::Update(float deltaTime)
 {
 	(void)deltaTime;
@@ -19,9 +24,6 @@ void dae::HealthComponent::Update(float deltaTime)
 void dae::HealthComponent::Initialize(int health)
 {
 	m_Health = health;
-
-	//Would be better if this was in an awake function 
-	OnHealthChanged().NotifyObservers(m_Health);
 }
 
 void dae::HealthComponent::TakeDamage(int damage)

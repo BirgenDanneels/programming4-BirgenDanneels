@@ -45,6 +45,8 @@ namespace dae
 			auto component = std::make_unique<TComponent>(*this);
 			TComponent* ptr = static_cast<TComponent*>(component.get());
 			m_components.push_back(std::move(component));
+			m_componentsToStart.push_back(ptr);
+
 			return static_cast<TComponent*>(ptr);
 		}
 
@@ -93,6 +95,7 @@ namespace dae
 
 		//COMPONENT MEMBER VARIABLES
 		std::vector<std::unique_ptr<Component>> m_components;
+		std::vector<Component*> m_componentsToStart;
 
 		//POSITION MEMBER VARIABLES
 		std::unique_ptr<TransformComponent> m_transformComponent;
@@ -114,6 +117,9 @@ namespace dae
 
 		//POSITION FUNCTIONS
 		void SetPositionDirty();
+
+		//START FUNCTIONS
+		void StartComponents();
 
 		bool m_markedForDelete = false;
 	};

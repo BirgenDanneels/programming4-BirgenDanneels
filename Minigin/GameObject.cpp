@@ -183,8 +183,22 @@ void dae::GameObject::SetPositionDirty()
 	std::for_each(m_vectChildren.begin(), m_vectChildren.end(), [](std::unique_ptr<dae::GameObject>& ptr) {ptr->SetPositionDirty(); });
 }
 
+void dae::GameObject::StartComponents()
+{
+	if(m_componentsToStart.empty())
+		return;
+
+	for (auto& comp : m_componentsToStart)
+	{
+		comp->Start();
+	}
+	m_componentsToStart.clear();
+}
+
 void dae::GameObject::Update(float deltaTime)
 {
+	StartComponents();
+
 	for (const auto& comp : m_components)
 	{
 		comp->Update(deltaTime);
