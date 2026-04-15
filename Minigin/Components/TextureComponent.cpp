@@ -45,7 +45,7 @@ void dae::TextureComponent::SetOffset(float x, float y)
 	m_yOffset = y;
 }
 
-void dae::TextureComponent::Load(const ParamMap& params)
+void dae::TextureComponent::Load(const dae::ParamMap& params)
 {
 	if (auto it = params.find("texture"); it != params.end())
 	{
