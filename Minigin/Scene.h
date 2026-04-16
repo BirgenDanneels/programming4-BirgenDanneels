@@ -7,6 +7,14 @@
 
 namespace dae
 {
+	struct ParentChange final
+	{
+		GameObject* child{};
+		GameObject* newParent{};
+		bool keepWorldPos{ true };
+	};
+
+
 	class Scene final
 	{
 	public:
@@ -20,6 +28,7 @@ namespace dae
 		void Render() const;
 		void RenderUI() const;
 		void DispatchGameEvents();
+		void ApplyPendingHierarchyChanges();
 
 		~Scene() = default;
 		Scene(const Scene& other) = delete;
@@ -28,12 +37,24 @@ namespace dae
 		Scene& operator=(Scene&& other) = delete;
 
 		GameEventQueue& GetGameEventQueue() { return m_gameEventQueue; }
+		bool GetIsIteratingObjects() const { return m_isIteratingObjects; }
+
+		void AddPendingHierarchyChange(GameObject* child, GameObject* newParent, bool keepWorldPos = true);
 
 	private:
 		friend class SceneManager;
 		explicit Scene() = default;
 
-		std::vector < std::unique_ptr<GameObject>> m_objects{};
+		void FlushPendingObjects();
+		std::unique_ptr<GameObject> RemoveFromContainer(std::vector<std::unique_ptr<GameObject>>& container, const GameObject& object);
+		void DestroyMarkedObjects();
+
+		std::vector<std::unique_ptr<GameObject>> m_objects{};
+		std::vector<std::unique_ptr<GameObject>> m_pendingObjects{};
+		std::vector<ParentChange> m_pendingHierarchyChanges{};
+		
+		bool m_isIteratingObjects{ false };
+
 		GameEventQueue m_gameEventQueue{};
 	};
 

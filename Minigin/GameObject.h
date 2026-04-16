@@ -37,6 +37,7 @@ namespace dae
 		//MARK FOR DELETE
 		void Delete() { m_markedForDelete = true; };
 		bool IsMarkedForDelete() const { return m_markedForDelete; }
+		void DestroyMarkedChildren();
 
 		//COMPONENT FUNCTIONS
 		template<std::derived_from<Component> TComponent>

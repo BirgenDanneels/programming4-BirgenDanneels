@@ -60,6 +60,22 @@ void dae::GameObject::SetWorldPosition(const glm::vec3& worldPos)
 	SetPositionDirty();
 }
 
+void dae::GameObject::DestroyMarkedChildren()
+{
+	m_vectChildren.erase(
+		std::remove_if(
+			m_vectChildren.begin(),
+			m_vectChildren.end(),
+			[](const auto& ptr) { return ptr->IsMarkedForDelete(); }),
+		m_vectChildren.end()
+	);
+
+	for (const auto& child : m_vectChildren)
+	{
+		child->DestroyMarkedChildren();
+	}
+}
+
 void dae::GameObject::SetParent(GameObject* ptrParent, bool keepWorldPos)
 {
 	if (!CheckIfParentIsValid(ptrParent))
@@ -67,7 +83,12 @@ void dae::GameObject::SetParent(GameObject* ptrParent, bool keepWorldPos)
 
 	//Adjust the local position to keep the world position the same
 	if (ptrParent == nullptr)
-		SetLocalPosition(GetWorldPosition());
+	{
+		if(keepWorldPos)
+			SetLocalPosition(GetWorldPosition());
+		else
+			SetPositionDirty();
+	}
 	else
 	{
 		if (keepWorldPos)

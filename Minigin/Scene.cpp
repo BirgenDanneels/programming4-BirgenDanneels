@@ -8,7 +8,65 @@ void Scene::Add(std::unique_ptr<GameObject> object)
 	assert(object != nullptr && "Cannot add a null GameObject to the scene.");
 
 	object->SetScene(this);
-	m_objects.emplace_back(std::move(object));
+
+	if (m_isIteratingObjects)
+	{
+		m_pendingObjects.emplace_back(std::move(object));
+	}
+	else
+	{
+		m_objects.emplace_back(std::move(object));
+	}
+}
+
+void dae::Scene::AddPendingHierarchyChange(GameObject* child, GameObject* newParent, bool keepWorldPos)
+{
+	m_pendingHierarchyChanges.push_back({ child, newParent, keepWorldPos });
+}
+
+void dae::Scene::FlushPendingObjects()
+{
+	if (m_pendingObjects.empty())
+		return;
+
+	m_objects.reserve(m_objects.size() + m_pendingObjects.size());
+	for (auto& object : m_pendingObjects)
+	{
+		m_objects.emplace_back(std::move(object));
+	}
+	m_pendingObjects.clear();
+}
+
+std::unique_ptr<GameObject> Scene::RemoveFromContainer(
+	std::vector<std::unique_ptr<GameObject>>& container,
+	const GameObject& object)
+{
+	auto it = std::find_if(container.begin(), container.end(),
+		[&object](const std::unique_ptr<GameObject>& child) { return child.get() == &object; });
+
+	if (it == container.end())
+		return nullptr;
+
+	std::unique_ptr<GameObject> result = std::move(*it);
+	container.erase(it);
+
+	return result;
+}
+
+void dae::Scene::DestroyMarkedObjects()
+{
+	m_objects.erase(
+		std::remove_if(
+			m_objects.begin(),
+			m_objects.end(),
+			[](const auto& ptr) { return ptr->IsMarkedForDelete(); }),
+		m_objects.end()
+	);
+
+	for (const auto& object : m_objects)
+	{
+		object->DestroyMarkedChildren();
+	}
 }
 
 GameObject* dae::Scene::CreateGameObject()
@@ -23,55 +81,44 @@ GameObject* dae::Scene::CreateGameObject()
 
 std::unique_ptr<dae::GameObject> Scene::Remove(const GameObject& object)
 {
-	auto it = std::find_if(m_objects.begin(), m_objects.end(),
-		[&object](const std::unique_ptr<GameObject>& child) { return child.get() == &object; });
+	if (auto removed = RemoveFromContainer(m_objects, object))
+		return removed;
 
-	if (it == m_objects.end())
-		return nullptr;
-
-	std::unique_ptr<GameObject> result = std::move(*it);
-	m_objects.erase(it);
-
-	return result;
+	return RemoveFromContainer(m_pendingObjects, object);
 }
 
 void Scene::RemoveAll()
 {
 	m_objects.clear();
+	m_pendingObjects.clear();
 }
 
 void Scene::Update(float deltaTime)
 {
+	m_isIteratingObjects = true;
 	for(auto& object : m_objects)
 	{
 		object->Update(deltaTime);
 	}
+	m_isIteratingObjects = false;
 
-	//Remove marked objects 
-	m_objects.erase(
-		std::remove_if(
-			m_objects.begin(),
-			m_objects.end(),
-			[](const auto& ptr) { return ptr->IsMarkedForDelete(); }),
-		m_objects.end()
-	);
+	DestroyMarkedObjects();
+
+	FlushPendingObjects();
 }
 
 void dae::Scene::FixedUpdate(float fixedDeltaTime)
 {
-	for(const auto& object : m_objects)
+	m_isIteratingObjects = true;
+	for (const auto& object : m_objects)
 	{
 		object->FixedUpdate(fixedDeltaTime);
 	}
+	m_isIteratingObjects = false;
 
-	//Remove marked objects 
-	m_objects.erase(
-		std::remove_if(
-			m_objects.begin(),
-			m_objects.end(),
-			[](const auto& ptr) { return ptr->IsMarkedForDelete(); }),
-		m_objects.end()
-	);
+	DestroyMarkedObjects();
+
+	FlushPendingObjects();
 }
 
 void Scene::Render() const
