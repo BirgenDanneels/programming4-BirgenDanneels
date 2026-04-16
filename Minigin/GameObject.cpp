@@ -78,6 +78,12 @@ void dae::GameObject::DestroyMarkedChildren()
 
 void dae::GameObject::SetParent(GameObject* ptrParent, bool keepWorldPos)
 {
+	if (m_pScene->GetIsIteratingObjects())
+	{
+		m_pScene->AddPendingHierarchyChange(this, ptrParent, keepWorldPos);
+		return;
+	}
+
 	if (!CheckIfParentIsValid(ptrParent))
 		return;
 

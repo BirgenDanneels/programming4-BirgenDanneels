@@ -28,7 +28,6 @@ namespace dae
 		void Render() const;
 		void RenderUI() const;
 		void DispatchGameEvents();
-		void ApplyPendingHierarchyChanges();
 
 		~Scene() = default;
 		Scene(const Scene& other) = delete;
@@ -48,6 +47,7 @@ namespace dae
 		void FlushPendingObjects();
 		std::unique_ptr<GameObject> RemoveFromContainer(std::vector<std::unique_ptr<GameObject>>& container, const GameObject& object);
 		void DestroyMarkedObjects();
+		void ApplyPendingHierarchyChanges();
 
 		std::vector<std::unique_ptr<GameObject>> m_objects{};
 		std::vector<std::unique_ptr<GameObject>> m_pendingObjects{};
@@ -57,5 +57,4 @@ namespace dae
 
 		GameEventQueue m_gameEventQueue{};
 	};
-
 }

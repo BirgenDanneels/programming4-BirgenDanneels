@@ -102,9 +102,10 @@ void Scene::Update(float deltaTime)
 	}
 	m_isIteratingObjects = false;
 
-	DestroyMarkedObjects();
-
+	ApplyPendingHierarchyChanges();
 	FlushPendingObjects();
+
+	DestroyMarkedObjects();
 }
 
 void dae::Scene::FixedUpdate(float fixedDeltaTime)
@@ -116,9 +117,10 @@ void dae::Scene::FixedUpdate(float fixedDeltaTime)
 	}
 	m_isIteratingObjects = false;
 
-	DestroyMarkedObjects();
-
+	ApplyPendingHierarchyChanges();
 	FlushPendingObjects();
+
+	DestroyMarkedObjects();
 }
 
 void Scene::Render() const
@@ -140,5 +142,14 @@ void dae::Scene::RenderUI() const
 void dae::Scene::DispatchGameEvents()
 {
 	m_gameEventQueue.Dispatch();
+}
+
+void dae::Scene::ApplyPendingHierarchyChanges()
+{
+	for (const auto& change : m_pendingHierarchyChanges)
+	{
+		change.child->SetParent(change.newParent, change.keepWorldPos);
+	}
+	m_pendingHierarchyChanges.clear();
 }
 
