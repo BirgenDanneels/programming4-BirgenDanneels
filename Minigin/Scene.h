@@ -53,7 +53,7 @@ namespace dae
 		std::vector<std::unique_ptr<GameObject>> m_pendingObjects{};
 		std::vector<ParentChange> m_pendingHierarchyChanges{};
 		
-		bool m_isIteratingObjects{ false };
+		mutable bool m_isIteratingObjects{ false };
 
 		GameEventQueue m_gameEventQueue{};
 	};

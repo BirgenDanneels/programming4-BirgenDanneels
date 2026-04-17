@@ -43,6 +43,10 @@ namespace dae
 		template<std::derived_from<Component> TComponent>
 		TComponent* AddComponent()
 		{
+			// Check if component already exists
+			if (HasComponent<TComponent>())
+				return nullptr;
+
 			auto component = std::make_unique<TComponent>(*this);
 			TComponent* ptr = static_cast<TComponent*>(component.get());
 			m_components.push_back(std::move(component));

@@ -125,18 +125,22 @@ void dae::Scene::FixedUpdate(float fixedDeltaTime)
 
 void Scene::Render() const
 {
+	m_isIteratingObjects = true;
 	for (const auto& object : m_objects)
 	{
 		object->Render();
 	}
+	m_isIteratingObjects = false;
 }
 
 void dae::Scene::RenderUI() const
 {
+	m_isIteratingObjects = true;
 	for (const auto& object : m_objects)
 	{
 		object->RenderUI();
 	}
+	m_isIteratingObjects = false;
 }
 
 void dae::Scene::DispatchGameEvents()

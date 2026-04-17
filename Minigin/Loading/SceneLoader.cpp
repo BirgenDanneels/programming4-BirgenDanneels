@@ -76,10 +76,9 @@ void dae::SceneLoader::CreateComponents(const Json& objJson, GameObject& go)
     for (const auto& compJson : components)
     {
         std::string type = compJson["type"];
-        std::string id;
 
-        if (compJson.contains("name"))
-            id = compJson["name"];
+        if (!m_factory.Has(type))
+            continue; //Skip and log error
 
         // Create component via factory
         Component* comp = m_factory.Create(type, go);
@@ -87,8 +86,6 @@ void dae::SceneLoader::CreateComponents(const Json& objJson, GameObject& go)
 		// Collect links
         if (compJson.contains("links"))
         {
-            std::string observerId = id; // this component is observer if it has links
-
             for (const auto& link : compJson["links"])
             {
                 m_pendingLinks.push_back({

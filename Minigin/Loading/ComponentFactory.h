@@ -32,6 +32,11 @@ namespace dae
             m_entries[type] = entry;
         }
 
+        bool Has(const std::string& type) const
+        {
+            return m_entries.find(type) != m_entries.end();
+        }
+
         Component* Create(const std::string& type, GameObject& obj)
         {
             return m_entries.at(type).create(obj);
