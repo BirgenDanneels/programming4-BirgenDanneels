@@ -47,6 +47,17 @@ namespace dae
             return m_entries.at(type).get(obj);
 		}
 
+        std::vector<std::string> GetRegisteredTypes() const
+        {
+            std::vector<std::string> types;
+            types.reserve(m_entries.size());
+            for (const auto& pair : m_entries)
+            {
+                types.push_back(pair.first);
+            }
+            return types;
+        }
+
     private:
         struct ComponentEntry
         {

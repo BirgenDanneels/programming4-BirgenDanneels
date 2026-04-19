@@ -34,21 +34,16 @@ void dae::StatsComponent::Initialize(std::string preStatString)
 	m_ptrTextComponent->SetText(m_preStatString + std::to_string(0));
 }
 
+std::vector<dae::ParamDefinition> dae::StatsComponent::GetExpectedParams() const
+{
+	return {
+		{ "text", std::string("") }
+	};
+}
+
 void dae::StatsComponent::Load(const ParamMap& params)
 {
-	if (auto it = params.find("text"); it != params.end())
-	{
-		if (std::holds_alternative<std::string>(it->second))
-		{
-			Initialize(std::get<std::string>(it->second));
-		}
-		else
-		{
-			throw std::runtime_error("StatsComponent Load: 'text' parameter is not a string.");
-		}
-	}
-	else
-	{
-		throw std::runtime_error("StatsComponent Load: Missing required 'text' parameter.");
-	}
+	std::string text = GetRequiredParam<std::string>(params, "text");
+
+	Initialize(text);
 }

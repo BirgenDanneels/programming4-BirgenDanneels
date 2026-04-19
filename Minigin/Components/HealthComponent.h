@@ -27,6 +27,7 @@ namespace dae
 		Subject<int>& OnHealthChanged() { return m_onHealthChangedSubject; }
 
 		// Inherited via IComponentLoadable
+		virtual std::vector<ParamDefinition> GetExpectedParams() const override;
 		virtual void Load(const ParamMap& params) override;
 
 		// Inherited via IEventLinkable

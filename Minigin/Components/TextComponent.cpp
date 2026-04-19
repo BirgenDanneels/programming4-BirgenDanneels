@@ -64,46 +64,31 @@ void dae::TextComponent::SetColor(const SDL_Color& color)
 	m_needsUpdate = true;
 }
 
+std::vector<dae::ParamDefinition> dae::TextComponent::GetExpectedParams() const
+{
+	return {
+		{ "text", std::string("") },
+		{ "font", std::string("") },
+		{ "size", 20 },
+		{ "color", std::vector<int>{ 255, 255, 255, 255 } }
+	};
+}
+
 void dae::TextComponent::Load(const ParamMap& params)
 {
-	std::string text{};
-	SDL_Color color{ 255, 255, 255, 255 };
-	uint8_t size{ 20 };
-	std::string fontFile{};
+	std::string text = GetRequiredParam<std::string>(params, "text");
+	std::string fontFile = GetRequiredParam<std::string>(params, "font");
 
-	if (auto it = params.find("text"); it != params.end())
-	{
-		text = std::get<std::string>(it->second);
-	}
-	else
-	{
-		throw std::runtime_error("TextComponent requires 'text' parameter");
-	}
+	int size = GetOptionalParam<int>(params, "size", 20);
 
-	//dont throw error if color is missing, just use default white
-	if (auto it = params.find("color"); it != params.end())
-	{
-		color.r = static_cast<Uint8>(std::get<std::vector<int>>(it->second)[0]);
-		color.g = static_cast<Uint8>(std::get<std::vector<int>>(it->second)[1]);
-		color.b = static_cast<Uint8>(std::get<std::vector<int>>(it->second)[2]);
-		color.a = static_cast<Uint8>(std::get<std::vector<int>>(it->second)[3]);
-	}
+	std::vector<int> colorVec = GetOptionalParam<std::vector<int>>(params, "color", { 255, 255, 255, 255 });
+	SDL_Color color{};
+	color.r = static_cast<Uint8>(colorVec[0]);
+	color.g = static_cast<Uint8>(colorVec[1]);
+	color.b = static_cast<Uint8>(colorVec[2]);
+	color.a = static_cast<Uint8>(colorVec[3]);
 
-	if (auto it = params.find("font"); it != params.end())
-	{
-		fontFile = std::get<std::string>(it->second);
-	}
-	else
-	{
-		throw std::runtime_error("TextComponent requires 'font' parameter");
-	}
-
-	if (auto it = params.find("size"); it != params.end())
-	{
-		size = static_cast<uint8_t>(std::get<int>(it->second));
-	}
-
-	Initialize(text, dae::ResourceManager::GetInstance().LoadFont(fontFile, size), 0, 0);
+	Initialize(text, dae::ResourceManager::GetInstance().LoadFont(fontFile, static_cast<uint8_t>(size)));
 	SetColor(color);
 }
 

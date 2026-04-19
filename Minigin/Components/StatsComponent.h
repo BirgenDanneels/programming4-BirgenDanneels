@@ -19,6 +19,7 @@ namespace dae
 		void Initialize(std::string preStatString);
 
 		// Inherited via IComponentLoadable
+		virtual std::vector<ParamDefinition> GetExpectedParams() const override;
 		virtual void Load(const ParamMap& params) override;
 
 	private:

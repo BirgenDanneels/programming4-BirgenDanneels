@@ -32,6 +32,7 @@ namespace dae
 		void SetColor(const SDL_Color& color);
 
 		// Inherited via IComponentLoadable
+		virtual std::vector<ParamDefinition> GetExpectedParams() const override;
 		virtual void Load(const ParamMap& params) override;
 
 	private:

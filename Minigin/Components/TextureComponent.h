@@ -30,6 +30,7 @@ namespace dae
 		void SetOffset(float x, float y);
 
 		// Inherited via IComponentLoadable
+		virtual std::vector<ParamDefinition> GetExpectedParams() const override;
 		virtual void Load(const ParamMap& params) override;
 
 	protected:

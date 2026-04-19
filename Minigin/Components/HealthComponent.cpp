@@ -38,23 +38,18 @@ void dae::HealthComponent::TakeDamage(int damage)
 	m_onHealthChangedSubject.NotifyObservers(m_Health);
 }
 
+std::vector<dae::ParamDefinition> dae::HealthComponent::GetExpectedParams() const
+{
+	return {
+		{ "health", 3 }
+	};
+}
+
 void dae::HealthComponent::Load(const ParamMap& params)
 {
-	if (auto it = params.find("health"); it != params.end())
-	{
-		if (std::holds_alternative<int>(it->second))
-		{
-			Initialize(std::get<int>(it->second));
-		}
-		else
-		{
-			throw std::runtime_error("HealthComponent Load: 'health' parameter is not an int.");
-		}
-	}
-	else
-	{
-		throw std::runtime_error("HealthComponent Load: Missing required 'health' parameter.");
-	}
+	int health = GetRequiredParam<int>(params, "health");
+
+	Initialize(health);
 }
 
 bool dae::HealthComponent::Bind(const std::string& eventName, IObserver* observer)

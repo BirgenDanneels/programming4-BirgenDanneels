@@ -45,22 +45,16 @@ void dae::TextureComponent::SetOffset(float x, float y)
 	m_yOffset = y;
 }
 
+std::vector<dae::ParamDefinition> dae::TextureComponent::GetExpectedParams() const
+{
+	return {
+		{ "texture", std::string("") }
+	};
+}
+
 void dae::TextureComponent::Load(const dae::ParamMap& params)
 {
-	if (auto it = params.find("texture"); it != params.end())
-	{
-		if (std::holds_alternative<std::string>(it->second))
-		{
-			const auto& filename = std::get<std::string>(it->second);
-			Initialize(filename);
-		}
-		else
-		{
-			throw std::runtime_error("Invalid parameter type for TextureComponent: Texture should be a string");
-		}
-	}
-	else
-	{
-		throw std::runtime_error("Missing required parameter for TextureComponent: Texture");
-	}
+	const std::string filename = GetRequiredParam<std::string>(params, "texture");
+
+	Initialize(filename);
 }
