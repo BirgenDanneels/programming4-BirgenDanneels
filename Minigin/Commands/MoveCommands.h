@@ -9,7 +9,6 @@ namespace dae
 	{
 	private:
 		CharacterController* m_characterController{ nullptr };
-		float m_cachedSpeed{ 100.f };
 
 	public:
 		Move2DCommand(CharacterController& actor);
