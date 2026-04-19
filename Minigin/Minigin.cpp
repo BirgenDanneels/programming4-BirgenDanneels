@@ -184,7 +184,7 @@ void dae::Minigin::RunOneFrame()
 		m_lag -= m_fixedTimeStep;
 	}
 	SceneManager::GetInstance().Update(m_deltaTime);
-	SceneManager::GetInstance().DispatchGameEvents();
+//	SceneManager::GetInstance().DispatchGameEvents();
 	Renderer::GetInstance().Render();
 
 	const auto targetTime = currentTime + std::chrono::duration<float>(m_FPS);

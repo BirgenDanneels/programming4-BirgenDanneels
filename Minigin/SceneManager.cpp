@@ -33,14 +33,6 @@ void dae::SceneManager::RenderUI() const
 	}
 }
 
-void dae::SceneManager::DispatchGameEvents()
-{
-	for (const auto& scene : m_scenes)
-	{
-		scene->DispatchGameEvents();
-	}
-}
-
 void dae::SceneManager::DestroyAllScenes()
 {
 	m_scenes.clear();

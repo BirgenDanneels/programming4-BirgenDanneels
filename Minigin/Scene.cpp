@@ -105,6 +105,8 @@ void Scene::Update(float deltaTime)
 	ApplyPendingHierarchyChanges();
 	FlushPendingObjects();
 
+	DispatchGameEvents();
+
 	DestroyMarkedObjects();
 }
 
@@ -119,6 +121,8 @@ void dae::Scene::FixedUpdate(float fixedDeltaTime)
 
 	ApplyPendingHierarchyChanges();
 	FlushPendingObjects();
+
+	DispatchGameEvents();
 
 	DestroyMarkedObjects();
 }
