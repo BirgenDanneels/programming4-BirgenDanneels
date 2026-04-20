@@ -17,9 +17,7 @@ void dae::CharacterController::Update(float deltaTime)
 		m_direction = glm::normalize(m_direction);
 	}
 
-	glm::vec3 currentPos = GetOwner()->GetLocalPosition();
-	currentPos += glm::vec3(m_direction.x * deltaTime * m_speed, m_direction.y * deltaTime * m_speed, 0);
-	GetOwner()->SetLocalPosition(currentPos);
+	GetOwner()->GetTransform().Translate(m_direction * deltaTime * m_speed);
 
 	//Reset direction after moving (since its kinematic)
 	m_direction = glm::vec2(0.0f, 0.0f);

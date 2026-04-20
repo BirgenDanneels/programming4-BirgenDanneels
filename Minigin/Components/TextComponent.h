@@ -26,7 +26,7 @@ namespace dae
 		virtual void Render() const override;
 
 		using TextureComponent::Initialize;
-		virtual void Initialize(const std::string& text, std::shared_ptr<dae::Font> font, float xOffset = 0, float yOffset = 0);
+		virtual void Initialize(const std::string& text, std::shared_ptr<dae::Font> font, bool centered = false,float xOffset = 0, float yOffset = 0);
 
 		void SetText(const std::string& text);
 		void SetColor(const SDL_Color& color);
@@ -42,6 +42,7 @@ namespace dae
 		std::shared_ptr<dae::Font> m_font;
 
 		bool m_needsUpdate{ true };
+		bool m_centered{ false };
 	};
 }
 

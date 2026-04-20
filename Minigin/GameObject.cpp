@@ -7,58 +7,11 @@
 
 
 dae::GameObject::GameObject()
-	:m_transformComponent{ std::make_unique<dae::TransformComponent>(*this)}, m_ptrParent{ nullptr }
+	:m_transform{this}, m_ptrParent{ nullptr }
 {
 }
 
 dae::GameObject::~GameObject() = default;
-
-const glm::vec3& dae::GameObject::GetLocalPosition()
-{
-	return m_transformComponent->GetPosition();
-}
-
-const glm::vec3& dae::GameObject::GetWorldPosition()
-{
-	if (m_isPosDirty)
-	{
-		if (m_ptrParent == nullptr)
-			m_worldPosition = GetLocalPosition();
-		else
-			m_worldPosition = m_ptrParent->GetWorldPosition() + GetLocalPosition();
-
-		m_isPosDirty = false;
-	}
-
-	return m_worldPosition;
-}
-
-void dae::GameObject::SetLocalPosition(const glm::vec3& localPos)
-{
-	m_transformComponent->SetPosition(localPos);
-
-	SetPositionDirty();
-}
-
-void dae::GameObject::SetLocalPosition(int x, int y)
-{
-	SetLocalPosition(glm::vec3(x, y, 0));
-}
-
-void dae::GameObject::SetWorldPosition(float x, float y)
-{
-	SetWorldPosition(glm::vec3(x, y, 0));
-}
-
-void dae::GameObject::SetWorldPosition(const glm::vec3& worldPos)
-{
-	if (m_ptrParent != nullptr)
-		m_transformComponent->SetPosition(worldPos - m_ptrParent->GetWorldPosition());
-	else
-		m_transformComponent->SetPosition(worldPos);
-
-	SetPositionDirty();
-}
 
 void dae::GameObject::DestroyMarkedChildren()
 {
@@ -91,16 +44,16 @@ void dae::GameObject::SetParent(GameObject* ptrParent, bool keepWorldPos)
 	if (ptrParent == nullptr)
 	{
 		if(keepWorldPos)
-			SetLocalPosition(GetWorldPosition());
+			m_transform.SetLocalPosition(m_transform.GetWorldPosition());
 		else
-			SetPositionDirty();
+			m_transform.SetDirty();
 	}
 	else
 	{
 		if (keepWorldPos)
-			SetLocalPosition(GetWorldPosition() - ptrParent->GetWorldPosition());
+			m_transform.SetLocalPosition(m_transform.GetWorldPosition() - ptrParent->m_transform.GetWorldPosition());
 		else
-			SetPositionDirty();
+			m_transform.SetDirty();
 	}
 
 	//Remove this GameObject from the current parent (if it has one)
@@ -201,13 +154,6 @@ void dae::GameObject::SetScene(Scene* scene)
 dae::Scene* dae::GameObject::GetScene() const
 {
 	return m_pScene;
-}
-
-void dae::GameObject::SetPositionDirty()
-{
-	m_isPosDirty = true;
-
-	std::for_each(m_vectChildren.begin(), m_vectChildren.end(), [](std::unique_ptr<dae::GameObject>& ptr) {ptr->SetPositionDirty(); });
 }
 
 void dae::GameObject::StartComponents()

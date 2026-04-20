@@ -4,10 +4,10 @@
 #include <unordered_map>
 #include <glm/glm.hpp>
 #include "Components/Component.h"
+#include "Transform.h"
 
 namespace dae
 {
-	class TransformComponent;
 	class Scene;
 
 	class GameObject final
@@ -26,13 +26,8 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 		//POSITION FUNCTIONS
-		const glm::vec3& GetLocalPosition();
-		const glm::vec3& GetWorldPosition();
-
-		void SetLocalPosition(const glm::vec3& localPos);
-		void SetLocalPosition(int x, int y);
-		void SetWorldPosition(float x, float y);
-		void SetWorldPosition(const glm::vec3& worldPos);
+		Transform& GetTransform() { return m_transform; }
+		const Transform& GetTransform() const { return m_transform; }
 
 		//MARK FOR DELETE
 		void Delete() { m_markedForDelete = true; };
@@ -103,9 +98,7 @@ namespace dae
 		std::vector<Component*> m_componentsToStart;
 
 		//POSITION MEMBER VARIABLES
-		std::unique_ptr<TransformComponent> m_transformComponent;
-		glm::vec3 m_worldPosition;
-		bool m_isPosDirty{ true };
+		Transform m_transform;
 
 		//HIERARCHY MEMBER VARIABLES
 		GameObject* m_ptrParent;
@@ -119,9 +112,6 @@ namespace dae
 		bool CheckIfParentIsValid(GameObject* ptrParent) const;
 		bool HasChild(GameObject* ptrChild) const;
 		bool IsDescendant(GameObject* ptrChild) const; //Checks deeper in the hierarchy
-
-		//POSITION FUNCTIONS
-		void SetPositionDirty();
 
 		//START FUNCTIONS
 		void StartComponents();

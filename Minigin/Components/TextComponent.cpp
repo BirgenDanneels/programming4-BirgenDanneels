@@ -34,6 +34,11 @@ void dae::TextComponent::Update(float deltaTime)
 		SDL_DestroySurface(surf);
 
 		UpdateTexture(std::make_shared<dae::Texture2D>(texture));
+		
+		if (m_centered)
+			CalculateOffsetsCentered();
+
+		m_needsUpdate = false; 
 	}
 }
 
@@ -42,14 +47,15 @@ void dae::TextComponent::Render() const
 	TextureComponent::Render();
 }
 
-void dae::TextComponent::Initialize(const std::string& text, std::shared_ptr<dae::Font> font, float xOffset, float yOffset)
+void dae::TextComponent::Initialize(const std::string& text, std::shared_ptr<dae::Font> font, bool centered, float xOffset, float yOffset)
 {
 	m_text = text;
 	m_font = std::move(font);
 	SetOffset(xOffset, yOffset);
+
+	m_centered = centered;
 	
 	m_needsUpdate = true;
-
 }
 
 void dae::TextComponent::SetText(const std::string& text)
@@ -70,7 +76,8 @@ std::vector<dae::ParamDefinition> dae::TextComponent::GetExpectedParams() const
 		{ "text", std::string("") },
 		{ "font", std::string("") },
 		{ "size", 20 },
-		{ "color", std::vector<int>{ 255, 255, 255, 255 } }
+		{ "color", std::vector<int>{ 255, 255, 255, 255 } },
+		{  "centered", false  }
 	};
 }
 
@@ -78,6 +85,7 @@ void dae::TextComponent::Load(const ParamMap& params)
 {
 	std::string text = GetRequiredParam<std::string>(params, "text");
 	std::string fontFile = GetRequiredParam<std::string>(params, "font");
+	bool centered = GetOptionalParam<bool>(params, "centered", false);
 
 	int size = GetOptionalParam<int>(params, "size", 20);
 
@@ -88,7 +96,7 @@ void dae::TextComponent::Load(const ParamMap& params)
 	color.b = static_cast<Uint8>(colorVec[2]);
 	color.a = static_cast<Uint8>(colorVec[3]);
 
-	Initialize(text, dae::ResourceManager::GetInstance().LoadFont(fontFile, static_cast<uint8_t>(size)));
+	Initialize(text, dae::ResourceManager::GetInstance().LoadFont(fontFile, static_cast<uint8_t>(size)), centered);
 	SetColor(color);
 }
 

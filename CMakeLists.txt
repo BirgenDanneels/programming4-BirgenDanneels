@@ -26,7 +26,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Minigin/SceneManager.cpp
   Minigin/Texture2D.cpp
   Minigin/Components/Component.cpp
-  Minigin/Components/TransformComponent.cpp
+  
   Minigin/Components/TextureComponent.cpp
   Minigin/Components/TextComponent.cpp
   Minigin/Components/FPSCounter.cpp
@@ -44,6 +44,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Minigin/Components/StatsComponent.cpp
   Minigin/Components/PointsComponent.cpp
   Minigin/Events/GameEventQueue.cpp  "Minigin/Loading/SceneLoader.cpp")
+  Minigin/Transform.cpp)
 
 # enable c++20 features
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_20)

@@ -61,7 +61,7 @@ void dae::SceneLoader::CreateObjects(const Json& objects, Scene& scene)
         if (objJson.contains("position"))
         {
             auto& pos = objJson["position"];
-            go->SetLocalPosition(pos[0], pos[1]);
+            go->GetTransform().SetLocalPosition(pos[0], pos[1]);
         }
 
         // Create components

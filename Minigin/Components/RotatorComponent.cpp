@@ -17,7 +17,7 @@ void dae::RotatorComponent::Update(float deltaTime)
 	float rotationSpeed{ 360.f * m_rotationSpeed * float(deltaTime) };
 
 	if (GameObject* parent{GetOwner()->GetParent()})
-		GetOwner()->SetWorldPosition(RotateAround(parent->GetWorldPosition(), rotationSpeed));
+		GetOwner()->GetTransform().SetWorldPosition(RotateAround(parent->GetTransform().GetWorldPosition(), rotationSpeed));
 }
 
 void dae::RotatorComponent::Initialize(float rotationSpeed)
@@ -28,7 +28,7 @@ void dae::RotatorComponent::Initialize(float rotationSpeed)
 glm::vec3 dae::RotatorComponent::RotateAround(const glm::vec3& pivot, float angle) const
 {
 	const float radians{ angle * float(M_PI) / 180.f };
-	const glm::vec3 position{ GetOwner()->GetWorldPosition() };
+	const glm::vec3 position{ GetOwner()->GetTransform().GetWorldPosition() };
 
 	const float translatedX = position.x - pivot.x;
 	const float translatedY = position.y - pivot.y;
