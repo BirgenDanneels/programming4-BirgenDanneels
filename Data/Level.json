@@ -9,7 +9,8 @@
           {
             "type": "TextureComponent",
             "params": {
-              "texture": "background.png"
+              "texture": "background.png",
+              "centered": false
             }
           }
         ]
@@ -25,7 +26,8 @@
               "text": "Programming 4 Assignment",
               "font": "Lingua.otf",
               "size": 25,
-              "color": [ 255, 255, 0, 255]
+              "color": [ 255, 255, 0, 255],
+              "centered": false
             }
           }
         ]
@@ -41,7 +43,8 @@
               "text": "ParentTest",
               "font": "Lingua.otf",
               "size": 10,
-              "color": [ 255, 255, 0, 255]
+              "color": [ 255, 255, 0, 255],
+              "centered": false
             }
           }
         ]
@@ -54,7 +57,8 @@
           {
             "type": "TextureComponent",
             "params":{
-              "texture":"BlueTank.png"
+              "texture":"BlueTank.png",
+              "centered": true
             }
           },
           { 
@@ -73,7 +77,8 @@
           {
             "type": "StatsComponent",
             "params":{
-              "text": "#Blue Tank Lives: "
+              "text": "#Blue Tank Lives: ",
+              "centered": true
             },
             "links": [
               {

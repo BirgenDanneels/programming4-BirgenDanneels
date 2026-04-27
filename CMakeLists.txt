@@ -43,7 +43,8 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Minigin/Components/HealthComponent.cpp
   Minigin/Components/StatsComponent.cpp
   Minigin/Components/PointsComponent.cpp
-  Minigin/Events/GameEventQueue.cpp  "Minigin/Loading/SceneLoader.cpp")
+  Minigin/Events/GameEventQueue.cpp
+  Minigin/Loading/SceneLoader.cpp
   Minigin/Transform.cpp)
 
 # enable c++20 features
