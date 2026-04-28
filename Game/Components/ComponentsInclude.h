@@ -5,5 +5,3 @@
 #include "HealthComponent.h"
 #include "StatsComponent.h"
 #include "PointsComponent.h"
-#include "TestComponent.h"
-#include "LevelEditorComponent.h"
