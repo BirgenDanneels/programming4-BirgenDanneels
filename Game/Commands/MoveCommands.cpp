@@ -1,5 +1,5 @@
 #include "MoveCommands.h"
-#include "Components/CharacterController.h"
+#include "Minigin/Components/CharacterController.h"
 
 dae::Move2DCommand::Move2DCommand(CharacterController& actor)
 	: m_characterController(&actor)

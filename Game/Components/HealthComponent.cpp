@@ -1,5 +1,5 @@
 #include "HealthComponent.h"
-#include "GameObject.h"
+#include "Minigin/GameObject.h"
 #include <stdexcept>
 
 dae::HealthComponent::HealthComponent(GameObject& pOwner)

@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "Minigin/Components/Component.h"
 
 namespace dae
 {

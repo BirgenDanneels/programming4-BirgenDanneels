@@ -1,8 +1,8 @@
 #include "FPSCounter.h"
 #include <sstream>
 #include <iomanip>
-#include "TextComponent.h"
-#include "GameObject.h"
+#include "Minigin/Components/TextComponent.h"
+#include "Minigin/GameObject.h"
 
 dae::FPSCounter::FPSCounter(dae::GameObject& refOwner)
 	:Component(refOwner)

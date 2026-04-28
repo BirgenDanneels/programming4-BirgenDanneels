@@ -1,7 +1,7 @@
 #include "PointsComponent.h"
 #include "TankComponent.h"
-#include "Utils/HashUtil.h"
-#include "Scene.h"
+#include "Minigin/Utils/HashUtil.h"
+#include "Minigin/Scene.h"
 
 dae::PointsComponent::PointsComponent(GameObject& pOwner)
 	: Component(pOwner), m_Points(0)

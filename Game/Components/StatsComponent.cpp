@@ -1,7 +1,7 @@
 #include "StatsComponent.h"
-#include "TextComponent.h"
-#include "GameObject.h"
-#include "ResourceManager.h"
+#include "Minigin/Components/TextComponent.h"
+#include "Minigin/GameObject.h"
+#include "Minigin/ResourceManager.h"
 
 dae::StatsComponent::StatsComponent(GameObject& pOwner)
 	: Component(pOwner), m_ptrTextComponent(GetOwner()->GetComponent<TextComponent>())

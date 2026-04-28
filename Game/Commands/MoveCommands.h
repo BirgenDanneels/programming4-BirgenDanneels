@@ -1,5 +1,5 @@
 #pragma once
-#include "Command.h"
+#include "Minigin/Commands/Command.h"
 
 namespace dae
 {

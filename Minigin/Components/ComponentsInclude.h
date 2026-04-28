@@ -2,14 +2,7 @@
 #include "Component.h"
 #include "TextureComponent.h"
 #include "TextComponent.h"
-#include "FPSCounter.h"
-#include "RotatorComponent.h"
-#include "ThrashCacheComponent.h"
 #include "CharacterController.h"
-#include "TankComponent.h"
-#include "HealthComponent.h"
-#include "StatsComponent.h"
-#include "PointsComponent.h"
 
 #ifdef USE_STEAMWORKS
 

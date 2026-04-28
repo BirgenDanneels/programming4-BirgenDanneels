@@ -1,7 +1,7 @@
-#include "Component.h"
+#include "Minigin/Components/Component.h"
 #include <memory>
-#include "Commands/Command.h"
-#include "Events/Subject.h"
+#include "Minigin/Commands/Command.h"
+#include "Minigin/Events/Subject.h"
 
 //Components should have an awake method so the getcomponents can be used without worrying about order of creation.
 

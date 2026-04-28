@@ -1,8 +1,8 @@
 #pragma once
 #include "Component.h"
-#include "Texture2D.h"
+#include "Minigin/Texture2D.h"
 #include <memory>
-#include "Loading/Interfaces/IComponentLoadable.h"
+#include "Minigin/Loading/Interfaces/IComponentLoadable.h"
 
 namespace dae
 {

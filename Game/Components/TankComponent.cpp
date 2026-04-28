@@ -1,11 +1,11 @@
 #include "TankComponent.h"
-#include "CharacterController.h"
+#include "Minigin/Components/CharacterController.h"
 #include "HealthComponent.h"
 #include "PointsComponent.h"
-#include "GameObject.h"
-#include "InputManager.h"
-#include "Input/InputMap.h"
-#include "Commands/MoveCommands.h"
+#include "Minigin/GameObject.h"
+#include "Minigin/InputManager.h"
+#include "Minigin/Input/InputMap.h"
+#include "Game/Commands/MoveCommands.h"
 
 namespace dae
 {

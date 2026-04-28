@@ -1,6 +1,6 @@
-#include "Component.h"
-#include "Events/Subject.h"
-#include "Events/Observer.h"
+#include "Minigin/Components/Component.h"
+#include "Minigin/Events/Subject.h"
+#include "Minigin/Events/Observer.h"
 
 namespace dae
 {

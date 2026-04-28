@@ -1,6 +1,6 @@
 #pragma once
-#include "Loading/LoadingStructs.h"
-#include "Loading/LoadingHelpers.h"
+#include "Minigin/Loading/LoadingStructs.h"
+#include "Minigin/Loading/LoadingHelpers.h"
 
 namespace dae
 {

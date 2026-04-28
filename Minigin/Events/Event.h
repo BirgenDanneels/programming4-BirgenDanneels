@@ -2,7 +2,7 @@
 #include <string>
 #include <variant>
 #include <vector>
-#include "Utils/HashUtil.h"
+#include "Minigin/Utils/HashUtil.h"
 
 namespace dae
 {

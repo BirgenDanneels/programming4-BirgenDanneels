@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-#include "Input/Bindings/InputStates.h"
+#include "Bindings/InputStates.h"
 
 
 namespace dae

@@ -1,7 +1,7 @@
-#include "Component.h"
-#include "Loading/Interfaces/IComponentLoadable.h"
-#include "Loading/Interfaces/IEventLinkable.h"
-#include "Events/Subject.h"
+#include "Minigin/Components/Component.h"
+#include "Minigin/Loading/Interfaces/IComponentLoadable.h"
+#include "Minigin/Loading/Interfaces/IEventLinkable.h"
+#include "Minigin/Events/Subject.h"
 
 namespace dae
 {

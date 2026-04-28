@@ -1,6 +1,6 @@
 #pragma once
-#include "Component.h"
-#include "GameObject.h"
+#include "Minigin/Components/Component.h"
+#include "Minigin/GameObject.h"
 
 namespace dae
 {

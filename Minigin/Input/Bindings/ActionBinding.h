@@ -1,6 +1,6 @@
 #include <memory>
-#include "Commands/Command.h"
-#include "Input/Bindings/InputStates.h"
+#include "Minigin/Commands/Command.h"
+#include "Minigin/Input/Bindings/InputStates.h"
 #include <string>
 
 namespace dae

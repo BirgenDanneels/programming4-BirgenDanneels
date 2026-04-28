@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
-#include "Events/Observer.h"
+#include "Minigin/Events/Observer.h"
 
 namespace dae
 {

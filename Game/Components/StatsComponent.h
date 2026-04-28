@@ -1,6 +1,6 @@
-#include "Events/Observer.h"
-#include "Component.h"
-#include "Loading/Interfaces/IComponentLoadable.h"
+#include "Minigin/Events/Observer.h"
+#include "Minigin/Components/Component.h"
+#include "Minigin/Loading/Interfaces/IComponentLoadable.h"
 
 namespace dae
 {

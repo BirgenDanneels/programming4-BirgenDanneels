@@ -1,7 +1,7 @@
 #pragma once
-#include "TextureComponent.h"
+#include "Minigin/Components/TextureComponent.h"
 #include <SDL3/SDL.h>
-#include "Loading/Interfaces/IComponentLoadable.h"
+#include "Minigin/Loading/Interfaces/IComponentLoadable.h"
 
 namespace dae
 {

@@ -2,8 +2,8 @@
 #include <string>
 #include <functional>
 #include <unordered_map>
-#include "Components/Component.h"
-#include "GameObject.h"
+#include "Minigin/Components/Component.h"
+#include "Minigin/GameObject.h"
 
 namespace dae
 {

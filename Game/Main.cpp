@@ -5,12 +5,13 @@
 #include <vld.h>
 #endif
 
-#include "Minigin.h"
-#include "SceneManager.h"
-#include "ResourceManager.h"
-#include "Scene.h"
-#include "Components/ComponentsInclude.h"
-#include "InputManager.h"
+#include "Minigin/Minigin.h"
+#include "Minigin/SceneManager.h"
+#include "Minigin/ResourceManager.h"
+#include "Minigin/Scene.h"
+#include "Game/Components/ComponentsInclude.h"
+#include "Minigin/Components/ComponentsInclude.h"
+#include "Minigin/InputManager.h"
 
 #include <filesystem>
 namespace fs = std::filesystem;
