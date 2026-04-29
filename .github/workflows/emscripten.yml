@@ -57,6 +57,7 @@ jobs:
           mkdir -p dist
           cp build-web/minigin_web.* dist/
           cp web/*.html dist/
+          cp web/coi-serviceworker.js dist/ #https://docs.wasmer.io/sdk/wasmer-js/how-to/coop-coep-headers/
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3

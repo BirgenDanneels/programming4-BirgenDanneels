@@ -17,6 +17,11 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "Loading/SceneLoader.h"
+#include "Sound/ServiceLocator.h"
+
+//Sound Implementation
+#include "Sound/SdlSoundSystem.cpp"
+#include "Sound/LoggingSoundSystem.h"
 
 #if USE_STEAMWORKS
 #pragma warning (push)
@@ -83,6 +88,19 @@ dae::Minigin::Minigin(const std::filesystem::path& dataPath)
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
 
+	// Set up sound system
+#ifndef NDEBUG
+	auto TempSoundSystem = std::make_unique<dae::SdlSoundSystem>();
+
+	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::LoggingSoundSystem>(std::move(TempSoundSystem)));
+	dae::ServiceLocator::GetSoundSystem().SetDataPath(m_dataPath.string());
+#else
+	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SdlSoundSystem>());
+	dae::ServiceLocator::GetSoundSystem().SetDataPath(m_dataPath.string());
+
+#endif // NDEBUG
+
+
 	g_window = SDL_CreateWindow(
 		"Programming 4 assignment",
 		1024,
@@ -120,6 +138,9 @@ dae::Minigin::~Minigin()
 	if (g_SteamAchievements)
 		delete g_SteamAchievements;
 #endif
+
+	// Ensure SDL_mixer teardown happens before SDL_Quit
+	dae::ServiceLocator::UnregisterSoundSystem();
 
 	SDL_DestroyWindow(g_window);
 	g_window = nullptr;

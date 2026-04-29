@@ -21,6 +21,7 @@ add_library(${ENGINE_TARGET} STATIC
   Components/TextureComponent.cpp
   Components/TextComponent.cpp
   Components/CharacterController.cpp
+  Sound/ServiceLocator.cpp
 )
 
 target_compile_features(${ENGINE_TARGET} PUBLIC cxx_std_20)
@@ -46,6 +47,7 @@ target_include_directories(${ENGINE_TARGET} PRIVATE
 target_link_libraries(${ENGINE_TARGET} PUBLIC
   SDL3::SDL3
   SDL3_ttf::SDL3_ttf
+  SDL3_mixer::SDL3_mixer
   glm::glm
   imgui
   imgui_plot
@@ -63,4 +65,8 @@ if(MSVC)
   target_compile_options(${ENGINE_TARGET} PRIVATE /W4 /WX)
 else()
   target_compile_options(${ENGINE_TARGET} PRIVATE -Wall -Wextra -Werror)
+endif()
+
+if(EMSCRIPTEN)
+  target_compile_options(${ENGINE_TARGET} PRIVATE -pthread -sUSE_PTHREADS=1)
 endif()
