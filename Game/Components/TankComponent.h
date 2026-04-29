@@ -2,11 +2,17 @@
 #include <memory>
 #include "Minigin/Commands/Command.h"
 #include "Minigin/Events/Subject.h"
-
-//Components should have an awake method so the getcomponents can be used without worrying about order of creation.
+#include "Minigin/Sound/ServiceLocator.h"
 
 namespace dae
 {
+	class CharacterController;
+	class HealthComponent;
+	class PointsComponent;
+	class InputDevice;
+}
+
+
 	enum class TankEvents
 	{
 		KillEnemy,
@@ -14,17 +20,12 @@ namespace dae
 		Win
 	};
 
-	class CharacterController;
-	class HealthComponent;
-	class InputDevice;
-	class PointsComponent;
-
-	class TankComponent final : public Component
+	class TankComponent final : public dae::Component
 	{
 	public:
-		TankComponent(GameObject& pOwner);
+		TankComponent(dae::GameObject& pOwner);
 		~TankComponent() override;
-		
+
 		virtual void FixedUpdate(float fixedDeltaTime) override { (void)fixedDeltaTime; };
 		virtual void Update(float deltaTime) override;
 		virtual void Render() const override {};
@@ -33,23 +34,24 @@ namespace dae
 		void RequestEnemyKill();
 		void RequestOrbPickUp();
 
-		void Initialize(InputDevice* device, float speed, int lives);
-		
-		Subject<TankEvents>& OnTankEvent() { return m_onTankEventSubject; }
+		void Initialize(dae::InputDevice* device, float speed, int lives);
+
+		dae::Subject<TankEvents>& OnTankEvent() { return m_onTankEventSubject; }
 
 	private:
 
-		CharacterController* m_pCharacterController;
-		HealthComponent* m_pHealthComponent;
-		PointsComponent* m_pPointsComponent;
+		dae::CharacterController* m_pCharacterController;
+		dae::HealthComponent* m_pHealthComponent;
+		dae::PointsComponent* m_pPointsComponent;
 
-		std::unique_ptr<Axis2DCommand> m_pMoveCommand;
-		std::unique_ptr<Command> m_pDamageCommand;
-		std::unique_ptr<Command> m_pPickupCommand;
-		std::unique_ptr<Command> m_pKillCommand;
+		std::unique_ptr<dae::Axis2DCommand> m_pMoveCommand;
+		std::unique_ptr<dae::Command> m_pDamageCommand;
+		std::unique_ptr<dae::Command> m_pPickupCommand;
+		std::unique_ptr<dae::Command> m_pKillCommand;
 
-		Subject<TankEvents> m_onTankEventSubject;
+		dae::Subject<TankEvents> m_onTankEventSubject;
 
-		InputDevice* m_pInputDevice{ nullptr };
+		dae::sound_id m_shotSound;
+
+		dae::InputDevice* m_pInputDevice{ nullptr };
 	};
-}

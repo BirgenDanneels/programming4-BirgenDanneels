@@ -68,12 +68,12 @@ static void load()
 	auto wasdText = scene.CreateGameObject();
 	wasdText->SetParent(textAnchor);
 	wasdText->GetTransform().SetLocalPosition(0, 0);
-	wasdText->AddComponent<dae::TextComponent>()->Initialize("Use WASD to move the blue tank, C to inflict damage, Z to pick up orb and X to kill", font2);
+	wasdText->AddComponent<dae::TextComponent>()->Initialize("Use WASD to move the blue tank, C to inflict damage, Z to pick up orb and X to kill (with sound)", font2);
 
 	auto controllerText = scene.CreateGameObject();
 	controllerText->SetParent(textAnchor);
 	controllerText->GetTransform().SetLocalPosition(0, 20);
-	controllerText->AddComponent<dae::TextComponent>()->Initialize("Use D-Pad or left stick to move the red tank, X to inflict damage, A to pick up orb and B  to kill", font2);
+	controllerText->AddComponent<dae::TextComponent>()->Initialize("Use D-Pad or left stick to move the red tank, X to inflict damage, A to pick up orb and B  to kill (with sound)", font2);
 
 	// Blue Tank Lives Text
 	auto blueLivesText = scene.CreateGameObject();
@@ -109,8 +109,8 @@ static void load()
 
 
 	//Init tanks
-	blueTank->AddComponent<dae::TankComponent>()->Initialize(dae::InputManager::GetInstance().GetKeyboard(), 100.f, 3);
-	redTank->AddComponent<dae::TankComponent>()->Initialize(dae::InputManager::GetInstance().GetGamepad(0), 200.f, 3);
+	blueTank->AddComponent<TankComponent>()->Initialize(dae::InputManager::GetInstance().GetKeyboard(), 100.f, 3);
+	redTank->AddComponent<TankComponent>()->Initialize(dae::InputManager::GetInstance().GetGamepad(0), 200.f, 3);
 	
 }
 

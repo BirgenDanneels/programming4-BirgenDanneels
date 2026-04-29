@@ -2,9 +2,10 @@
 #include "Minigin/Events/Subject.h"
 #include "Minigin/Events/Observer.h"
 
+enum class TankEvents;
+
 namespace dae
 {
-	enum class TankEvents;
 
 	class PointsComponent final : public Component, public Observer<TankEvents>
 	{
