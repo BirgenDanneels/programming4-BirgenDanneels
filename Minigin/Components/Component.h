@@ -25,8 +25,6 @@ namespace dae
 		virtual void Render() const = 0;
 		virtual void RenderUI() {};
 
-	protected:
-
 		GameObject* GetOwner() const;
 
 	private:

@@ -1,3 +1,4 @@
 #include "ServiceLocator.h"
 
-std::unique_ptr<dae::SoundSystem> dae::ServiceLocator::_ss_instance{};
+std::unique_ptr<dae::SoundSystem> dae::ServiceLocator::m_soundInstance{};
+std::unique_ptr<dae::PhysicsManager> dae::ServiceLocator::m_physicsInstance{};

@@ -22,7 +22,10 @@ add_library(${ENGINE_TARGET} STATIC
   Components/TextComponent.cpp
   Components/CharacterController.cpp
   Sound/ServiceLocator.cpp
-)
+  Physics/PhysicsManager.cpp
+  Physics/Rigidbody.cpp
+  Physics/Collider.cpp
+  )
 
 target_compile_features(${ENGINE_TARGET} PUBLIC cxx_std_20)
 

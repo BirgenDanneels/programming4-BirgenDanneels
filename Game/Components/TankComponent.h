@@ -3,6 +3,8 @@
 #include "Minigin/Commands/Command.h"
 #include "Minigin/Events/Subject.h"
 #include "Minigin/Sound/ServiceLocator.h"
+#include "Minigin/Physics/PhysicsManager.h"
+#include "Minigin/Events/Observer.h"
 
 namespace dae
 {
@@ -20,12 +22,13 @@ namespace dae
 		Win
 	};
 
-	class TankComponent final : public dae::Component
+	class TankComponent final : public dae::Component, public dae::Observer<dae::Hit>
 	{
 	public:
 		TankComponent(dae::GameObject& pOwner);
 		~TankComponent() override;
 
+		virtual void Start() override;
 		virtual void FixedUpdate(float fixedDeltaTime) override { (void)fixedDeltaTime; };
 		virtual void Update(float deltaTime) override;
 		virtual void Render() const override {};
@@ -38,9 +41,11 @@ namespace dae
 
 		dae::Subject<TankEvents>& OnTankEvent() { return m_onTankEventSubject; }
 
+		virtual void OnNotify(dae::Hit hit) override;
+
 	private:
 
-		dae::CharacterController* m_pCharacterController;
+		dae::Rigidbody* m_pRigidbody;
 		dae::HealthComponent* m_pHealthComponent;
 		dae::PointsComponent* m_pPointsComponent;
 
@@ -54,4 +59,6 @@ namespace dae
 		dae::sound_id m_shotSound;
 
 		dae::InputDevice* m_pInputDevice{ nullptr };
+
+		float m_Speed{ 100.0f };
 	};

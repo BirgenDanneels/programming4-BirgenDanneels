@@ -12,6 +12,8 @@
 #include "Game/Components/ComponentsInclude.h"
 #include "Minigin/Components/ComponentsInclude.h"
 #include "Minigin/InputManager.h"
+#include "Minigin/Physics/Collider.h"
+
 
 #include <filesystem>
 namespace fs = std::filesystem;
@@ -109,9 +111,24 @@ static void load()
 
 
 	//Init tanks
+	blueTank->AddComponent<dae::Collider>()->InitializeBoxCollider(50, 50);
 	blueTank->AddComponent<TankComponent>()->Initialize(dae::InputManager::GetInstance().GetKeyboard(), 100.f, 3);
+	redTank->AddComponent<dae::Collider>()->InitializeBoxCollider(50, 50);
 	redTank->AddComponent<TankComponent>()->Initialize(dae::InputManager::GetInstance().GetGamepad(0), 200.f, 3);
 	
+
+	auto worldTop = scene.CreateGameObject();
+	worldTop->GetTransform().SetLocalPosition(512, 0);
+	worldTop->AddComponent<dae::Collider>()->InitializeBoxCollider(1024, 10);
+	auto worldBottom = scene.CreateGameObject();
+	worldBottom->GetTransform().SetLocalPosition(512, 576);
+	worldBottom->AddComponent<dae::Collider>()->InitializeBoxCollider(1024, 10);
+	auto worldLeft = scene.CreateGameObject();
+	worldLeft->GetTransform().SetLocalPosition(0, 288);
+	worldLeft->AddComponent<dae::Collider>()->InitializeBoxCollider(10, 576);
+	auto worldRight = scene.CreateGameObject();
+	worldRight->GetTransform().SetLocalPosition(1024, 288);
+	worldRight->AddComponent<dae::Collider>()->InitializeBoxCollider(10, 576);
 }
 
 int main(int, char*[]) {

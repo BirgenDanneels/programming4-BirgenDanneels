@@ -23,6 +23,8 @@
 #include "Sound/SdlSoundSystem.cpp"
 #include "Sound/LoggingSoundSystem.h"
 
+#include "Physics/PhysicsManager.h"
+
 #if USE_STEAMWORKS
 #pragma warning (push)
 #pragma warning (disable:4996)
@@ -100,6 +102,8 @@ dae::Minigin::Minigin(const std::filesystem::path& dataPath)
 
 #endif // NDEBUG
 
+	// Set up physics system
+	dae::ServiceLocator::RegisterPhysicsManager(std::make_unique<dae::PhysicsManager>());
 
 	g_window = SDL_CreateWindow(
 		"Programming 4 assignment",
@@ -202,6 +206,8 @@ void dae::Minigin::RunOneFrame()
 	while (m_lag >= m_fixedTimeStep)
 	{
 		SceneManager::GetInstance().FixedUpdate(m_fixedTimeStep);
+		ServiceLocator::GetPhysicsManager().FixedUpdate(m_fixedTimeStep);
+
 		m_lag -= m_fixedTimeStep;
 	}
 	SceneManager::GetInstance().Update(m_deltaTime);

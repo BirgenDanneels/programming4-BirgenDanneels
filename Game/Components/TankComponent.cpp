@@ -1,11 +1,12 @@
 #include "TankComponent.h"
-#include "Minigin/Components/CharacterController.h"
 #include "HealthComponent.h"
 #include "PointsComponent.h"
 #include "Minigin/GameObject.h"
 #include "Minigin/InputManager.h"
 #include "Minigin/Input/InputMap.h"
 #include "Game/Commands/MoveCommands.h"
+#include "Minigin/Physics/Rigidbody.h"
+#include "Minigin/Physics/Collider.h"
 
 class DamageCommand final : public dae::Command
 {
@@ -55,19 +56,13 @@ private:
 
 
 TankComponent::TankComponent(dae::GameObject& pOwner)
-	: Component(pOwner), m_pCharacterController(GetOwner()->GetComponent<dae::CharacterController>()), m_pHealthComponent(GetOwner()->GetComponent<dae::HealthComponent>()), m_pPointsComponent(GetOwner()->GetComponent<dae::PointsComponent>())
+	: Component(pOwner)
 {
-	if (!m_pCharacterController)
-		m_pCharacterController = GetOwner()->AddComponent<dae::CharacterController>();
-
-	if (!m_pHealthComponent)
-		m_pHealthComponent = GetOwner()->AddComponent<dae::HealthComponent>();
-
-	if (!m_pPointsComponent)
-		m_pPointsComponent = GetOwner()->AddComponent<dae::PointsComponent>();
-
 	m_shotSound = dae::ServiceLocator::GetSoundSystem().LoadSound("Shot.wav");
 
+
+	GetOwner()->AddComponent<dae::Rigidbody>()->Initialize(false, true); //SHOULD BE REMOVED AND FIXED THAT OBJECTS CAN BE CONSTRUCTED DURING START bc now the vector gets cleared at the end of start which means the constructed objects get removed from said vector!
+	
 }
 
 TankComponent::~TankComponent()
@@ -85,36 +80,35 @@ TankComponent::~TankComponent()
 	}
 }
 
-void TankComponent::Update(float deltaTime)
+void TankComponent::Start()
 {
-	(void)deltaTime;
-}
+	m_pRigidbody = GetOwner()->GetComponent<dae::Rigidbody>();
+	m_pHealthComponent = GetOwner()->GetComponent<dae::HealthComponent>();
+	m_pPointsComponent = GetOwner()->GetComponent<dae::PointsComponent>();
 
-void TankComponent::RequestEnemyKill()
-{
-	m_onTankEventSubject.NotifyObservers(TankEvents::KillEnemy);
-	dae::ServiceLocator::GetSoundSystem().Play(m_shotSound, 0.2f);
-}
+	if (!m_pRigidbody)
+	{
+		m_pRigidbody = GetOwner()->AddComponent<dae::Rigidbody>();
+		m_pRigidbody->Initialize(false, true);
+	}
 
-void TankComponent::RequestOrbPickUp()
-{
-	m_onTankEventSubject.NotifyObservers(TankEvents::PickupOrb);
-}
+	m_pRigidbody->SetDrag(0.1f);
 
-void TankComponent::Initialize(dae::InputDevice* device, float speed, int lives)
-{
-	m_pCharacterController->SetSpeed(speed);
-	m_pHealthComponent->Initialize(lives);
+	if (!m_pHealthComponent)
+		m_pHealthComponent = GetOwner()->AddComponent<dae::HealthComponent>();
 
-	//Bind add pointsystems to events
-	OnTankEvent().AddObserver(m_pPointsComponent);
+	if (!m_pPointsComponent)
+		m_pPointsComponent = GetOwner()->AddComponent<dae::PointsComponent>();
 
-	m_pMoveCommand = std::make_unique<dae::Move2DCommand>(*m_pCharacterController);
+
+
+	m_pMoveCommand = std::make_unique<dae::Move2DCommand>(*m_pRigidbody, m_Speed);
 	m_pDamageCommand = std::make_unique<DamageCommand>(*m_pHealthComponent, 1);
 	m_pPickupCommand = std::make_unique<FirePickupEventCommand>(*this);
 	m_pKillCommand = std::make_unique<FireKillEventCommand>(*this);
 
-	m_pInputDevice = device;
+	//Bind add pointsystems to events
+	OnTankEvent().AddObserver(m_pPointsComponent);
 
 	if (m_pInputDevice)
 	{
@@ -140,10 +134,53 @@ void TankComponent::Initialize(dae::InputDevice* device, float speed, int lives)
 			inputMap->BindAction("FirePickUpEvent", (int)GamepadInput::A, InputState::Pressed, *m_pPickupCommand);
 			inputMap->BindAction("FireKillEvent", (int)GamepadInput::B, InputState::Pressed, *m_pKillCommand);
 
-			
+
 		}
 
 
 		m_pInputDevice->SetInputMap(std::move(inputMap));
 	}
+
+	//OnCollission
+	dae::Collider* collider = GetOwner()->GetComponent<dae::Collider>();
+	if (collider)
+	{
+		collider->OnCollisionEnter().AddObserver(this);
+	}
+}
+
+void TankComponent::Update(float deltaTime)
+{
+	(void)deltaTime;
+	
+	//X axis is straight ahead
+
+	glm::vec2 v = m_pRigidbody->GetVelocity();
+	float angleDeg = glm::degrees(atan2(v.y, v.x));
+
+	GetOwner()->GetTransform().SetLocalRotation(angleDeg);
+}
+
+void TankComponent::RequestEnemyKill()
+{
+	m_onTankEventSubject.NotifyObservers(TankEvents::KillEnemy);
+	dae::ServiceLocator::GetSoundSystem().Play(m_shotSound, 0.2f);
+}
+
+void TankComponent::RequestOrbPickUp()
+{
+	m_onTankEventSubject.NotifyObservers(TankEvents::PickupOrb);
+}
+
+void TankComponent::Initialize(dae::InputDevice* device, float speed, int lives)
+{
+	m_pHealthComponent = GetOwner()->GetComponent<dae::HealthComponent>();
+	m_pHealthComponent->Initialize(lives);
+	m_Speed = speed;
+	m_pInputDevice = device;
+}
+
+void TankComponent::OnNotify(dae::Hit hit)
+{
+	(void)hit;
 }

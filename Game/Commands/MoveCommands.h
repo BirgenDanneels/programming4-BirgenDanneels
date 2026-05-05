@@ -3,15 +3,17 @@
 
 namespace dae
 {
-	class CharacterController;
+	class Rigidbody;
 
 	class Move2DCommand : public Axis2DCommand
 	{
 	private:
-		CharacterController* m_characterController{ nullptr };
+		Rigidbody* m_rigidbody{ nullptr };
+		float m_speed{ 100.0f };
+		bool m_isMoving{ false };
 
 	public:
-		Move2DCommand(CharacterController& actor);
+		Move2DCommand(Rigidbody& rigidbody, float speed);
 		void Execute() override;
 	};
 
