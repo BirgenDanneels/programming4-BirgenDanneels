@@ -20,7 +20,7 @@
 #include "Sound/ServiceLocator.h"
 
 //Sound Implementation
-#include "Sound/SdlSoundSystem.cpp"
+#include "Sound/SdlSoundSystem.h"
 #include "Sound/LoggingSoundSystem.h"
 
 #include "Physics/PhysicsManager.h"

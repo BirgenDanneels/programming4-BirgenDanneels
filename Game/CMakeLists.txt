@@ -1,7 +1,7 @@
 if(EMSCRIPTEN)
-  set(TARGET_NAME minigin_web)
+  set(TARGET_NAME tron_web)
 else()
-  set(TARGET_NAME minigin)
+  set(TARGET_NAME tron)
 endif()
 
 add_executable(${TARGET_NAME} ${TARGET_PARAM}
@@ -13,8 +13,8 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Components/FPSCounter.cpp
   Components/RotatorComponent.cpp
   Commands/MoveCommands.cpp
- Components/BarrelComponent.cpp
- Components/Bullet.cpp
+  Components/BarrelComponent.cpp
+  Components/Bullet.cpp
 )
 
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_20)
@@ -26,7 +26,7 @@ else()
 endif()
 
 # Link the Engine
-target_link_libraries(${TARGET_NAME} PRIVATE MiniginEngine)
+target_link_libraries(${TARGET_NAME} PRIVATE Minigin)
 
 if(Steamworks_FOUND)
   target_link_libraries(${TARGET_NAME} PUBLIC Steamworks::Steamworks)
@@ -61,7 +61,7 @@ if(EMSCRIPTEN)
   )
 
 elseif(WIN32)
-  # Set minigin as the default startup project
+  # Set tron as the default startup project
   set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${TARGET_NAME})
   # Set working directory to output folder
   set_target_properties(${TARGET_NAME} PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:${TARGET_NAME}>")

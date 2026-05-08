@@ -1,3 +1,4 @@
+#include "SdlSoundSystem.h"
 #include "SoundSystem.h"
 #include <queue>
 #include <mutex>
@@ -15,10 +16,10 @@ namespace dae
         float volume;
     };
 
-    class SdlSoundSystem final : public SoundSystem
+    class SdlSoundSystemImpl final : public SoundSystem
     {
     public:
-        SdlSoundSystem()
+        SdlSoundSystemImpl()
         {
             MIX_Init();
             m_mixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, nullptr);
@@ -35,7 +36,7 @@ namespace dae
             m_worker = std::jthread([this](std::stop_token st) { ProcessQueue(st); });
         }
 
-        ~SdlSoundSystem() override
+        ~SdlSoundSystemImpl() override
         {
             m_condition.notify_all();
             if (m_worker.joinable())
@@ -93,6 +94,11 @@ namespace dae
             m_sounds[id] = audio;
 
             return id;
+        }
+
+        void SetDataPath(const std::string& path) override
+        {
+            m_dataPath = path;
         }
 
     private:
@@ -159,5 +165,13 @@ namespace dae
         std::vector<MIX_Track*> m_tracks; // Track pool
         std::unordered_map<std::string, sound_id> m_pathToId;
         std::unordered_map<sound_id, MIX_Audio*> m_sounds;
+
+		std::string m_dataPath;
     };
+
+
+    dae::SdlSoundSystem::SdlSoundSystem()
+		:m_pImpl(std::make_unique<SdlSoundSystemImpl>())
+    {
+    }
 }

@@ -1,4 +1,5 @@
-set(ENGINE_TARGET MiniginEngine)
+set(ENGINE_TARGET Minigin)
+
 
 add_library(${ENGINE_TARGET} STATIC
   Font.cpp
@@ -25,7 +26,7 @@ add_library(${ENGINE_TARGET} STATIC
   Physics/PhysicsManager.cpp
   Physics/Rigidbody.cpp
   Physics/Collider.cpp
-  )
+  Sound/SdlSoundSystem.cpp
 
 target_compile_features(${ENGINE_TARGET} PUBLIC cxx_std_20)
 
