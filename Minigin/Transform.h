@@ -46,6 +46,9 @@ namespace dae
 		float GetWorldRotation() const;
 		const glm::vec2& GetWorldScale() const;
 
+		// Flag Setters
+		void SetInheritRotation(bool inherit) { m_inheritRotation = inherit; }
+
 	private:
 		friend class GameObject;
 
@@ -66,6 +69,9 @@ namespace dae
 		mutable glm::vec3 m_worldPosition{ 0.0f, 0.0f, 0.0f };
 		mutable float m_worldRotation{ 0.0f }; 
 		mutable glm::vec2 m_worldScale{ 1.0f, 1.0f };
+
+		// Inheritance flags
+		bool m_inheritRotation = true;
 
 		mutable bool m_isDirty{ true };
 	};

@@ -109,12 +109,23 @@ static void load()
 	points2->Initialize("Red Tank Points: ");
 	redPoints->OnPointsChanged().AddObserver(points2);
 
+	// Barrels
+	auto playerBarrel = scene.CreateGameObject();
+	playerBarrel->SetParent(redTank);
+	playerBarrel->GetTransform().SetLocalPosition(0, 0);
+	auto blueBarrelComp = playerBarrel->AddComponent<BarrelComponent>();
+	auto bulletSpawnPoint1 = scene.CreateGameObject();
+	bulletSpawnPoint1->SetParent(playerBarrel);
+	bulletSpawnPoint1->GetTransform().SetLocalPosition(25, 0);
+	blueBarrelComp->Initialize(0.5f, *bulletSpawnPoint1, 1, 5, 20);
+
 
 	//Init tanks
-	blueTank->AddComponent<dae::Collider>()->InitializeBoxCollider(50, 50);
-	blueTank->AddComponent<TankComponent>()->Initialize(dae::InputManager::GetInstance().GetKeyboard(), 100.f, 3);
-	redTank->AddComponent<dae::Collider>()->InitializeBoxCollider(50, 50);
-	redTank->AddComponent<TankComponent>()->Initialize(dae::InputManager::GetInstance().GetGamepad(0), 200.f, 3);
+	blueTank->AddComponent<dae::Collider>()->InitializeBoxCollider(30, 30);
+	//blueTank->AddComponent<TankComponent>()->Initialize(dae::InputManager::GetInstance().GetKeyboard(), 100.f, 3);
+
+	redTank->AddComponent<dae::Collider>()->InitializeBoxCollider(30, 30);
+	redTank->AddComponent<TankComponent>()->Initialize(dae::InputManager::GetInstance().GetGamepad(0), 200.f, 3, *playerBarrel);
 	
 
 	auto worldTop = scene.CreateGameObject();

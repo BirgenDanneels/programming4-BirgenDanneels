@@ -169,7 +169,11 @@ namespace dae
 			m_worldPosition = parentTransform.GetWorldPosition() + rotatedScaledLocalPos;
 
 			// Rotation and Scale cascade additively/multiplicatively
-			m_worldRotation = parentTransform.GetWorldRotation() + m_localRotation;
+			if(m_inheritRotation)
+				m_worldRotation = parentTransform.GetWorldRotation() + m_localRotation;
+			else
+				m_worldRotation = m_localRotation;
+
 			m_worldScale = parentTransform.GetWorldScale() * m_localScale;
 		}
 		else

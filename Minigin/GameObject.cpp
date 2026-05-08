@@ -3,8 +3,6 @@
 #include "ResourceManager.h"
 #include "SceneManager.h"
 
-#include "Components/ComponentsInclude.h"
-
 
 dae::GameObject::GameObject()
 	:m_transform{this}, m_ptrParent{ nullptr }

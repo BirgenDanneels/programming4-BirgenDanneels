@@ -29,15 +29,17 @@ namespace dae
 		~TankComponent() override;
 
 		virtual void Start() override;
-		virtual void FixedUpdate(float fixedDeltaTime) override { (void)fixedDeltaTime; };
+		virtual void FixedUpdate(float /*fixedDeltaTime*/) override {};
 		virtual void Update(float deltaTime) override;
 		virtual void Render() const override {};
 
 		//These are functions to demonstrate how this component can broadcast events. This isnt a realistic example of how these events would be triggered.
 		void RequestEnemyKill();
 		void RequestOrbPickUp();
+		
+		void TakeDamage(int damage);
 
-		void Initialize(dae::InputDevice* device, float speed, int lives);
+		void Initialize(dae::InputDevice* device, float speed, int lives, dae::GameObject& barrel);
 
 		dae::Subject<TankEvents>& OnTankEvent() { return m_onTankEventSubject; }
 
@@ -50,15 +52,16 @@ namespace dae
 		dae::PointsComponent* m_pPointsComponent;
 
 		std::unique_ptr<dae::Axis2DCommand> m_pMoveCommand;
+		std::unique_ptr<dae::Axis1DCommand> m_pRotateBarrelCommand;
 		std::unique_ptr<dae::Command> m_pDamageCommand;
 		std::unique_ptr<dae::Command> m_pPickupCommand;
-		std::unique_ptr<dae::Command> m_pKillCommand;
+		std::unique_ptr<dae::Command> m_pShootCommand;
 
 		dae::Subject<TankEvents> m_onTankEventSubject;
 
 		dae::sound_id m_shotSound;
 
 		dae::InputDevice* m_pInputDevice{ nullptr };
-
+		dae::GameObject* m_pBarrel{ nullptr };
 		float m_Speed{ 100.0f };
 	};

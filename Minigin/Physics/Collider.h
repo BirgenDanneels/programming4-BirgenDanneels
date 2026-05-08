@@ -43,7 +43,7 @@ namespace dae
 		bool GetDebugDraw() const { return m_debugDraw; }
 
 		// Events
-		Subject<Hit>& OnCollisionEnter() { return m_onCollision; }
+		Subject<Hit>& OnCollision() { return m_onCollision; }
 
 	private:
 		glm::vec2 m_offset{ 0.0f, 0.0f };

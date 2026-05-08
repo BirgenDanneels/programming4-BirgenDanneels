@@ -219,8 +219,8 @@ void dae::PhysicsManager::DispatchEvents()
         Collider* colB = event.b;
         if (colA && colB) 
         {
-            colA->OnCollisionEnter().NotifyObservers(event);
-            colB->OnCollisionEnter().NotifyObservers(event);
+            colA->OnCollision().NotifyObservers(event);
+            colB->OnCollision().NotifyObservers(event);
 		}
     }
 
