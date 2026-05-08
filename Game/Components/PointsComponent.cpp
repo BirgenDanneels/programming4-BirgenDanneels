@@ -3,19 +3,14 @@
 #include "Minigin/Utils/HashUtil.h"
 #include "Minigin/Scene.h"
 
-dae::PointsComponent::PointsComponent(GameObject& pOwner)
-	: Component(pOwner), m_Points(0)
+PointsComponent::PointsComponent(dae::GameObject& pOwner)
+	: dae::Component(pOwner), m_Points(0)
 {
 }
 
-dae::PointsComponent::~PointsComponent() = default;
+PointsComponent::~PointsComponent() = default;
 
-void dae::PointsComponent::Update(float deltaTime)
-{
-	(void)deltaTime;
-}
-
-void dae::PointsComponent::OnNotify(TankEvents event)
+void PointsComponent::OnNotify(TankEvents event)
 {
 	switch (event)
 	{
@@ -30,11 +25,11 @@ void dae::PointsComponent::OnNotify(TankEvents event)
 	}
 }
 
-void dae::PointsComponent::AddPoints(int points)
+void PointsComponent::AddPoints(int points)
 {
 	m_Points += points;
 	m_onPointsChangedSubject.NotifyObservers(m_Points);
 	
 	//Broadcast a game event
-	GetOwner()->GetScene()->GetGameEventQueue().Enqueue(Event{ Event::ToEventID("PointsChanged"), {m_Points } });
+	GetOwner()->GetScene()->GetGameEventQueue().Enqueue({dae::Event::ToEventID("PointsChanged"), {m_Points } });
 }

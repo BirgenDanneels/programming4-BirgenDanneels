@@ -20,21 +20,6 @@ void dae::Collider::Start()
 	ServiceLocator::GetPhysicsManager().RegisterCollider(this);
 }
 
-void dae::Collider::FixedUpdate(float fixedDeltaTime)
-{
-	(void)fixedDeltaTime;
-}
-
-void dae::Collider::Update(float deltaTime)
-{
-	(void)deltaTime;
-}
-
-void dae::Collider::Render() const
-{
-	// Colliders don't render in game view
-}
-
 void dae::Collider::RenderUI()
 {
 	if (!m_debugDraw)

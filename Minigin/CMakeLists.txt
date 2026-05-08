@@ -32,8 +32,6 @@ target_compile_features(${ENGINE_TARGET} PUBLIC cxx_std_20)
 
 if(Steamworks_FOUND)
   target_sources(${ENGINE_TARGET} PRIVATE
-    Components/AchievementSystem.cpp
-    Steam/SteamAchievements.cpp
   )
 endif()
 

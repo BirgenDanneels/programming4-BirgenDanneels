@@ -20,9 +20,9 @@ namespace dae
 		~Rigidbody() override;
 
 		virtual void Start() override;
-		virtual void FixedUpdate(float fixedDeltaTime) override;
-		virtual void Update(float deltaTime) override;
-		virtual void Render() const override;
+		virtual void FixedUpdate(float) override;
+		virtual void Update(float) override {};
+		virtual void Render() const override {};
 
 		// Initialization
 		void Initialize(bool useGravity = false, bool isKinematic = true, bool canBounce = false);

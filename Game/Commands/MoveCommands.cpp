@@ -1,12 +1,12 @@
 #include "MoveCommands.h"
 #include "Minigin/Physics/Rigidbody.h"
 
-dae::Move2DCommand::Move2DCommand(dae::Rigidbody& rigidbody, float speed)
-	: m_rigidbody(&rigidbody), m_speed(speed)
+Move2DCommand::Move2DCommand(dae::Rigidbody& rigidbody, float speed)
+	:m_rigidbody(&rigidbody), m_speed(speed)
 {
 }
 
-void dae::Move2DCommand::Execute()
+void Move2DCommand::Execute()
 {
 	if (!(glm::length(GetAxisValue()) > 0.f))
 	{

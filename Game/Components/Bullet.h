@@ -13,17 +13,17 @@ public:
 	void Initialize(int damage, int bounces);
 
 	virtual void Start() override;
-	virtual void FixedUpdate(float fixedDeltaTime) override { (void)fixedDeltaTime; };
-	virtual void Update(float deltaTime) override;
+	virtual void FixedUpdate(float) override {};
+	virtual void Update(float) override {};
 	virtual void Render() const override {};
 
 	// Inherited via Observer
 	virtual void OnNotify(dae::Hit hit) override;
 
 private:
-	dae::Collider* m_pCollider;
+	dae::Collider* m_pCollider{nullptr};
 	int m_damage{ 1 };
 	int m_bouncesRemaining{ 5 };
 
-	short int m_shotSoundId;
+	short int m_shotSoundId{-1};
 };

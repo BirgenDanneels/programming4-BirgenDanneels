@@ -21,10 +21,8 @@ void dae::Rigidbody::Start()
 	ServiceLocator::GetPhysicsManager().RegisterRigidbody(this);
 }
 
-void dae::Rigidbody::FixedUpdate(float fixedDeltaTime)
+void dae::Rigidbody::FixedUpdate(float)
 {
-	(void)fixedDeltaTime;
-
 	if (!m_isKinematic)
 	{
 		// Apply drag
@@ -47,16 +45,6 @@ void dae::Rigidbody::FixedUpdate(float fixedDeltaTime)
 	// Apply constraints
 	if (m_freezeX) m_velocity.x = 0.0f;
 	if (m_freezeY) m_velocity.y = 0.0f;
-}
-
-void dae::Rigidbody::Update(float deltaTime)
-{
-	(void)deltaTime;
-}
-
-void dae::Rigidbody::Render() const
-{
-	// Rigidbodies don't render by default
 }
 
 void dae::Rigidbody::Initialize(bool useGravity, bool isKinematic, bool canBounce)

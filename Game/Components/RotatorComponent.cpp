@@ -2,30 +2,25 @@
 #include <cmath>
 #include "RotatorComponent.h"
 
-dae::RotatorComponent::RotatorComponent(dae::GameObject& refOwner)
-	:Component(refOwner), m_rotationSpeed{ 0 }
+RotatorComponent::RotatorComponent(dae::GameObject& refOwner)
+	:dae::Component(refOwner), m_rotationSpeed{ 0 }
 {
 }
 
-void dae::RotatorComponent::FixedUpdate(float deltaTime)
-{
-	(void)deltaTime;
-}
-
-void dae::RotatorComponent::Update(float deltaTime)
+void RotatorComponent::Update(float deltaTime)
 {
 	float rotationSpeed{ 360.f * m_rotationSpeed * float(deltaTime) };
 
-	if (GameObject* parent{GetOwner()->GetParent()})
+	if (dae::GameObject* parent{GetOwner()->GetParent()})
 		GetOwner()->GetTransform().SetWorldPosition(RotateAround(parent->GetTransform().GetWorldPosition(), rotationSpeed));
 }
 
-void dae::RotatorComponent::Initialize(float rotationSpeed)
+void RotatorComponent::Initialize(float rotationSpeed)
 {
 	m_rotationSpeed = rotationSpeed;
 }
 
-glm::vec3 dae::RotatorComponent::RotateAround(const glm::vec3& pivot, float angle) const
+glm::vec3 RotatorComponent::RotateAround(const glm::vec3& pivot, float angle) const
 {
 	const float radians{ angle * float(M_PI) / 180.f };
 	const glm::vec3 position{ GetOwner()->GetTransform().GetWorldPosition() };

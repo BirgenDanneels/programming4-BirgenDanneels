@@ -41,26 +41,20 @@ static void load()
 	auto fpsCounter = scene.CreateGameObject();
 	fpsCounter->GetTransform().SetLocalPosition(5, 5);
 	fpsCounter->AddComponent<dae::TextComponent>()->Initialize("0", font);
-	fpsCounter->AddComponent<dae::FPSCounter>()->Initialize();
+	fpsCounter->AddComponent<FPSCounter>()->Initialize();
 
 	auto blueTank = scene.CreateGameObject();
 	blueTank->GetTransform().SetLocalPosition(100, 280);
 	blueTank->AddComponent<dae::TextureComponent>()->Initialize("BlueTank.png");
-	dae::HealthComponent* blueHealth = blueTank->AddComponent<dae::HealthComponent>();
-	dae::PointsComponent* bluePoints = blueTank->AddComponent<dae::PointsComponent>();
+	HealthComponent* blueHealth = blueTank->AddComponent<HealthComponent>();
+	PointsComponent* bluePoints = blueTank->AddComponent<PointsComponent>();
 
 	auto redTank = scene.CreateGameObject();
 	redTank->GetTransform().SetLocalPosition(300, 100);
 	redTank->AddComponent<dae::TextureComponent>()->Initialize("RedTank.png");
-	dae::HealthComponent* redHealth = redTank->AddComponent<dae::HealthComponent>();
-	dae::PointsComponent* redPoints = redTank->AddComponent<dae::PointsComponent>();
+	HealthComponent* redHealth = redTank->AddComponent<HealthComponent>();
+	PointsComponent* redPoints = redTank->AddComponent<PointsComponent>();
 
-	// Achievement System
-#ifdef USE_STEAMWORKS
-	auto achievementSystem = scene.CreateGameObject();
-	achievementSystem->AddComponent<dae::AchievementSystem>();
-#endif
-	
 	// Controls Text
 	auto font2 = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 15);
 
@@ -81,7 +75,7 @@ static void load()
 	auto blueLivesText = scene.CreateGameObject();
 	blueLivesText->SetParent(textAnchor);
 	blueLivesText->GetTransform().SetLocalPosition(0, 60);
-	dae::StatsComponent* blueLives = blueLivesText->AddComponent<dae::StatsComponent>();
+	StatsComponent* blueLives = blueLivesText->AddComponent<StatsComponent>();
 	blueLives->Initialize("#Red Tank Lives: ");
 	blueHealth->OnHealthChanged().AddObserver(blueLives);
 
@@ -89,7 +83,7 @@ static void load()
 	auto bluePointsText = scene.CreateGameObject();
 	bluePointsText->SetParent(textAnchor);
 	bluePointsText->GetTransform().SetLocalPosition(0, 80);
-	dae::StatsComponent* points1 = bluePointsText->AddComponent < dae::StatsComponent>();
+	StatsComponent* points1 = bluePointsText->AddComponent <StatsComponent>();
 	points1->Initialize("Blue Tank Points: ");
 	bluePoints->OnPointsChanged().AddObserver(points1);
 
@@ -97,7 +91,7 @@ static void load()
 	auto RedLivesText = scene.CreateGameObject();
 	RedLivesText->SetParent(textAnchor);
 	RedLivesText->GetTransform().SetLocalPosition(0, 100);
-	dae::StatsComponent* redLives = RedLivesText->AddComponent<dae::StatsComponent>();
+	StatsComponent* redLives = RedLivesText->AddComponent<StatsComponent>();
 	redLives->Initialize("#Red Tank Lives: ");
 	redHealth->OnHealthChanged().AddObserver(redLives);
 
@@ -105,7 +99,7 @@ static void load()
 	auto pointsText2 = scene.CreateGameObject();
 	pointsText2->SetParent(textAnchor);
 	pointsText2->GetTransform().SetLocalPosition(0, 120);
-	dae::StatsComponent* points2 = pointsText2->AddComponent < dae::StatsComponent>();
+	StatsComponent* points2 = pointsText2->AddComponent <StatsComponent>();
 	points2->Initialize("Red Tank Points: ");
 	redPoints->OnPointsChanged().AddObserver(points2);
 
@@ -156,8 +150,8 @@ int main(int, char*[]) {
 
 	factory.Register<dae::TextureComponent>("TextureComponent");
 	factory.Register<dae::TextComponent>("TextComponent");
-	factory.Register<dae::HealthComponent>("HealthComponent");
-	factory.Register<dae::StatsComponent>("StatsComponent");
+	factory.Register<HealthComponent>("HealthComponent");
+	factory.Register<StatsComponent>("StatsComponent");
 
 	engine.Run(load);
 	//engine.Run("Level.json");

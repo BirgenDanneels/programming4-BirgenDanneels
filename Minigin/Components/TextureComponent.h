@@ -20,8 +20,8 @@ namespace dae
 
 		~TextureComponent() = default;
 
-		virtual void FixedUpdate(float fixedDeltaTime) override;
-		virtual void Update(float deltaTime) override;
+		virtual void FixedUpdate(float) override {};
+		virtual void Update(float) override {};
 
 		virtual void Initialize(const std::string& filename, bool centered = true, float xOffset = 0, float yOffset = 0);
 

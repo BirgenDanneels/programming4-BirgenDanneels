@@ -20,8 +20,8 @@ namespace dae
 
 		~TextComponent() = default;
 
-		virtual void FixedUpdate(float fixedDeltaTime) override;
-		virtual void Update(float deltaTime) override;
+		virtual void FixedUpdate(float) override {};
+		virtual void Update(float) override;
 
 		virtual void Render() const override;
 

@@ -12,7 +12,7 @@ namespace dae
 
 		void Update(float deltaTime) override;
 
-		virtual void FixedUpdate(float fixedDeltaTime) override { (void)fixedDeltaTime; };
+		virtual void FixedUpdate(float) override {};
 		virtual void Render() const override {};
 
 		void SetSpeed(float speed) { m_speed = speed; }

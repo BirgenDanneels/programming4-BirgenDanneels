@@ -4,16 +4,16 @@
 #include "Minigin/Components/TextComponent.h"
 #include "Minigin/GameObject.h"
 
-dae::FPSCounter::FPSCounter(dae::GameObject& refOwner)
+FPSCounter::FPSCounter(dae::GameObject& refOwner)
 	:Component(refOwner)
 {
-	m_ptrTextComponent = GetOwner()->GetComponent<TextComponent>();
+	m_ptrTextComponent = GetOwner()->GetComponent<dae::TextComponent>();
 
 	if (!m_ptrTextComponent)
-		m_ptrTextComponent = GetOwner()->AddComponent<TextComponent>();
+		m_ptrTextComponent = GetOwner()->AddComponent<dae::TextComponent>();
 }
 
-void dae::FPSCounter::Update(float deltaTime)
+void FPSCounter::Update(float deltaTime)
 {
 	if (deltaTime <= EPSILON)
 		return;
@@ -38,12 +38,6 @@ void dae::FPSCounter::Update(float deltaTime)
 	}
 }
 
-void dae::FPSCounter::FixedUpdate(float fixedDeltaTime)
+void FPSCounter::Initialize()
 {
-	(void)fixedDeltaTime;
-}
-
-void dae::FPSCounter::Initialize()
-{
-
 }

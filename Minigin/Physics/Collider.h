@@ -25,9 +25,9 @@ namespace dae
 		~Collider() override;
 
 		virtual void Start() override;
-		virtual void FixedUpdate(float fixedDeltaTime) override;
-		virtual void Update(float deltaTime) override;
-		virtual void Render() const override;
+		virtual void FixedUpdate(float /*fixedDeltaTime*/) override {};
+		virtual void Update(float /*deltaTime*/) override {};
+		virtual void Render() const override {};
 		virtual void RenderUI() override;
 
 		void InitializeBoxCollider(float width, float height, float xOffset = 0.0f, float yOffset = 0.0f);

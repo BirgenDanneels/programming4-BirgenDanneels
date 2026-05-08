@@ -10,15 +10,8 @@ dae::TextComponent::TextComponent(dae::GameObject& refOwner)
 {
 }
 
-void dae::TextComponent::FixedUpdate(float fixedDeltaTime)
+void dae::TextComponent::Update(float)
 {
-	(void)fixedDeltaTime;
-}
-
-void dae::TextComponent::Update(float deltaTime)
-{
-	(void)deltaTime;
-
 	if (m_needsUpdate)
 	{
 		const auto surf = TTF_RenderText_Blended(m_font->GetFont(), m_text.c_str(), m_text.size(), m_color);

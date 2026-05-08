@@ -4,28 +4,25 @@
 
 enum class TankEvents;
 
-namespace dae
+	
+class PointsComponent final : public dae::Component, public dae::Observer<TankEvents>
 {
+public:
+	PointsComponent(dae::GameObject& pOwner);
+	~PointsComponent() override;
+	void Update(float) override {};
+	void FixedUpdate(float) override {};
+	void Render() const override {};
+	int GetPoints() const { return m_Points; }
 
-	class PointsComponent final : public Component, public Observer<TankEvents>
-	{
-	public:
-		PointsComponent(GameObject& pOwner);
-		~PointsComponent() override;
-		void Update(float deltaTime) override;
-		void FixedUpdate(float fixedDeltaTime) override { (void)fixedDeltaTime; };
-		void Render() const override {};
-		int GetPoints() const { return m_Points; }
+	void OnNotify(TankEvents event) override;
 
-		void OnNotify(TankEvents event) override;
+	dae::Subject<int>& OnPointsChanged() { return m_onPointsChangedSubject; }
 
-		Subject<int>& OnPointsChanged() { return m_onPointsChangedSubject; }
+private:
 
-	private:
+	int m_Points{ 0 };
+	dae::Subject<int> m_onPointsChangedSubject;
 
-		int m_Points{ 0 };
-		Subject<int> m_onPointsChangedSubject;
-
-		void AddPoints(int points);
-	};
-}
+	void AddPoints(int points);
+};

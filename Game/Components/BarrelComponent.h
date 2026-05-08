@@ -13,7 +13,7 @@ public:
 	void Initialize(float shootCooldown, dae::GameObject& bulletSpawn, int damage, int maxBounces, float rotationSpeed);
 
 	virtual void Start() override;
-	virtual void FixedUpdate(float /*fixedDeltaTime*/) override {};
+	virtual void FixedUpdate(float) override {};
 	virtual void Update(float deltaTime) override;
 	virtual void Render() const override {};
 
@@ -22,10 +22,10 @@ public:
 
 private:
 
-	dae::TextureComponent* m_pTextureComponent;
-	dae::GameObject* m_pBulletSpawnPoint;
+	dae::TextureComponent* m_pTextureComponent{nullptr};
+	dae::GameObject* m_pBulletSpawnPoint{nullptr};
 
-	short int m_shotSoundId;
+	short int m_shotSoundId{-1};
 	int m_damage{ 1 };
 	int m_maxBounces{ 5 };
 

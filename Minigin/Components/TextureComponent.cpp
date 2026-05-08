@@ -24,16 +24,6 @@ void dae::TextureComponent::CalculateOffsetsCentered()
 	m_yOffset = std::round(-texHeight / 2.0f);
 }
 
-void dae::TextureComponent::FixedUpdate(float fixedDeltaTime)
-{
-	(void)fixedDeltaTime;
-}
-
-void dae::TextureComponent::Update(float deltaTime)
-{
-	(void)deltaTime;
-}
-
 void dae::TextureComponent::Initialize(const std::string& filename, bool centered, float xOffset, float yOffset)
 {
 	m_texture = dae::ResourceManager::GetInstance().LoadTexture(filename);

@@ -26,11 +26,6 @@ void Bullet::Start()
 	}
 }
 
-void Bullet::Update(float deltaTime)
-{
-	(void)deltaTime;
-}
-
 void Bullet::OnNotify(dae::Hit hit)
 {
 	auto otherCollider = (hit.a == m_pCollider) ? hit.b : hit.a;

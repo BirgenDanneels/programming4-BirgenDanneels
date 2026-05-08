@@ -98,8 +98,8 @@ TankComponent::~TankComponent()
 void TankComponent::Start()
 {
 	m_pRigidbody = GetOwner()->GetComponent<dae::Rigidbody>();
-	m_pHealthComponent = GetOwner()->GetComponent<dae::HealthComponent>();
-	m_pPointsComponent = GetOwner()->GetComponent<dae::PointsComponent>();
+	m_pHealthComponent = GetOwner()->GetComponent<HealthComponent>();
+	m_pPointsComponent = GetOwner()->GetComponent<PointsComponent>();
 
 	if (!m_pRigidbody)
 	{
@@ -110,14 +110,14 @@ void TankComponent::Start()
 	m_pRigidbody->SetDrag(0.1f);
 
 	if (!m_pHealthComponent)
-		m_pHealthComponent = GetOwner()->AddComponent<dae::HealthComponent>();
+		m_pHealthComponent = GetOwner()->AddComponent<HealthComponent>();
 
 	if (!m_pPointsComponent)
-		m_pPointsComponent = GetOwner()->AddComponent<dae::PointsComponent>();
+		m_pPointsComponent = GetOwner()->AddComponent<PointsComponent>();
 
 
 
-	m_pMoveCommand = std::make_unique<dae::Move2DCommand>(*m_pRigidbody, m_Speed);
+	m_pMoveCommand = std::make_unique<Move2DCommand>(*m_pRigidbody, m_Speed);
 	m_pDamageCommand = std::make_unique<DamageCommand>(*this, 1);
 	m_pPickupCommand = std::make_unique<FirePickupEventCommand>(*this);
 	m_pShootCommand = std::make_unique<ShootCommand>(*m_pBarrel->GetComponent<BarrelComponent>());
@@ -167,7 +167,7 @@ void TankComponent::Start()
 	}
 }
 
-void TankComponent::Update(float /*deltaTime*/)
+void TankComponent::Update(float)
 {	
 	glm::vec2 v = m_pRigidbody->GetVelocity();
 	float angleDeg = glm::degrees(atan2(v.y, v.x));
@@ -193,7 +193,7 @@ void TankComponent::TakeDamage(int damage)
 
 void TankComponent::Initialize(dae::InputDevice* device, float speed, int lives, dae::GameObject& barrel)
 {
-	m_pHealthComponent = GetOwner()->GetComponent<dae::HealthComponent>();
+	m_pHealthComponent = GetOwner()->GetComponent<HealthComponent>();
 	m_pHealthComponent->Initialize(lives);
 	m_Speed = speed;
 	m_pInputDevice = device;

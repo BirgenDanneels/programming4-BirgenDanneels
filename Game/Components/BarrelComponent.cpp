@@ -7,9 +7,8 @@
 #include "Minigin/Sound/ServiceLocator.h"
 
 BarrelComponent::BarrelComponent(dae::GameObject& pOwner)
-	: Component(pOwner) 
+	: Component(pOwner)
 {
-	m_shotSoundId = dae::ServiceLocator::GetSoundSystem().LoadSound("Shot.wav");
 }
 
 BarrelComponent::~BarrelComponent()
@@ -27,6 +26,8 @@ void BarrelComponent::Initialize(float shootCooldown, dae::GameObject& bulletSpa
 
 void BarrelComponent::Start()
 {
+	m_shotSoundId = dae::ServiceLocator::GetSoundSystem().LoadSound("Shot.wav");
+
 	m_pTextureComponent = GetOwner()->GetComponent<dae::TextureComponent>();
 
 	if(!m_pTextureComponent)

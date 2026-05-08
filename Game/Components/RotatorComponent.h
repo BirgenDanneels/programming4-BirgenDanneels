@@ -2,31 +2,28 @@
 #include "Minigin/Components/Component.h"
 #include "Minigin/GameObject.h"
 
-namespace dae
+class RotatorComponent : public dae::Component
 {
-	class RotatorComponent : public Component
-	{
-	public:
-		RotatorComponent() = delete;
-		RotatorComponent(dae::GameObject& refOwner);
+public:
+	RotatorComponent() = delete;
+	RotatorComponent(dae::GameObject& refOwner);
 
-		RotatorComponent(const RotatorComponent& other) = delete;
-		RotatorComponent(RotatorComponent&& other) = delete;
-		RotatorComponent& operator=(const RotatorComponent& other) = delete;
-		RotatorComponent& operator=(RotatorComponent&& other) = delete;
+	RotatorComponent(const RotatorComponent& other) = delete;
+	RotatorComponent(RotatorComponent&& other) = delete;
+	RotatorComponent& operator=(const RotatorComponent& other) = delete;
+	RotatorComponent& operator=(RotatorComponent&& other) = delete;
 
-		virtual ~RotatorComponent() = default;
+	virtual ~RotatorComponent() = default;
 
-		virtual void FixedUpdate(float deltaTime)override;
-		virtual void Update(float deltaTime) override;
-		virtual void Render() const override {};
+	virtual void FixedUpdate(float)override {};
+	virtual void Update(float deltaTime) override;
+	virtual void Render() const override {};
 
-		virtual void Initialize(float rotationSpeed);
+	virtual void Initialize(float rotationSpeed);
 
-	private:
+private:
 
-		glm::vec3 RotateAround(const glm::vec3& pivot, float angle) const;
+	glm::vec3 RotateAround(const glm::vec3& pivot, float angle) const;
 
-		float m_rotationSpeed;
-	};
-}
+	float m_rotationSpeed;
+};
