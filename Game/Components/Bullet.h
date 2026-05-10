@@ -22,6 +22,8 @@ public:
 
 private:
 	dae::Collider* m_pCollider{nullptr};
+	dae::ObserverHandle m_collisionHandle;
+
 	int m_damage{ 1 };
 	int m_bouncesRemaining{ 5 };
 

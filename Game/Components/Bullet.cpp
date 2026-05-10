@@ -22,7 +22,7 @@ void Bullet::Start()
 	m_pCollider = GetOwner()->GetComponent<dae::Collider>();
 	if (m_pCollider)
 	{
-		m_pCollider->OnCollision().AddObserver(this);
+		m_collisionHandle = m_pCollider->OnCollision().AddObserver(this);
 	}
 }
 

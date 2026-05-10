@@ -2,7 +2,6 @@
 #include <fstream>
 #include "SceneManager.h"
 #include "Loading/Interfaces/IComponentLoadable.h"
-#include "Loading/Interfaces/IEventLinkable.h"
 #include "LoadingHelpers.h"
 
 dae::SceneLoader::SceneLoader(ComponentFactory& factory)
@@ -23,8 +22,6 @@ void dae::SceneLoader::ParseScene(const Json& root, Scene& scene)
     auto& objects = root["scene"]["objects"];
 
     CreateObjects(objects, scene);
-
-    ResolveLinks();
 
     LoadComponents();
 }
@@ -83,20 +80,6 @@ void dae::SceneLoader::CreateComponents(const Json& objJson, GameObject& go)
         // Create component via factory
         Component* comp = m_factory.Create(type, go);
 
-		// Collect links
-        if (compJson.contains("links"))
-        {
-            for (const auto& link : compJson["links"])
-            {
-                m_pendingLinks.push_back({
-                    dynamic_cast<IObserver*>(comp),
-                    link["targetObject"],
-                    link["targetComponent"],
-                    link["event"]
-                    });
-            }
-        }
-
         // Collect parameters and put them in a vector with the component for later loading. (May change to being loaded immediately)
         if (auto* loadable = dynamic_cast<IComponentLoadable*>(comp))
         {
@@ -115,42 +98,6 @@ void dae::SceneLoader::LoadComponents()
     {
         loadable->Load(params);
     }
-}
-
-void dae::SceneLoader::ResolveLinks()
-{
-    for (const auto& link : m_pendingLinks)
-    {
-        IObserver* observer = link.observerPtr;
-        const std::string& targetObjectName = link.targetGameObjectName;
-        const std::string& targetComponentName = link.targetComponentName;
-        const std::string& eventName = link.eventName;
-        if (m_gameObjectByName.find(targetObjectName) == m_gameObjectByName.end())
-        {
-            throw std::runtime_error("Link Error: Target GameObject '" + targetObjectName + "' not found.");
-            continue;
-        }
-        GameObject* targetObject = m_gameObjectByName[targetObjectName];
-        Component* targetComponent = m_factory.Get(targetComponentName, *targetObject);
-
-        if (!targetComponent)
-        {
-            throw std::runtime_error("Link Error: Target Component '" + targetComponentName + "' not found on GameObject '" + targetObjectName + "'.");
-            continue;
-        }
-
-        if (auto* eventLinkable = dynamic_cast<IEventLinkable*>(targetComponent))
-        {
-            if (!eventLinkable->Bind(eventName, observer))
-            {
-                throw std::runtime_error("Link Error: Failed to bind event '" + eventName + "' on component '" + targetComponentName + "'.");
-            }
-        }
-        else
-        {
-            throw std::runtime_error("Link Error: Target Component '" + targetComponentName + "' does not support event linking.");
-        }
-	}
 }
 
 Json dae::SceneLoader::LoadJsonFile(const std::string& path)

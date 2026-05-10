@@ -27,14 +27,10 @@ namespace dae
 
         void LoadComponents();
 
-        void ResolveLinks();
-
         ComponentFactory& m_factory;
 
 		std::unordered_map<std::string, GameObject*> m_gameObjectByName;
 		std::vector<std::tuple<IComponentLoadable*, ParamMap>> m_loadableComponents;
-
-        std::vector<LinkRequest> m_pendingLinks;
 
 
         Json LoadJsonFile(const std::string& path);

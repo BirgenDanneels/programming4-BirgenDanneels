@@ -16,12 +16,4 @@ namespace dae
         std::string name;
         Value defaultValue;
     };
-
-    struct LinkRequest
-    {
-        IObserver* observerPtr;
-        std::string targetGameObjectName;
-        std::string targetComponentName;
-        std::string eventName;
-    };
 }

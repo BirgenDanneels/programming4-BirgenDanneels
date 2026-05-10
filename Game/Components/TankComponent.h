@@ -61,6 +61,9 @@ private:
 
 	dae::sound_id m_shotSound;
 
+	dae::ObserverHandle m_pointObserverHandle; //A component on the points object should do this subscription and hold the handle.
+	dae::ObserverHandle m_collisionHandle;
+
 	dae::InputDevice* m_pInputDevice{ nullptr };
 	dae::GameObject* m_pBarrel{ nullptr };
 	float m_Speed{ 100.0f };

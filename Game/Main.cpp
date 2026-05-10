@@ -46,14 +46,14 @@ static void load()
 	auto blueTank = scene.CreateGameObject();
 	blueTank->GetTransform().SetLocalPosition(100, 280);
 	blueTank->AddComponent<dae::TextureComponent>()->Initialize("BlueTank.png");
-	HealthComponent* blueHealth = blueTank->AddComponent<HealthComponent>();
-	PointsComponent* bluePoints = blueTank->AddComponent<PointsComponent>();
+	blueTank->AddComponent<HealthComponent>();
+	blueTank->AddComponent<PointsComponent>();
 
 	auto redTank = scene.CreateGameObject();
 	redTank->GetTransform().SetLocalPosition(300, 100);
 	redTank->AddComponent<dae::TextureComponent>()->Initialize("RedTank.png");
-	HealthComponent* redHealth = redTank->AddComponent<HealthComponent>();
-	PointsComponent* redPoints = redTank->AddComponent<PointsComponent>();
+	redTank->AddComponent<HealthComponent>();
+	redTank->AddComponent<PointsComponent>();
 
 	// Controls Text
 	auto font2 = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 15);
@@ -75,33 +75,25 @@ static void load()
 	auto blueLivesText = scene.CreateGameObject();
 	blueLivesText->SetParent(textAnchor);
 	blueLivesText->GetTransform().SetLocalPosition(0, 60);
-	StatsComponent* blueLives = blueLivesText->AddComponent<StatsComponent>();
-	blueLives->Initialize("#Red Tank Lives: ");
-	blueHealth->OnHealthChanged().AddObserver(blueLives);
+	blueLivesText->AddComponent<HealthStatsComponent>()->Initialize("#Red Tank Lives: ", *blueTank);
 
 	// Blue Tank Points Text
 	auto bluePointsText = scene.CreateGameObject();
 	bluePointsText->SetParent(textAnchor);
 	bluePointsText->GetTransform().SetLocalPosition(0, 80);
-	StatsComponent* points1 = bluePointsText->AddComponent <StatsComponent>();
-	points1->Initialize("Blue Tank Points: ");
-	bluePoints->OnPointsChanged().AddObserver(points1);
+	bluePointsText->AddComponent<PointsStatsComponent>()->Initialize("Blue Tank Points: ", *blueTank);
 
 	// Red Tank Lives Text
 	auto RedLivesText = scene.CreateGameObject();
 	RedLivesText->SetParent(textAnchor);
 	RedLivesText->GetTransform().SetLocalPosition(0, 100);
-	StatsComponent* redLives = RedLivesText->AddComponent<StatsComponent>();
-	redLives->Initialize("#Red Tank Lives: ");
-	redHealth->OnHealthChanged().AddObserver(redLives);
+	RedLivesText->AddComponent<HealthStatsComponent>()->Initialize("#Red Tank Lives: ", *redTank);
 
 	// Red Tank Points Text
 	auto pointsText2 = scene.CreateGameObject();
 	pointsText2->SetParent(textAnchor);
 	pointsText2->GetTransform().SetLocalPosition(0, 120);
-	StatsComponent* points2 = pointsText2->AddComponent <StatsComponent>();
-	points2->Initialize("Red Tank Points: ");
-	redPoints->OnPointsChanged().AddObserver(points2);
+	pointsText2->AddComponent <PointsStatsComponent>()->Initialize("Red Tank Points: ",*redTank);
 
 	// Barrels
 	auto playerBarrel = scene.CreateGameObject();

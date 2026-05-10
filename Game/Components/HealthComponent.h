@@ -1,6 +1,5 @@
 #include "Minigin/Components/Component.h"
 #include "Minigin/Loading/Interfaces/IComponentLoadable.h"
-#include "Minigin/Loading/Interfaces/IEventLinkable.h"
 #include "Minigin/Events/Subject.h"
 
 namespace dae
@@ -8,7 +7,7 @@ namespace dae
 	class GameObject;
 }
 
-class HealthComponent final : public dae::Component, public dae::IComponentLoadable, public dae::IEventLinkable
+class HealthComponent final : public dae::Component, public dae::IComponentLoadable
 {
 public:
 	HealthComponent(dae::GameObject& pOwner);
@@ -31,9 +30,6 @@ public:
 	virtual std::vector<dae::ParamDefinition> GetExpectedParams() const override;
 	virtual void Load(const dae::ParamMap& params) override;
 
-	// Inherited via IEventLinkable
-	virtual bool Bind(const std::string& eventName, dae::IObserver* observer) override;
-	virtual bool Unbind(const std::string& eventName, dae::IObserver* observer) override;
 private:
 	int m_Health{ 3 };
 

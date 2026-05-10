@@ -124,7 +124,7 @@ void TankComponent::Start()
 	m_pRotateBarrelCommand = std::make_unique<RotateBarrelCommand>(*m_pBarrel->GetComponent<BarrelComponent>());
 
 	//Bind add pointsystems to events
-	OnTankEvent().AddObserver(m_pPointsComponent);
+	m_pointObserverHandle = OnTankEvent().AddObserver(m_pPointsComponent);
 
 	if (m_pInputDevice)
 	{
@@ -163,7 +163,7 @@ void TankComponent::Start()
 	dae::Collider* collider = GetOwner()->GetComponent<dae::Collider>();
 	if (collider)
 	{
-		collider->OnCollision().AddObserver(this);
+		m_collisionHandle = collider->OnCollision().AddObserver(this);
 	}
 }
 
