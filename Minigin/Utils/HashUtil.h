@@ -21,4 +21,13 @@ namespace dae
 	template <size_t N> consteval unsigned int make_sdbm_hash(const char(&text)[N]) {
 		return sdbm_hash<N - 1>::calculate(text);
 	}
+
+	// Runtime version
+	inline unsigned int make_sdbm_hash_runtime(const char* text) {
+		unsigned int value = 0;
+		for (int i = 0; text[i] != '\0'; ++i) {
+			value = text[i] + (value << 6) + (value << 16) - value;
+		}
+		return value;
+	}
 }

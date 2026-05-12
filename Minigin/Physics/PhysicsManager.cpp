@@ -26,49 +26,101 @@ void dae::PhysicsManager::UnregisterCollider(Collider* collider)
 	}
 }
 
-void dae::PhysicsManager::RegisterRigidbody(Rigidbody* rigidbody)
-{
-    if (!rigidbody) return;
-    const auto it = std::find(m_rigidbodies.begin(), m_rigidbodies.end(), rigidbody);
-    if (it == m_rigidbodies.end())
-    {
-        m_rigidbodies.push_back(rigidbody);
-    }
-}
-
-void dae::PhysicsManager::UnregisterRigidbody(Rigidbody* rigidbody)
-{
-	if (!rigidbody) return;
-	const auto it = std::find(m_rigidbodies.begin(), m_rigidbodies.end(), rigidbody);
-	if (it != m_rigidbodies.end())
-	{
-		m_rigidbodies.erase(it);
-	}
-}
-
 void dae::PhysicsManager::Clear()
 {
 	m_colliders.clear();
-	m_rigidbodies.clear();
 }
 
 void dae::PhysicsManager::FixedUpdate(float fixedDeltaTime)
 {
-	for (auto& rb : m_rigidbodies) {
-		ResolveMovement(rb, fixedDeltaTime);
-	}
+    std::vector<ColliderPair> pairs = GetColliderPairs();
+
+	float remaining = 1;
+
+    while (remaining > 0)
+    {
+		InternalHit bestHit{};
+        bestHit.t = 1.0f;
+
+		for (ColliderPair& pair : pairs)
+        {
+            if (!IsResolvable(pair))
+                continue;
+
+			InternalHit hit = ResolvePair(pair, fixedDeltaTime * remaining);
+
+            if (hit.hit && hit.t < bestHit.t)
+                bestHit = hit;
+
+        }
+
+        if (bestHit.hit)
+        {
+            m_collisionEvents.push_back(bestHit);
+
+			// Handle response for both objects with correct normals
+			HandleResponse(bestHit, bestHit.a, bestHit.normal, fixedDeltaTime * remaining);
+            HandleResponse(bestHit, bestHit.b, -bestHit.normal, fixedDeltaTime * remaining);
+
+            for (Collider* c : m_colliders)
+            {
+				if (c == bestHit.a || c == bestHit.b)
+					continue;
+
+                if (Rigidbody* rb = c->GetRigidbody())
+                {
+                    glm::vec2 pos = rb->GetOwner()->GetTransform().GetWorldPosition();
+                    pos += rb->GetVelocity() * fixedDeltaTime * remaining * bestHit.t;
+                    rb->GetOwner()->GetTransform().SetWorldPosition({ pos.x, pos.y, rb->GetOwner()->GetTransform().GetWorldPosition().z });
+                }
+            }
+
+            remaining *= (1.0f - bestHit.t);
+        }
+        else
+        {
+            for (Collider* c : m_colliders)
+            {
+                if (Rigidbody* rb = c->GetRigidbody())
+                {
+                    glm::vec2 pos = rb->GetOwner()->GetTransform().GetWorldPosition();
+                    pos += rb->GetVelocity() * fixedDeltaTime * remaining;
+                    rb->GetOwner()->GetTransform().SetWorldPosition({ pos.x, pos.y, rb->GetOwner()->GetTransform().GetWorldPosition().z});
+                }
+            }
+            break;
+		}
+    }
 
 	DispatchEvents();
 }
 
-dae::AABB dae::PhysicsManager::BoxAt(const Rigidbody& body)
+void dae::PhysicsManager::HandleResponse(const InternalHit& hit, Collider* collider, const glm::vec2& normal, float fixedDeltaTime)
 {
-    return BoxAt(*body.GetCollider(), body.GetOwner()->GetTransform().GetWorldPosition());
-}
+    Rigidbody* rb = collider->GetRigidbody();
+	if (!rb) return;
 
-dae::AABB dae::PhysicsManager::BoxAt(const Rigidbody& body, const glm::vec2& pos)
-{
-	return BoxAt(*body.GetCollider(), pos);
+	glm::vec2 pos = rb->GetOwner()->GetTransform().GetWorldPosition();
+	glm::vec2 velocity = rb->GetVelocity();
+
+    // Move to collision point
+    pos += velocity * fixedDeltaTime * hit.t;
+
+    if (rb->CanBounce())
+    {
+        // Reflect velocity across the normal (preserve magnitude)
+        glm::vec2 reflected = velocity - 2.0f * glm::dot(velocity, normal) * normal;
+        rb->SetVelocity(reflected);
+    }
+    else
+    {
+        // Slide: remove velocity perpendicular to surface
+        glm::vec2 slidVel = velocity - glm::dot(velocity, normal) * normal;
+        rb->SetVelocity(slidVel);
+    }
+
+    pos += normal * 0.01f;
+    rb->GetOwner()->GetTransform().SetWorldPosition({ pos.x, pos.y, rb->GetOwner()->GetTransform().GetWorldPosition().z });
 }
 
 dae::AABB dae::PhysicsManager::BoxAt(const Collider& col)
@@ -88,9 +140,9 @@ dae::AABB dae::PhysicsManager::BoxAt(const Collider& col, const glm::vec2& pos)
 // Inspired by: "Swept AABB Collision Detection and Response" by BrendanL.K (from gamedev.net)
 // https://gamedev.net/tutorials/programming/general-and-gameplay-programming/swept-aabb-collision-detection-and-response-r3084/
 
-dae::Hit dae::PhysicsManager::SweepAABB(const AABB& moving, const glm::vec2& velocity, const AABB& target)
+dae::PhysicsManager::InternalHit dae::PhysicsManager::SweepAABB(const AABB& moving, const glm::vec2& velocity, const AABB& target)
 {
-    Hit result;
+    InternalHit result;
     result.hit = false;
     result.t = 1.0f;
 
@@ -154,73 +206,61 @@ dae::Hit dae::PhysicsManager::SweepAABB(const AABB& moving, const glm::vec2& vel
     return result;
 }
 
-void dae::PhysicsManager::ResolveMovement(Rigidbody* rb, float deltaTime)
+std::vector<dae::PhysicsManager::ColliderPair> dae::PhysicsManager::GetColliderPairs()
 {
-    glm::vec2 velocity = rb->GetVelocity();
-
-    glm::vec2 remaining = velocity * deltaTime;
-    glm::vec2 pos = rb->GetOwner()->GetTransform().GetWorldPosition();
-
-    for (int i = 0; i < 4; i++) 
+    std::vector<ColliderPair> pairs;
+    for (size_t i = 0; i < m_colliders.size(); ++i)
     {
-        Hit bestHit{};
-        bestHit.t = 1.0f;
-
-        // Find earliest collision
-        for (auto& collider : m_colliders) 
+        for (size_t j = i + 1; j < m_colliders.size(); ++j)
         {
-            Hit h = SweepAABB(BoxAt(*rb, pos), remaining, BoxAt(*collider));
-
-            if (h.hit && h.t < bestHit.t) 
-            {
-				h.b = collider;
-                bestHit = h;
-            }
+            pairs.push_back({ m_colliders[i], m_colliders[j] });
         }
+    }
+    return pairs;
+}
 
-        if (!bestHit.hit) 
-        {
-            pos += remaining;
-            break;
-        }
+bool dae::PhysicsManager::IsResolvable(const ColliderPair& pair) const
+{
+    if (!pair.a->GetRigidbody() && !pair.b->GetRigidbody())
+        return false;
 
-        bestHit.a = rb->GetCollider();
-		m_collisionEvents.push_back(bestHit);
+    return true;
+}
 
-        // Move to collision point
-        pos += remaining * bestHit.t;
-
-        remaining = remaining * (1.0f - bestHit.t);
-
-		//This is a bounce where no energy gets lost, so the velocity is reflected across the normal of the collision surface.
-        if (rb->CanBounce())
-        {
-            if (std::abs(bestHit.normal.x) > 0.0001f) remaining.x = -remaining.x;
-            if (std::abs(bestHit.normal.y) > 0.0001f) remaining.y = -remaining.y;
-
-            // Reflect velocity
-            glm::vec2 reflected = velocity - 2.0f * glm::dot(velocity, bestHit.normal) * bestHit.normal;
-			rb->SetVelocity(reflected);
-        }
-        // Slide
-        remaining = remaining - glm::dot(remaining, bestHit.normal) * bestHit.normal;
-        // Small push to avoid sticking
-        pos += bestHit.normal * 0.001f;
+dae::PhysicsManager::InternalHit dae::PhysicsManager::ResolvePair(const ColliderPair& pair, float remainingDeltaTime)
+{
+    glm::vec2 velA{ 0,0 };
+    glm::vec2 velB{ 0,0 };
+    if (pair.a->GetRigidbody())
+    {
+        velA = pair.a->GetRigidbody()->GetVelocity();
+    }
+    if (pair.b->GetRigidbody())
+    {
+        velB = pair.b->GetRigidbody()->GetVelocity();
     }
 
-	rb->GetOwner()->GetTransform().SetWorldPosition({ pos.x, pos.y, rb->GetOwner()->GetTransform().GetWorldPosition().z });
+    glm::vec2 relativeVel = velA - velB;
+    relativeVel *= remainingDeltaTime;
+
+    InternalHit hit = SweepAABB(BoxAt(*pair.a), relativeVel, BoxAt(*pair.b));
+	hit.a = pair.a;
+	hit.b = pair.b;
+
+	return hit;
 }
 
 void dae::PhysicsManager::DispatchEvents()
 {
+
     for(auto& event : m_collisionEvents)
     {
 		Collider* colA = event.a;
         Collider* colB = event.b;
         if (colA && colB) 
         {
-            colA->OnCollision().NotifyObservers(event);
-            colB->OnCollision().NotifyObservers(event);
+            colA->OnCollision().NotifyObservers({event.b, event.t, event.normal});
+            colB->OnCollision().NotifyObservers({event.a, event.t, -event.normal});
 		}
     }
 

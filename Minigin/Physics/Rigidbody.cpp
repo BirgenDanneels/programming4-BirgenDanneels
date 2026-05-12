@@ -12,13 +12,14 @@ dae::Rigidbody::Rigidbody(GameObject& refOwner)
 
 dae::Rigidbody::~Rigidbody()
 {
-	ServiceLocator::GetPhysicsManager().UnregisterRigidbody(this);
 }
 
 void dae::Rigidbody::Start()
 {
-	m_pCollider = GetOwner()->GetComponent<Collider>();
-	ServiceLocator::GetPhysicsManager().RegisterRigidbody(this);
+	if (Collider* collider = GetOwner()->GetComponent<Collider>())
+	{
+		collider->SetRigidbody(this);
+	}
 }
 
 void dae::Rigidbody::FixedUpdate(float)

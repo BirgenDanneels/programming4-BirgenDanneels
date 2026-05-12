@@ -22,7 +22,7 @@ enum class TankEvents
 	Win
 };
 
-class TankComponent final : public dae::Component, public dae::Observer<dae::Hit>
+class TankComponent final : public dae::Component, public dae::Observer<dae::HitEvent>
 {
 public:
 	TankComponent(dae::GameObject& pOwner);
@@ -43,7 +43,7 @@ public:
 
 	dae::Subject<TankEvents>& OnTankEvent() { return m_onTankEventSubject; }
 
-	virtual void OnNotify(dae::Hit hit) override;
+	virtual void OnNotify(dae::HitEvent hit) override;
 
 private:
 

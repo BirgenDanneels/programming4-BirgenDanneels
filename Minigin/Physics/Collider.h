@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include "Minigin/Components/Component.h"
 #include "Minigin/Events/Subject.h"
+#include "Rigidbody.h"
 #include "PhysicsManager.h"
 
 namespace dae
@@ -39,18 +40,23 @@ namespace dae
 		glm::vec2 GetWorldPosition() const;
 		AABB GetBounds() const;
 
+		void SetRigidbody(Rigidbody* rb) { m_pRigidbody = rb; }
+		Rigidbody* GetRigidbody() const { return m_pRigidbody; }
+
 		void SetDebugDraw(bool enable) { m_debugDraw = enable; }
 		bool GetDebugDraw() const { return m_debugDraw; }
 
 		// Events
-		Subject<Hit>& OnCollision() { return m_onCollision; }
+		Subject<HitEvent>& OnCollision() { return m_onCollision; }
 
 	private:
 		glm::vec2 m_offset{ 0.0f, 0.0f };
 		glm::vec2 m_size{ 1.0f, 1.0f };
 		bool m_debugDraw{ true };
 
+		Rigidbody* m_pRigidbody{ nullptr };
+
 		// Event subjects
-		Subject<Hit> m_onCollision;
+		Subject<HitEvent> m_onCollision;
 	};
 }

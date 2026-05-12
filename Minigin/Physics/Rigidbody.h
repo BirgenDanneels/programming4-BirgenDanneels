@@ -4,8 +4,6 @@
 
 namespace dae
 {
-	class Collider;
-
 	class Rigidbody final : public Component
 	{
 	public:
@@ -54,8 +52,6 @@ namespace dae
 		bool IsFrozenX() const { return m_freezeX; }
 		bool IsFrozenY() const { return m_freezeY; }
 
-		Collider* GetCollider() const { return m_pCollider; }
-
 	private:
 
 		// Movement and physics
@@ -71,7 +67,5 @@ namespace dae
 
 		bool m_freezeX{ false };
 		bool m_freezeY{ false };
-
-		Collider* m_pCollider{ nullptr };
 	};
 }

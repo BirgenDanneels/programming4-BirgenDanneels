@@ -4,7 +4,7 @@
 #include "Minigin/Physics/PhysicsManager.h"
 #include "Minigin/Physics/Collider.h"
 
-class Bullet final : public dae::Component, public dae::Observer<dae::Hit>
+class Bullet final : public dae::Component, public dae::Observer<dae::HitEvent>
 {
 public:
 	Bullet(dae::GameObject& pOwner);
@@ -18,7 +18,7 @@ public:
 	virtual void Render() const override {};
 
 	// Inherited via Observer
-	virtual void OnNotify(dae::Hit hit) override;
+	virtual void OnNotify(dae::HitEvent hit) override;
 
 private:
 	dae::Collider* m_pCollider{nullptr};

@@ -112,6 +112,7 @@ static void load()
 
 	redTank->AddComponent<dae::Collider>()->InitializeBoxCollider(30, 30);
 	redTank->AddComponent<TankComponent>()->Initialize(dae::InputManager::GetInstance().GetGamepad(0), 200.f, 3, *playerBarrel);
+	redTank->SetTag(dae::make_sdbm_hash("Player"));
 	
 
 	auto worldTop = scene.CreateGameObject();

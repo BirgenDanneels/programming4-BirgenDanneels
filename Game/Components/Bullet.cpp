@@ -1,5 +1,6 @@
 #include "Bullet.h"
 #include "Minigin/GameObject.h"
+#include "Minigin/Utils/HashUtil.h"
 #include "TankComponent.h"
 
 Bullet::Bullet(dae::GameObject& pOwner)
@@ -26,18 +27,17 @@ void Bullet::Start()
 	}
 }
 
-void Bullet::OnNotify(dae::Hit hit)
+void Bullet::OnNotify(dae::HitEvent hit)
 {
-	auto otherCollider = (hit.a == m_pCollider) ? hit.b : hit.a;
-
-	//IMPLEMENT TAGS
-
-	auto otherObject = otherCollider->GetOwner();
-	if(auto comp = otherObject->GetComponent<TankComponent>())
+	auto otherObject = hit.otherCollider->GetOwner();
+	if (otherObject->GetTag() == dae::make_sdbm_hash("Player"))
 	{
-		// Handle collision with tank
-		comp->TakeDamage(m_damage);
-		GetOwner()->Delete();
+		if (auto comp = otherObject->GetComponent<TankComponent>())
+		{
+			// Handle collision with tank
+			comp->TakeDamage(m_damage);
+			GetOwner()->Delete();
+		}
 	}
 	else
 	{

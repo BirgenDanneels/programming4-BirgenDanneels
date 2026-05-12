@@ -91,6 +91,11 @@ namespace dae
 		void SetScene(Scene* scene);
 		Scene* GetScene() const;
 		
+		// TAG FUNCTIONS
+		void SetTag(unsigned int tag) { m_Tag = tag; }
+		void SetTag(std::string tag); //This should only be used for loading from file.
+		unsigned int GetTag() const { return m_Tag; }
+
 	private:
 
 		//COMPONENT MEMBER VARIABLES
@@ -105,6 +110,9 @@ namespace dae
 		std::vector<std::unique_ptr<GameObject>> m_vectChildren;
 
 		Scene* m_pScene = nullptr;
+
+		// TAG MEMBER VARIABLE
+		unsigned int m_Tag{};
 
 		//HIERARCHY FUNCTIONS
 		std::unique_ptr<dae::GameObject> RemoveChild(GameObject* ptrChild);

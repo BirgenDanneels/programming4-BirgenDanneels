@@ -200,6 +200,6 @@ void TankComponent::Initialize(dae::InputDevice* device, float speed, int lives,
 	m_pBarrel = &barrel;
 }
 
-void TankComponent::OnNotify(dae::Hit /*hit*/)
+void TankComponent::OnNotify(dae::HitEvent /*hit*/)
 {
 }

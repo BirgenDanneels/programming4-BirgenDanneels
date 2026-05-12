@@ -2,10 +2,11 @@
 #include <string>
 #include "ResourceManager.h"
 #include "SceneManager.h"
+#include "Utils/HashUtil.h"
 
 
 dae::GameObject::GameObject()
-	:m_transform{this}, m_ptrParent{ nullptr }
+	:m_transform{ this }, m_ptrParent{ nullptr }, m_Tag{ make_sdbm_hash("Default") }
 {
 }
 
@@ -223,4 +224,9 @@ void dae::GameObject::RenderUI() const
 	{
 		child->RenderUI();
 	}
+}
+
+void dae::GameObject::SetTag(std::string tag)
+{
+	m_Tag = make_sdbm_hash_runtime(tag.c_str());
 }
