@@ -1,6 +1,5 @@
 #include "Minigin/Events/Observer.h"
 #include "Minigin/Components/Component.h"
-#include "Minigin/Loading/Interfaces/IComponentLoadable.h"
 #include "Minigin/Events/Subject.h"
 
 namespace dae
@@ -8,7 +7,7 @@ namespace dae
 	class TextComponent;
 }
 
-class StatsComponent : public dae::Component, public dae::IComponentLoadable, public dae::Observer<int>
+class StatsComponent : public dae::Component, public dae::Observer<int>
 {
 public:
 	StatsComponent(dae::GameObject& pOwner);
@@ -37,6 +36,10 @@ public:
 
 	 void Initialize(std::string preStatString, dae::GameObject& targetObject);
 
+	 // Loading functions
+	 virtual std::vector<dae::ParamDefinition> GetExpectedParams() const override;
+	 virtual void Load(const dae::ParamMap& params) override;
+
 private:
 
 	dae::ObserverHandle m_pointsObserverHandle;
@@ -47,6 +50,10 @@ class HealthStatsComponent final : public StatsComponent
 public:
 	HealthStatsComponent(dae::GameObject& pOwner);
 	void Initialize(std::string preStatString, dae::GameObject& targetObject);
+
+	// Loading functions
+	virtual std::vector<dae::ParamDefinition> GetExpectedParams() const override;
+	virtual void Load(const dae::ParamMap& params) override;
 
 private:
 	dae::ObserverHandle m_healthObserverHandle;

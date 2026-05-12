@@ -4,6 +4,7 @@
 #include "Minigin/Transform.h"
 #include "Minigin/Sound/ServiceLocator.h"
 #include <imgui.h>
+#include "Minigin/Loading/LoadingHelpers.h"
 
 dae::Collider::Collider(GameObject& refOwner)
 	: Component(refOwner)
@@ -45,6 +46,20 @@ void dae::Collider::InitializeBoxCollider(float width, float height, float xOffs
 {    
 	m_size = { width, height };
 	m_offset = { xOffset, yOffset };
+}
+
+std::vector<dae::ParamDefinition> dae::Collider::GetExpectedParams() const
+{
+	return { {"width", 0.0f}, {"height", 0.0f}, {"xOffset", 0.0f}, {"yOffset", 0.0f} };
+}
+
+void dae::Collider::Load(const ParamMap& params)
+{
+	float width = GetRequiredParam<float>(params, "width");
+	float height = GetRequiredParam<float>(params, "height");
+	float xOffset = GetOptionalParam<float>(params, "xOffset", 0.0f);
+	float yOffset = GetOptionalParam<float>(params, "yOffset", 0.0f);
+	InitializeBoxCollider(width, height, xOffset, yOffset);
 }
 
 glm::vec2 dae::Collider::GetWorldPosition() const

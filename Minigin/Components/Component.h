@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <vector>
+#include "Minigin/Loading/LoadingStructs.h"
 
 namespace dae
 {
@@ -26,6 +28,10 @@ namespace dae
 		virtual void RenderUI() {};
 
 		GameObject* GetOwner() const;
+
+		//Loading functions
+		virtual std::vector<ParamDefinition> GetExpectedParams() const = 0;
+		virtual void Load(const ParamMap& params) = 0;
 
 	private:
 

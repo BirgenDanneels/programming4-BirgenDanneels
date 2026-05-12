@@ -18,7 +18,7 @@
 #include <filesystem>
 namespace fs = std::filesystem;
 
-static void load()
+inline void load()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene();
 
@@ -111,7 +111,7 @@ static void load()
 	//blueTank->AddComponent<TankComponent>()->Initialize(dae::InputManager::GetInstance().GetKeyboard(), 100.f, 3);
 
 	redTank->AddComponent<dae::Collider>()->InitializeBoxCollider(30, 30);
-	redTank->AddComponent<TankComponent>()->Initialize(dae::InputManager::GetInstance().GetGamepad(0), 200.f, 3, *playerBarrel);
+	redTank->AddComponent<TankComponent>()->Initialize("gamepad_0", 200.f, 3, *playerBarrel);
 	redTank->SetTag(dae::make_sdbm_hash("Player"));
 	
 
@@ -144,10 +144,17 @@ int main(int, char*[]) {
 	factory.Register<dae::TextureComponent>("TextureComponent");
 	factory.Register<dae::TextComponent>("TextComponent");
 	factory.Register<HealthComponent>("HealthComponent");
-	factory.Register<StatsComponent>("StatsComponent");
+	factory.Register<PointsComponent>("PointsComponent");
+	factory.Register<HealthStatsComponent>("HealthStatsComponent");
+	factory.Register<PointsStatsComponent>("PointsStatsComponent");
+	factory.Register<FPSCounter>("FPSCounter");
+	factory.Register<BarrelComponent>("BarrelComponent");
+	factory.Register<TankComponent>("TankComponent");
+	factory.Register<dae::Collider>("Collider");
 
-	engine.Run(load);
-	//engine.Run("Level.json");
+
+	//engine.Run(load);
+	engine.Run("Level.json");
 
     return 0;
 }

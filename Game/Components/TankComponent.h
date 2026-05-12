@@ -39,7 +39,10 @@ public:
 		
 	void TakeDamage(int damage);
 
-	void Initialize(dae::InputDevice* device, float speed, int lives, dae::GameObject& barrel);
+	void Initialize(const std::string& device, float speed, int lives, dae::GameObject& barrel);
+	//Loading functions
+	virtual std::vector<dae::ParamDefinition> GetExpectedParams() const override;
+	virtual void Load(const dae::ParamMap& params) override;
 
 	dae::Subject<TankEvents>& OnTankEvent() { return m_onTankEventSubject; }
 

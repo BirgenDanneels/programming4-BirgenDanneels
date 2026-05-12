@@ -1,5 +1,4 @@
 #include "Minigin/Components/Component.h"
-#include "Minigin/Loading/Interfaces/IComponentLoadable.h"
 #include "Minigin/Events/Subject.h"
 
 namespace dae
@@ -7,7 +6,7 @@ namespace dae
 	class GameObject;
 }
 
-class HealthComponent final : public dae::Component, public dae::IComponentLoadable
+class HealthComponent final : public dae::Component
 {
 public:
 	HealthComponent(dae::GameObject& pOwner);

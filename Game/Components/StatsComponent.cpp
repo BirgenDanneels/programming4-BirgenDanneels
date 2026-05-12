@@ -4,6 +4,7 @@
 #include "Minigin/ResourceManager.h"
 #include "PointsComponent.h"
 #include "HealthComponent.h"
+#include "Minigin/Loading/LoadingHelpers.h"
 
 StatsComponent::StatsComponent(dae::GameObject& pOwner)
 	: dae::Component(pOwner), m_ptrTextComponent(GetOwner()->GetComponent<dae::TextComponent>())
@@ -60,6 +61,21 @@ void PointsStatsComponent::Initialize(std::string preStatString, dae::GameObject
 	}
 }
 
+std::vector<dae::ParamDefinition> PointsStatsComponent::GetExpectedParams() const
+{
+	return {
+		{ "text", std::string("") },
+		{ "targetObject", static_cast<dae::GameObject*>(nullptr) }
+	};
+}
+
+void PointsStatsComponent::Load(const dae::ParamMap& params)
+{
+	std::string text = dae::GetRequiredParam<std::string>(params, "text");
+	dae::GameObject* targetObject = dae::GetRequiredParam<dae::GameObject*>(params, "targetObject");
+	Initialize(text, *targetObject);
+}
+
 HealthStatsComponent::HealthStatsComponent(dae::GameObject& pOwner)
 	: StatsComponent(pOwner)
 {
@@ -72,4 +88,19 @@ void HealthStatsComponent::Initialize(std::string preStatString, dae::GameObject
 	{
 		m_healthObserverHandle = healthComp->OnHealthChanged().AddObserver(this);
 	}
+}
+
+std::vector<dae::ParamDefinition> HealthStatsComponent::GetExpectedParams() const
+{
+	return {
+	{ "text", std::string("") },
+	{ "targetObject", static_cast<dae::GameObject*>(nullptr) }
+	};
+}
+
+void HealthStatsComponent::Load(const dae::ParamMap& params)
+{
+	std::string text = dae::GetRequiredParam<std::string>(params, "text");
+	dae::GameObject* targetObject = dae::GetRequiredParam<dae::GameObject*>(params, "targetObject");
+	Initialize(text, *targetObject);
 }

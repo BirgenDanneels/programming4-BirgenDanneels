@@ -8,6 +8,7 @@
 #include "Minigin/Physics/Rigidbody.h"
 #include "Minigin/Physics/Collider.h"
 #include "BarrelComponent.h"
+#include "Minigin/Loading/LoadingHelpers.h"
 
 class DamageCommand final : public dae::Command
 {
@@ -151,8 +152,6 @@ void TankComponent::Start()
 			inputMap->BindAction("Damage", (int)GamepadInput::X, InputState::Pressed, *m_pDamageCommand);
 			inputMap->BindAction("FirePickUpEvent", (int)GamepadInput::A, InputState::Pressed, *m_pPickupCommand);
 			inputMap->BindAction("FireKillEvent", (int)GamepadInput::B, InputState::Pressed, *m_pShootCommand);
-
-
 		}
 
 
@@ -191,15 +190,31 @@ void TankComponent::TakeDamage(int damage)
 	m_pHealthComponent->TakeDamage(damage);
 }
 
-void TankComponent::Initialize(dae::InputDevice* device, float speed, int lives, dae::GameObject& barrel)
+void TankComponent::Initialize(const std::string& device, float speed, int lives, dae::GameObject& barrel)
 {
 	m_pHealthComponent = GetOwner()->GetComponent<HealthComponent>();
 	m_pHealthComponent->Initialize(lives);
 	m_Speed = speed;
-	m_pInputDevice = device;
+	m_pInputDevice = dae::InputManager::GetInstance().GetDeviceByName(device);
 	m_pBarrel = &barrel;
 }
 
-void TankComponent::OnNotify(dae::HitEvent /*hit*/)
+std::vector<dae::ParamDefinition> TankComponent::GetExpectedParams() const
+{
+	dae::GameObject* nullPtr{ nullptr };
+
+	return { { "speed", 100.0f }, { "lives", 3 }, { "barrel", nullPtr }, { "device", "" } };
+}
+
+void TankComponent::Load(const dae::ParamMap& params)
+{
+	float speed = GetRequiredParam<float>(params, "speed");
+	int lives = GetRequiredParam<int>(params, "lives");
+	dae::GameObject* barrel = GetRequiredParam<dae::GameObject*>(params, "barrel");
+	const std::string& device = GetRequiredParam<std::string>(params, "device");
+	Initialize(device, speed, lives, *barrel);
+}
+
+void TankComponent::OnNotify(dae::HitEvent)
 {
 }

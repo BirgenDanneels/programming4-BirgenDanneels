@@ -19,6 +19,10 @@ namespace dae
 		float GetSpeed() const { return m_speed; }
 		void Move(const glm::vec2& direction);
 
+		//Loading functions
+		virtual std::vector<ParamDefinition> GetExpectedParams() const override;
+		virtual void Load(const ParamMap& params) override;
+
 	private:
 
 		float m_speed{ 100.0f };

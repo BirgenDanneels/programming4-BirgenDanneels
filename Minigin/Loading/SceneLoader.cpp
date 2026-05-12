@@ -1,7 +1,6 @@
 #include "SceneLoader.h"
 #include <fstream>
 #include "SceneManager.h"
-#include "Loading/Interfaces/IComponentLoadable.h"
 #include "LoadingHelpers.h"
 
 dae::SceneLoader::SceneLoader(ComponentFactory& factory)
@@ -80,14 +79,11 @@ void dae::SceneLoader::CreateComponents(const Json& objJson, GameObject& go)
         // Create component via factory
         Component* comp = m_factory.Create(type, go);
 
-        // Collect parameters and put them in a vector with the component for later loading. (May change to being loaded immediately)
-        if (auto* loadable = dynamic_cast<IComponentLoadable*>(comp))
+        // Collect parameters and put them in a vector with the component for later loading.
+        if (compJson.contains("params"))
         {
-            if (compJson.contains("params"))
-            {
-                ParamMap params = ParseParams(compJson["params"]);
-				m_loadableComponents.emplace_back(loadable, params);
-            }
+            ParamMap params = ParseParams(compJson["params"]);
+			m_loadableComponents.emplace_back(comp, params);
         }
     }
 }
@@ -96,9 +92,70 @@ void dae::SceneLoader::LoadComponents()
 {
     for (auto& [loadable, params] : m_loadableComponents)
     {
+        FinalizeParams(params);
         loadable->Load(params);
     }
 }
+
+dae::ParamMap dae::SceneLoader::ParseParams(const Json& params)
+{
+    ParamMap out;
+
+    if (!params.is_object())
+        return out;
+
+    for (auto it = params.begin(); it != params.end(); ++it)
+    {
+        const std::string key = it.key();
+        const Json& value = it.value();
+
+        if (value.is_string())
+			out[key] = value.get<std::string>();
+        else if (value.is_number())
+        {
+            // Try to parse as float first for consistency with numeric data
+            if (value.is_number_float() || value.get<double>() != static_cast<double>(value.get<int>()))
+            {
+                out[key] = value.get<float>();
+            }
+            else
+            {
+                out[key] = value.get<int>();
+            }
+        }
+        else if (value.is_boolean())
+            out[key] = value.get<bool>();
+        else if (value.is_array())
+            out[key] = value.get<std::vector<int>>();
+    }
+
+    return out;
+}
+
+void dae::SceneLoader::FinalizeParams(ParamMap& params)
+{
+	for (auto& [key, param] : params)
+    {
+        if (std::holds_alternative<std::string>(param))
+        {
+            std::string str = std::get<std::string>(param);
+            if(str.starts_with("GO_"))
+            {
+                std::string goName = str.substr(3);
+                if (m_gameObjectByName.find(goName) != m_gameObjectByName.end())
+                {
+                    param = m_gameObjectByName[goName];
+                }
+                else
+                {
+                    throw std::runtime_error("GameObject '" + goName + "' not found for parameter '" + key + "'.");
+                }
+            }
+        }
+    }
+}
+
+
 
 Json dae::SceneLoader::LoadJsonFile(const std::string& path)
 {

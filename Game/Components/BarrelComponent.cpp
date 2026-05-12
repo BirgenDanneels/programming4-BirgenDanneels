@@ -5,6 +5,7 @@
 #include "Minigin/Physics/Collider.h"
 #include "Bullet.h"
 #include "Minigin/Sound/ServiceLocator.h"
+#include "Minigin/Loading/LoadingHelpers.h"
 
 BarrelComponent::BarrelComponent(dae::GameObject& pOwner)
 	: Component(pOwner)
@@ -13,15 +14,6 @@ BarrelComponent::BarrelComponent(dae::GameObject& pOwner)
 
 BarrelComponent::~BarrelComponent()
 {
-}
-
-void BarrelComponent::Initialize(float shootCooldown, dae::GameObject& bulletSpawn, int damage, int maxBounces, float rotationSpeed)
-{
-	m_shootCooldown = shootCooldown;
-	m_pBulletSpawnPoint = &bulletSpawn;
-	m_damage = damage;
-	m_maxBounces = maxBounces;
-	m_rotationSpeed = rotationSpeed;
 }
 
 void BarrelComponent::Start()
@@ -75,10 +67,42 @@ void BarrelComponent::Shoot()
 	//Shooting sound
 	dae::ServiceLocator::GetSoundSystem().Play(m_shotSoundId, 0.2f);
 
-	m_shootTimer = m_shootCooldown;
+	m_shootTimer = m_fireRate;
 }
 
 void BarrelComponent::Rotate(float direction)
 {
 	m_rotationDirection = direction;
+}
+
+
+void BarrelComponent::Initialize(float fireRate, dae::GameObject& bulletSpawn, int damage, int maxBounces, float rotationSpeed)
+{
+	m_fireRate = fireRate;
+	m_pBulletSpawnPoint = &bulletSpawn;
+	m_damage = damage;
+	m_maxBounces = maxBounces;
+	m_rotationSpeed = rotationSpeed;
+}
+
+std::vector<dae::ParamDefinition> BarrelComponent::GetExpectedParams() const
+{
+	dae::GameObject* nullPtr = nullptr;
+
+	return { { "fireRate", 5.f },
+		{ "bulletSpawn", nullPtr},
+		{ "damage", 1 },
+		{ "maxBounces", 5 },
+		{ "rotationSpeed", 180.f } };
+}
+
+void BarrelComponent::Load(const dae::ParamMap& params)
+{
+	float shootCooldown = dae::GetRequiredParam<float>(params, "fireRate");
+	dae::GameObject* bulletSpawn = dae::GetRequiredParam<dae::GameObject*>(params, "bulletSpawn");
+	int damage = dae::GetRequiredParam<int>(params, "damage");
+	int maxBounces = dae::GetRequiredParam<int>(params, "maxBounces");
+	float rotationSpeed = dae::GetRequiredParam<float>(params, "rotationSpeed");
+
+	Initialize(shootCooldown, *bulletSpawn, damage, maxBounces, rotationSpeed);
 }

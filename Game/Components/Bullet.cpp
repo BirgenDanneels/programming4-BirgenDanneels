@@ -2,6 +2,7 @@
 #include "Minigin/GameObject.h"
 #include "Minigin/Utils/HashUtil.h"
 #include "TankComponent.h"
+#include "Minigin/Loading/LoadingHelpers.h"
 
 Bullet::Bullet(dae::GameObject& pOwner)
 	: Component(pOwner)
@@ -16,6 +17,17 @@ void Bullet::Initialize(int damage, int bounces)
 {
 	m_damage = damage;
 	m_bouncesRemaining = bounces;
+}
+
+std::vector<dae::ParamDefinition> Bullet::GetExpectedParams() const
+{
+	return { {"damage", 1}, {"bounces", 5} };
+}
+
+void Bullet::Load(const dae::ParamMap& params)
+{
+	m_damage = GetRequiredParam<int>(params, "damage");
+	m_bouncesRemaining = GetRequiredParam<int>(params, "bounces");
 }
 
 void Bullet::Start()

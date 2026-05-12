@@ -2,6 +2,7 @@
 #include "ResourceManager.h"
 #include "GameObject.h"
 #include "Renderer.h"
+#include "Loading/LoadingHelpers.h"
 
 dae::TextureComponent::TextureComponent(dae::GameObject& refOwner)
 	:Component(refOwner)

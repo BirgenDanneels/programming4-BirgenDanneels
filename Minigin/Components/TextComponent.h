@@ -1,7 +1,6 @@
 #pragma once
 #include "Minigin/Components/TextureComponent.h"
 #include <SDL3/SDL.h>
-#include "Minigin/Loading/Interfaces/IComponentLoadable.h"
 
 namespace dae
 {
@@ -31,7 +30,7 @@ namespace dae
 		void SetText(const std::string& text);
 		void SetColor(const SDL_Color& color);
 
-		// Inherited via IComponentLoadable
+		//Loading functions
 		virtual std::vector<ParamDefinition> GetExpectedParams() const override;
 		virtual void Load(const ParamMap& params) override;
 

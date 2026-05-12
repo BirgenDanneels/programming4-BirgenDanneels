@@ -1,5 +1,4 @@
 #pragma once
-
 #include <variant>
 #include <unordered_map>
 #include <string>
@@ -8,7 +7,9 @@
 
 namespace dae
 {
-    using Value = std::variant<int, float, bool, std::string, std::vector<int>>;
+    class GameObject; // Forward declaration
+
+    using Value = std::variant<int, float, bool, std::string, std::vector<int>, GameObject*>;
     using ParamMap = std::unordered_map<std::string, Value>;
 
     struct ParamDefinition

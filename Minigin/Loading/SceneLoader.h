@@ -6,8 +6,6 @@ using Json = nlohmann::json;
 
 namespace dae
 {
-
-	class IComponentLoadable;
     class SceneLoader
     {
     public:
@@ -27,10 +25,13 @@ namespace dae
 
         void LoadComponents();
 
+        ParamMap ParseParams(const Json& params);
+        void FinalizeParams(ParamMap& params);
+
         ComponentFactory& m_factory;
 
 		std::unordered_map<std::string, GameObject*> m_gameObjectByName;
-		std::vector<std::tuple<IComponentLoadable*, ParamMap>> m_loadableComponents;
+		std::vector<std::tuple<Component*, ParamMap>> m_loadableComponents;
 
 
         Json LoadJsonFile(const std::string& path);

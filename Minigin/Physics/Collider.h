@@ -32,6 +32,9 @@ namespace dae
 		virtual void RenderUI() override;
 
 		void InitializeBoxCollider(float width, float height, float xOffset = 0.0f, float yOffset = 0.0f);
+		//Loading functions
+		virtual std::vector<ParamDefinition> GetExpectedParams() const override;
+		virtual void Load(const ParamMap& params) override;
 
 		const glm::vec2& GetOffset() const { return m_offset; }
 		const glm::vec2& GetSize() const { return m_size; }

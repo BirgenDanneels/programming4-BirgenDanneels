@@ -100,3 +100,14 @@ dae::Gamepad* dae::InputManager::GetGamepad(int controllerIdx) const
 {
 	return m_gamepads[controllerIdx].get();
 }
+
+dae::InputDevice* dae::InputManager::GetDeviceByName(const std::string& name) const
+{
+	if (name == "keyboard")
+		return m_keyboard.get();
+	else
+	{
+		int controllerIdx = std::stoi(name.substr(8)); // Assuming the name is in the format "gamepad_X"
+		return GetGamepad(controllerIdx);
+	}
+}

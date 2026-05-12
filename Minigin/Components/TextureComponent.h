@@ -2,11 +2,10 @@
 #include "Component.h"
 #include "Minigin/Texture2D.h"
 #include <memory>
-#include "Minigin/Loading/Interfaces/IComponentLoadable.h"
 
 namespace dae
 {
-	class TextureComponent : public	Component, public IComponentLoadable
+	class TextureComponent : public	Component
 	{
 	public:
 
@@ -29,7 +28,7 @@ namespace dae
 
 		void SetOffset(float x, float y);
 
-		// Inherited via IComponentLoadable
+		//Loading functions
 		virtual std::vector<ParamDefinition> GetExpectedParams() const override;
 		virtual void Load(const ParamMap& params) override;
 

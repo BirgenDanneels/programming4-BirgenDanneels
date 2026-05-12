@@ -25,6 +25,9 @@ public:
 	void Render() const override {};
 
 	void Initialize();
+	//Loading functions
+	virtual std::vector<dae::ParamDefinition> GetExpectedParams() const override { return {}; };
+	virtual void Load(const dae::ParamMap&) override {};
 
 private:
 

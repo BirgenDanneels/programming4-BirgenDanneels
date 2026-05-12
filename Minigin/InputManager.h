@@ -1,8 +1,10 @@
+#pragma once
 #include "Singleton.h"
 #include "Input/Keyboard.h"
 #include "Input/Gamepad.h"
 #include <vector>
 #include <memory>
+#include <string>
 
 namespace dae
 {
@@ -24,6 +26,8 @@ namespace dae
 
 		Keyboard* GetKeyboard() const { return m_keyboard.get(); }
 		Gamepad* GetGamepad(int controllerIdx) const;
+
+		InputDevice* GetDeviceByName(const std::string& name) const;
 
 	private:
 

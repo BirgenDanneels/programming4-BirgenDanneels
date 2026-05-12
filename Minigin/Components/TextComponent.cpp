@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include"Renderer.h"
 #include "ResourceManager.h"
+#include "Loading/LoadingHelpers.h"
 
 dae::TextComponent::TextComponent(dae::GameObject& refOwner)
 	:TextureComponent(refOwner)
@@ -78,9 +79,9 @@ void dae::TextComponent::Load(const ParamMap& params)
 {
 	std::string text = GetRequiredParam<std::string>(params, "text");
 	std::string fontFile = GetRequiredParam<std::string>(params, "font");
-	bool centered = GetOptionalParam<bool>(params, "centered", false);
+	bool centered = GetRequiredParam<bool>(params, "centered");
 
-	int size = GetOptionalParam<int>(params, "size", 20);
+	int size = GetRequiredParam<int>(params, "size");
 
 	std::vector<int> colorVec = GetOptionalParam<std::vector<int>>(params, "color", { 255, 255, 255, 255 });
 	SDL_Color color{};

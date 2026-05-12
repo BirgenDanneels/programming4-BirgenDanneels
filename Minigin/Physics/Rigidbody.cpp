@@ -2,8 +2,8 @@
 #include "Collider.h"
 #include "PhysicsManager.h"
 #include "Minigin/GameObject.h"
-#include "Minigin/Transform.h"
 #include "Minigin/Sound/ServiceLocator.h"
+#include "Minigin/Loading/LoadingHelpers.h"
 
 dae::Rigidbody::Rigidbody(GameObject& refOwner)
 	: Component(refOwner)
@@ -53,6 +53,20 @@ void dae::Rigidbody::Initialize(bool useGravity, bool isKinematic, bool canBounc
 	m_useGravity = useGravity;
 	m_isKinematic = isKinematic;
 	m_canBounce = canBounce;
+}
+
+std::vector<dae::ParamDefinition> dae::Rigidbody::GetExpectedParams() const
+{
+	return { {"useGravity", false}, 
+		{"isKinematic", true}, 
+		{"canBounce", false} };
+}
+
+void dae::Rigidbody::Load(const ParamMap& params)
+{
+	m_useGravity = GetOptionalParam<bool>(params, "useGravity", false);
+	m_isKinematic = GetOptionalParam<bool>(params, "isKinematic", true);
+	m_canBounce = GetOptionalParam<bool>(params, "canBounce", false);
 }
 
 void dae::Rigidbody::SetDrag(float drag)

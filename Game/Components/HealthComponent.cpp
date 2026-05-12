@@ -1,6 +1,6 @@
 #include "HealthComponent.h"
 #include "Minigin/GameObject.h"
-#include <stdexcept>
+#include "Minigin/Loading/LoadingHelpers.h"
 
 HealthComponent::HealthComponent(dae::GameObject& pOwner)
 	: dae::Component(pOwner), m_onDeadSubject()

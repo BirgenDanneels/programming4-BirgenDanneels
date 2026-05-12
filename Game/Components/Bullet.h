@@ -11,6 +11,9 @@ public:
 	~Bullet() override;
 
 	void Initialize(int damage, int bounces);
+	//Loading functions
+	virtual std::vector<dae::ParamDefinition> GetExpectedParams() const override;
+	virtual void Load(const dae::ParamMap& params) override;
 
 	virtual void Start() override;
 	virtual void FixedUpdate(float) override {};

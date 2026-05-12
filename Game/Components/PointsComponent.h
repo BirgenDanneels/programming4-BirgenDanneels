@@ -10,6 +10,7 @@ class PointsComponent final : public dae::Component, public dae::Observer<TankEv
 public:
 	PointsComponent(dae::GameObject& pOwner);
 	~PointsComponent() override;
+
 	void Update(float) override {};
 	void FixedUpdate(float) override {};
 	void Render() const override {};
@@ -18,6 +19,10 @@ public:
 	void OnNotify(TankEvents event) override;
 
 	dae::Subject<int>& OnPointsChanged() { return m_onPointsChangedSubject; }
+
+	//Loading functions
+	virtual std::vector<dae::ParamDefinition> GetExpectedParams() const override { return{}; };
+	virtual void Load(const dae::ParamMap&) override {};
 
 private:
 

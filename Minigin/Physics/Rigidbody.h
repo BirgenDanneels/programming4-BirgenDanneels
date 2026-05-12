@@ -24,6 +24,10 @@ namespace dae
 
 		// Initialization
 		void Initialize(bool useGravity = false, bool isKinematic = true, bool canBounce = false);
+		//Loading functions
+		virtual std::vector<ParamDefinition> GetExpectedParams() const override;
+		virtual void Load(const ParamMap& params) override;
+
 
 		// Movement
 		void SetVelocity(const glm::vec2& velocity);
