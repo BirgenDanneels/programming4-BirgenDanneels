@@ -14,7 +14,7 @@ namespace dae
 
 		~SceneLoader() = default;
 
-        Scene& LoadFromFile(const std::string& path);
+        void LoadFromFile(const std::string& path, Scene& scene);
 
         static ParamMap ParseParams(const Json& params);
 

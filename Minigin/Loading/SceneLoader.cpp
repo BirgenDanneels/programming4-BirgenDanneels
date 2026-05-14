@@ -8,12 +8,10 @@ dae::SceneLoader::SceneLoader(ComponentFactory& factory)
 {
 }
 
-dae::Scene& dae::SceneLoader::LoadFromFile(const std::string& path)
+void dae::SceneLoader::LoadFromFile(const std::string& path, Scene& scene)
 {
     Json root = LoadJsonFile(path);
-    auto& scene = dae::SceneManager::GetInstance().CreateScene();
     ParseScene(root, scene);
-    return scene;
 }
 
 void dae::SceneLoader::ParseScene(const Json& root, Scene& scene)

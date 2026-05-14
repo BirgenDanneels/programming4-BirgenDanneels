@@ -126,6 +126,7 @@ dae::Minigin::Minigin(const std::filesystem::path& dataPath)
 
 	Renderer::GetInstance().Init(g_window);
 	ResourceManager::GetInstance().Init(m_dataPath);
+	SceneManager::GetInstance().SetComponentFactory(m_componentFactory);
 }
 
 dae::Minigin::~Minigin()
@@ -171,10 +172,9 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 void dae::Minigin::Run(const std::string& sceneFile)
 {
-	SceneLoader loader{m_componentFactory};
-
 	const auto scenePath = m_dataPath / sceneFile;
-	loader.LoadFromFile(scenePath.string());
+
+	SceneManager::GetInstance().LoadScene(scenePath.string());
 
 #ifndef __EMSCRIPTEN__
 
