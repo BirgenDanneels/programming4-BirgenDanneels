@@ -74,9 +74,6 @@ private:
 TankComponent::TankComponent(dae::GameObject& pOwner)
 	: Component(pOwner)
 {
-	m_shotSound = dae::ServiceLocator::GetSoundSystem().LoadSound("Shot.wav");
-
-
 	GetOwner()->AddComponent<dae::Rigidbody>()->Initialize(false, true); //SHOULD BE REMOVED AND FIXED THAT OBJECTS CAN BE CONSTRUCTED DURING START bc now the vector gets cleared at the end of start which means the constructed objects get removed from said vector!
 	
 }
@@ -98,6 +95,8 @@ TankComponent::~TankComponent()
 
 void TankComponent::Start()
 {
+	m_shotSound = dae::ServiceLocator::GetSoundSystem().GetSoundId("Shot.wav");
+
 	m_pRigidbody = GetOwner()->GetComponent<dae::Rigidbody>();
 	m_pHealthComponent = GetOwner()->GetComponent<HealthComponent>();
 	m_pPointsComponent = GetOwner()->GetComponent<PointsComponent>();

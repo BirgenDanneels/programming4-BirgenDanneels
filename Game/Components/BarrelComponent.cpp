@@ -18,7 +18,7 @@ BarrelComponent::~BarrelComponent()
 
 void BarrelComponent::Start()
 {
-	m_shotSoundId = dae::ServiceLocator::GetSoundSystem().LoadSound("Shot.wav");
+	m_shotSoundId = dae::ServiceLocator::GetSoundSystem().GetSoundId("Shot.wav");
 
 	m_pTextureComponent = GetOwner()->GetComponent<dae::TextureComponent>();
 

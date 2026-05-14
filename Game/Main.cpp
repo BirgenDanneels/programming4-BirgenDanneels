@@ -152,6 +152,9 @@ int main(int, char*[]) {
 	factory.Register<TankComponent>("TankComponent");
 	factory.Register<dae::Collider>("Collider");
 
+	//Temporary loading of sounds
+	dae::ServiceLocator::GetSoundSystem().LoadSound("Shot.wav");
+
 
 	//engine.Run(load);
 	engine.Run("Level.json");

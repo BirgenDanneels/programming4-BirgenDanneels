@@ -8,15 +8,32 @@ namespace dae
 	public:
 		NullSoundSystem() = default;
 		~NullSoundSystem() override = default;
-		void Play(const sound_id /*id*/, const float /*volume*/) override
+		void Play(const sound_id , const float ) override
 		{
 		}
-		sound_id LoadSound(const std::string& /*file*/) override
+		void LoadSound(const std::string& ) override
+		{
+		}
+		void SetDataPath(const std::string&) override
+		{
+		}
+
+		virtual void UnloadSound(const sound_id)
+		{
+		}
+
+		virtual void UnloadAll()
+		{
+		}
+
+		virtual sound_id GetSoundId(const std::string&) const
 		{
 			return 0;
 		}
-		void SetDataPath(const std::string& /*path*/) override
+
+		bool AreAllSoundsLoaded() const override
 		{
+			return true;
 		}
 	};
 }

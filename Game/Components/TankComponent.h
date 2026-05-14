@@ -62,7 +62,7 @@ private:
 
 	dae::Subject<TankEvents> m_onTankEventSubject;
 
-	dae::sound_id m_shotSound;
+	dae::sound_id m_shotSound{0};
 
 	dae::ObserverHandle m_pointObserverHandle; //A component on the points object should do this subscription and hold the handle.
 	dae::ObserverHandle m_collisionHandle;

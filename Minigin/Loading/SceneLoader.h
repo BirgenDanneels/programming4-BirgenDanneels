@@ -1,7 +1,7 @@
-#include "Scene.h"
-#include "Loading/ComponentFactory.h"
+#include "Minigin/Scene.h"
+#include "Minigin/Loading/ComponentFactory.h"
 #include <nlohmann/json.hpp>
-#include "Loading/LoadingStructs.h"
+#include "Minigin/Loading/LoadingStructs.h"
 using Json = nlohmann::json;
 
 namespace dae
@@ -16,6 +16,8 @@ namespace dae
 
         Scene& LoadFromFile(const std::string& path);
 
+        static ParamMap ParseParams(const Json& params);
+
     private:
         void ParseScene(const Json& root, Scene& scene);
 
@@ -25,7 +27,6 @@ namespace dae
 
         void LoadComponents();
 
-        ParamMap ParseParams(const Json& params);
         void FinalizeParams(ParamMap& params);
 
         ComponentFactory& m_factory;

@@ -16,7 +16,7 @@ namespace dae
 	{
 	public:
 		Collider() = delete;
-		explicit Collider(GameObject& refOwner);
+		Collider(GameObject& refOwner);
 
 		Collider(const Collider& other) = delete;
 		Collider(Collider&& other) = delete;
