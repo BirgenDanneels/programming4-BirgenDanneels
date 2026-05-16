@@ -15,6 +15,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Commands/MoveCommands.cpp
   Components/BarrelComponent.cpp
   Components/Bullet.cpp
+  Components/LevelEditorComponent.cpp
 )
 
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_20)

@@ -43,6 +43,11 @@ namespace dae
 			return m_pImpl->AreAllSoundsLoaded();
 		}
 
+		Subject<>& OnSoundsLoaded() override
+		{
+			return m_pImpl->OnSoundsLoaded();
+		}
+
 	private:
 		
 		std::unique_ptr<SoundSystem> m_pImpl;

@@ -154,10 +154,6 @@ int main(int, char*[]) {
 	factory.Register<dae::SpriteComponent>("SpriteComponent");
 	factory.Register<dae::AnimatedSpriteComponent>("AnimatedSpriteComponent");
 
-	//Temporary loading of sounds
-	dae::ServiceLocator::GetSoundSystem().LoadSound("Shot.wav");
-
-
 	//engine.Run(load);
 	engine.Run("Level.json");
 

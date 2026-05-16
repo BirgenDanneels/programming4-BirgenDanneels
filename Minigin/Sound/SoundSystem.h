@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <string>
+#include "Minigin/Events/Subject.h"
 
 namespace dae
 {
@@ -23,5 +24,8 @@ namespace dae
 
 		virtual sound_id GetSoundId(const std::string& file) const = 0;
 		virtual bool AreAllSoundsLoaded() const = 0;
+		
+		// Event fired when all sounds finish loading
+		virtual Subject<>& OnSoundsLoaded() = 0;
 	};
 }

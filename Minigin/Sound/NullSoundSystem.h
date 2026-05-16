@@ -35,5 +35,11 @@ namespace dae
 		{
 			return true;
 		}
+
+		Subject<>& OnSoundsLoaded() override
+		{
+			static Subject<> dummySubject;
+			return dummySubject;
+		}
 	};
 }

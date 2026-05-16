@@ -1,5 +1,6 @@
 #include "SceneLoader.h"
 #include <fstream>
+#include <Minigin/Sound/ServiceLocator.h>
 #include "SceneManager.h"
 #include "LoadingHelpers.h"
 
@@ -17,10 +18,36 @@ void dae::SceneLoader::LoadFromFile(const std::string& path, Scene& scene)
 void dae::SceneLoader::ParseScene(const Json& root, Scene& scene)
 {
     auto& objects = root["scene"]["objects"];
+    auto& sounds = root["scene"]["sounds"];
+    LoadSounds(sounds);
 
     CreateObjects(objects, scene);
 
+	WaitForSoundsToLoad(); // Do this before loading components since its very well possible that components get sound_id's in their initialize/load function.
+
     LoadComponents();
+}
+
+void dae::SceneLoader::LoadSounds(const Json& sounds)
+{
+    m_soundLoadedHandle = ServiceLocator::GetSoundSystem().OnSoundsLoaded().AddObserver(this);
+
+    for (const auto& soundJson : sounds)
+    {
+		ServiceLocator::GetSoundSystem().LoadSound(soundJson);
+    }
+}
+
+void dae::SceneLoader::WaitForSoundsToLoad()
+{
+    m_soundsLoadedLatch.wait();
+}
+
+void dae::SceneLoader::OnNotify()
+{
+    m_soundsLoadedLatch.count_down();
+
+    m_soundLoadedHandle.Unsubscribe();
 }
 
 void dae::SceneLoader::CreateObjects(const Json& objects, Scene& scene)
@@ -51,6 +78,12 @@ void dae::SceneLoader::CreateObjects(const Json& objects, Scene& scene)
         }
         else
 			throw std::runtime_error("SceneLoader CreateObjects : 'name' parameter is not found.");
+
+        if (objJson.contains("tag"))
+        {
+            std::string tagStr = objJson["tag"];
+			go->SetTag(tagStr);
+        }
 
         if (objJson.contains("position"))
         {

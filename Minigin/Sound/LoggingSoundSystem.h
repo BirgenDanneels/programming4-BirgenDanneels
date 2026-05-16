@@ -61,6 +61,12 @@ namespace dae
 			return allLoaded;
 		}
 
+		Subject<>& OnSoundsLoaded() override
+		{
+			std::cout << "Accessing OnSoundsLoaded event" << std::endl;
+			return m_realSoundSystem->OnSoundsLoaded();
+		}
+
 	private:
 		std::unique_ptr<SoundSystem> m_realSoundSystem;
 	};

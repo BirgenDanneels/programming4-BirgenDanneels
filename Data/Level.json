@@ -315,6 +315,7 @@
           }
         ]
       }
-    ]
+    ],
+    "sounds":["Shot.wav", "PlayerDead.wav"]
   }
 }

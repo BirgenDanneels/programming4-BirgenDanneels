@@ -169,6 +169,11 @@ namespace dae
             return m_loadQueue.empty();
         }
 
+        Subject<>& OnSoundsLoaded() override
+        {
+            return m_soundsLoadedEvent;
+        }
+
     private:
         void ProcessPlayQueue(std::stop_token stopToken)
         {
@@ -200,6 +205,9 @@ namespace dae
 
                 m_loadCondition.wait(lock, stopToken, [this]
                     {
+                        if(m_loadQueue.empty())
+							m_soundsLoadedEvent.NotifyObservers(); // Notify that all sounds are loaded when the queue is empty
+
                         return !m_loadQueue.empty();
                     });
 
@@ -285,6 +293,7 @@ namespace dae
         std::unordered_map<sound_id, MIX_Audio*> m_sounds;
 
         std::string m_dataPath;
+        Subject<> m_soundsLoadedEvent;
     };
 
 

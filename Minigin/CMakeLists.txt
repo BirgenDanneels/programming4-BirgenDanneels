@@ -27,6 +27,8 @@ add_library(${ENGINE_TARGET} STATIC
   Physics/Rigidbody.cpp
   Physics/Collider.cpp
   Sound/SdlSoundSystem.cpp
+  Components/SpriteComponent.cpp
+  Components/AnimatedSpriteComponent.cpp
 
 target_compile_features(${ENGINE_TARGET} PUBLIC cxx_std_20)
 
