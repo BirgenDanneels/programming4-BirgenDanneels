@@ -151,6 +151,8 @@ int main(int, char*[]) {
 	factory.Register<BarrelComponent>("BarrelComponent");
 	factory.Register<TankComponent>("TankComponent");
 	factory.Register<dae::Collider>("Collider");
+	factory.Register<dae::SpriteComponent>("SpriteComponent");
+	factory.Register<dae::AnimatedSpriteComponent>("AnimatedSpriteComponent");
 
 	//Temporary loading of sounds
 	dae::ServiceLocator::GetSoundSystem().LoadSound("Shot.wav");

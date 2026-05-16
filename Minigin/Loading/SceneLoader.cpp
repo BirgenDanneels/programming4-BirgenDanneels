@@ -164,6 +164,4 @@ Json dae::SceneLoader::LoadJsonFile(const std::string& path)
     Json root;
     file >> root;
     return root;
-
-	return root;
 }

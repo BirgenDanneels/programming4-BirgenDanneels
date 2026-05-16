@@ -66,13 +66,18 @@ void dae::TextureComponent::Render() const
 		// Reversing the offset forces the texture to pivot exactly around the GameObject's world position.
 		SDL_FPoint centerPoint = { -scaledOffsetX, -scaledOffsetY };
 
+		SDL_FRect dstRect{
+			pos.x + scaledOffsetX,
+			pos.y + scaledOffsetY,
+			finalWidth,
+			finalHeight
+		};
+
 		dae::Renderer::GetInstance().RenderTexture(
 			*m_texture, 
-			pos.x + scaledOffsetX, 
-			pos.y + scaledOffsetY, 
-			finalWidth, 
-			finalHeight, 
+			dstRect,
 			angle,
+			nullptr,
 			&centerPoint
 		);
 	}
