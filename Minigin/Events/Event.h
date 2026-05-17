@@ -41,6 +41,11 @@ namespace dae
 			return make_sdbm_hash(eventName);
 		}
 
+		static EventID ToEventID(const std::string& eventName)
+		{
+ 			return make_sdbm_hash_runtime(eventName.c_str());
+		}
+
 		EventID GetId() const noexcept { return m_id; }
 		const std::vector<EventArg>& GetArgs() const noexcept { return m_args; }
 

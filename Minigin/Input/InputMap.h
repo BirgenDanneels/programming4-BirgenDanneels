@@ -26,9 +26,9 @@ namespace dae
 			m_AxisBindings.emplace_back(std::make_unique<Axis1DBinding>(name, keyLeft, keyRight, command));
 		};
 
-		void BindAxis2D(const std::string& name, int keyLeft, int keyRight, int keyUp, int keyDown, Axis2DCommand& command)
+		void BindAxis2D(const std::string& name, int keyLeft, int keyRight, int keyDown, int keyUp, Axis2DCommand& command)
 		{
-			m_Axis2DBindings.emplace_back(std::make_unique<Axis2DBinding>(name, keyLeft, keyRight, keyUp, keyDown, command));
+			m_Axis2DBindings.emplace_back(std::make_unique<Axis2DBinding>(name, keyLeft, keyRight, keyDown, keyUp, command));
 		};
 
 

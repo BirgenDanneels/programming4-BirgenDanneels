@@ -153,6 +153,8 @@ int main(int, char*[]) {
 	factory.Register<dae::Collider>("Collider");
 	factory.Register<dae::SpriteComponent>("SpriteComponent");
 	factory.Register<dae::AnimatedSpriteComponent>("AnimatedSpriteComponent");
+	factory.Register<ButtonComponent>("ButtonComponent");
+	factory.Register<UINavigator>("UINavigator");
 
 	//engine.Run(load);
 	engine.Run("Level.json");

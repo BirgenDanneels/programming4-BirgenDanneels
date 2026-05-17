@@ -6,3 +6,5 @@
 #include "StatsComponent.h"
 #include "PointsComponent.h"
 #include "BarrelComponent.h"
+#include "ButtonComponent.h"
+#include "UINavigator.h"

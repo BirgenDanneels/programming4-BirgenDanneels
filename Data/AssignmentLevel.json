@@ -1,0 +1,321 @@
+{
+  "scene": {
+    "objects": [
+      {
+        "name": "background",
+        "parent": "",
+        "position": [0.0, 0.0],
+        "components": [
+          {
+            "type": "TextureComponent",
+            "params": {
+              "texture": "background.png",
+              "centered": false
+            }
+          }
+        ]
+      },
+      {
+        "name": "logo",
+        "parent": "",
+        "position": [358.0, 180.0],
+        "components": [
+          {
+            "type": "TextureComponent",
+            "params": {
+              "texture": "logo.png",
+              "centered": true
+            }
+          }
+        ]
+      },
+      {
+        "name": "progText",
+        "parent": "",
+        "position": [292.0, 20.0],
+        "components": [
+          {
+            "type": "TextComponent",
+            "params": {
+              "text": "Programming 4 Assignment",
+              "font": "tronFont/tron.otf",
+              "size": 25,
+              "color": [255, 255, 0, 255],
+              "centered": false
+            }
+          }
+        ]
+      },
+      {
+        "name": "fpsCounter",
+        "parent": "",
+        "position": [5.0, 5.0],
+        "components": [
+          {
+            "type": "TextComponent",
+            "params": {
+              "text": "0",
+              "font": "Lingua.otf",
+              "size": 25,
+              "color": [255, 255, 255, 255],
+              "centered": false
+            }
+          },
+          {
+            "type": "FPSCounter",
+            "params": {}
+          }
+        ]
+      },
+      {
+        "name": "blueTank",
+        "parent": "",
+        "position": [100.0, 280.0],
+        "components": [
+          {
+            "type": "TextureComponent",
+            "params": {
+              "texture": "BlueTank.png",
+              "centered": true
+            }
+          },
+          {
+            "type": "HealthComponent",
+            "params": {
+              "health": 3
+            }
+          },
+          {
+            "type": "PointsComponent",
+            "params": {}
+          },
+          {
+            "type": "Collider",
+            "params": {
+              "width": 30.0,
+              "height": 30.0
+            }
+          }
+        ],
+        "tag": "Player"
+      },
+      {
+        "name": "redTank",
+        "parent": "",
+        "position": [300.0, 100.0],
+        "components": [
+          {
+            "type": "TextureComponent",
+            "params": {
+              "texture": "RedTank.png",
+              "centered": true
+            }
+          },
+          {
+            "type": "HealthComponent",
+            "params": {
+              "health": 3
+            }
+          },
+          {
+            "type": "PointsComponent",
+            "params": {}
+          },
+          {
+            "type": "Collider",
+            "params": {
+              "width": 30.0,
+              "height": 30.0
+            }
+          },
+          {
+            "type": "TankComponent",
+            "params": {
+              "device": "gamepad_0",
+              "speed": 200.0,
+              "lives": 3,
+              "barrel": "GO_playerBarrel"
+            }
+          }
+        ],
+        "tag": "Player"
+      },
+      {
+        "name": "textAnchor",
+        "parent": "",
+        "position": [10.0, 100.0],
+        "components": []
+      },
+      {
+        "name": "wasdText",
+        "parent": "textAnchor",
+        "position": [0.0, 0.0],
+        "components": [
+          {
+            "type": "TextComponent",
+            "params": {
+              "text": "Use WASD to move the blue tank, C to inflict damage, Z to pick up orb and X to kill (with sound)",
+              "font": "Lingua.otf",
+              "size": 15,
+              "color": [255, 255, 255, 255],
+              "centered": false
+            }
+          }
+        ]
+      },
+      {
+        "name": "controllerText",
+        "parent": "textAnchor",
+        "position": [0.0, 20.0],
+        "components": [
+          {
+            "type": "TextComponent",
+            "params": {
+              "text": "Use D-Pad or left stick to move the red tank, X to inflict damage, A to pick up orb and B to kill (with sound)",
+              "font": "Lingua.otf",
+              "size": 15,
+              "color": [255, 255, 255, 255],
+              "centered": false
+            }
+          }
+        ]
+      },
+      {
+        "name": "blueLivesText",
+        "parent": "textAnchor",
+        "position": [0.0, 60.0],
+        "components": [
+          {
+            "type": "HealthStatsComponent",
+            "params": {
+              "text": "#Blue Tank Lives: ",
+              "targetObject": "GO_blueTank"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bluePointsText",
+        "parent": "textAnchor",
+        "position": [0.0, 80.0],
+        "components": [
+          {
+            "type": "PointsStatsComponent",
+            "params": {
+              "text": "Blue Tank Points: ",
+              "targetObject": "GO_blueTank"
+            }
+          }
+        ]
+      },
+      {
+        "name": "redLivesText",
+        "parent": "textAnchor",
+        "position": [0.0, 100.0],
+        "components": [
+          {
+            "type": "HealthStatsComponent",
+            "params": {
+              "text": "#Red Tank Lives: ",
+              "targetObject": "GO_redTank"
+            }
+          }
+        ]
+      },
+      {
+        "name": "redPointsText",
+        "parent": "textAnchor",
+        "position": [0.0, 120.0],
+        "components": [
+          {
+            "type": "PointsStatsComponent",
+            "params": {
+              "text": "Red Tank Points: ",
+              "targetObject": "GO_redTank"
+            }
+          }
+        ]
+      },
+      {
+        "name": "playerBarrel",
+        "parent": "redTank",
+        "position": [0.0, 0.0],
+        "components": [
+          {
+            "type": "BarrelComponent",
+            "params": {
+              "fireRate": 0.5,
+              "bulletSpawn": "GO_bulletSpawnPoint1",
+              "damage": 1,
+              "maxBounces": 5,
+              "rotationSpeed": 180.0
+            }
+          }
+        ]
+      },
+      {
+        "name": "bulletSpawnPoint1",
+        "parent": "playerBarrel",
+        "position": [25.0, 0.0],
+        "components": []
+      },
+      {
+        "name": "worldTop",
+        "parent": "",
+        "position": [512.0, 0.0],
+        "components": [
+          {
+            "type": "Collider",
+            "params": {
+              "width": 1024.0,
+              "height": 10.0
+            }
+          }
+        ]
+      },
+      {
+        "name": "worldBottom",
+        "parent": "",
+        "position": [512.0, 576.0],
+        "components": [
+          {
+            "type": "Collider",
+            "params": {
+              "width": 1024.0,
+              "height": 10.0
+            }
+          }
+        ]
+      },
+      {
+        "name": "worldLeft",
+        "parent": "",
+        "position": [0.0, 288.0],
+        "components": [                                     
+          {
+            "type": "Collider",
+            "params": {
+              "width": 10.0,
+              "height": 576.0
+            }
+          }
+        ]
+      },
+      {
+        "name": "worldRight",
+        "parent": "",
+        "position": [1024.0, 288.0],
+        "components": [
+          {
+            "type": "Collider",
+            "params": {
+              "width": 10.0,
+              "height": 576.0
+            }
+          }
+        ]
+      }
+    ],
+    "sounds":["Shot.wav", "PlayerDead.wav"]
+  }
+}
