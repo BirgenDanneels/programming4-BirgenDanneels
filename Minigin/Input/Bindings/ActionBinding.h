@@ -2,6 +2,7 @@
 #include "Minigin/Commands/Command.h"
 #include "Minigin/Input/Bindings/InputStates.h"
 #include <string>
+#include <vector>
 
 namespace dae
 {
@@ -10,10 +11,15 @@ namespace dae
 		std::string m_name{};
 		int m_key{ -1 };
 		InputState m_InputState{ InputState::Pressed };
-		Command* m_pCommand{ nullptr };
+		std::vector<Command*> m_commands{};
 
-		ActionBinding(const std::string& name, int key, InputState state, Command& command)
-			: m_name(name), m_key(key), m_InputState(state), m_pCommand(&command) {}
+		ActionBinding(const std::string& name, int key, InputState state)
+			: m_name(name), m_key(key), m_InputState(state){}
+
+		void AddCommand(Command& command)
+		{
+			m_commands.push_back(&command);
+		}
 	};
 
 	struct Axis1DBinding
@@ -22,10 +28,17 @@ namespace dae
 		int m_negative{ -1 };
 		int m_positive{ -1 };
 
-		Axis1DCommand* m_pCommand{ nullptr };
+		std::vector<Axis1DCommand*> m_commands{};
 
-		Axis1DBinding(const std::string& name, int negative, int positive, Axis1DCommand& command)
-			: m_name(name), m_negative(negative), m_positive(positive), m_pCommand(&command) { }
+		Axis1DBinding(const std::string& name, int negative, int positive)
+			: m_name(name), m_negative(negative), m_positive(positive)
+		{
+		}
+
+		void AddCommand(Axis1DCommand& command)
+		{
+			m_commands.push_back(&command);
+		}
 	};
 
 	struct Axis2DBinding
@@ -36,9 +49,16 @@ namespace dae
 		int m_negativeY{ -1 };
 		int m_positiveY{ -1 };
 
-		Axis2DCommand* m_pCommand{ nullptr };
+		std::vector<Axis2DCommand*> m_commands{};
 
-		Axis2DBinding(const std::string& name, int negativeX, int positiveX, int negativeY, int positiveY, Axis2DCommand& command)
-			: m_name(name), m_negativeX(negativeX), m_positiveX(positiveX), m_negativeY(negativeY), m_positiveY(positiveY), m_pCommand(&command) { }
+		Axis2DBinding(const std::string& name, int negativeX, int positiveX, int negativeY, int positiveY)
+			: m_name(name), m_negativeX(negativeX), m_positiveX(positiveX), m_negativeY(negativeY), m_positiveY(positiveY)
+		{
+		}
+
+		void AddCommand(Axis2DCommand& command)
+		{
+			m_commands.push_back(&command);
+		}
 	};
 }

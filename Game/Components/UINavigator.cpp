@@ -77,22 +77,23 @@ void UINavigator::Initialize(std::string inputDeviceName, dae::GameObject* first
 
 	dae::InputManager& inputManager = dae::InputManager::GetInstance();
 	auto device = inputManager.GetDeviceByName(inputDeviceName);
-
-	//TODO: SHOULDNT BE CREATING MAPS HERE THIS IS JUST FOR TESTING TILL FILE LOADING MAPS IS A THING
-
-	auto* map = device->GetInputMap();
+	auto* map = device->GetInputMap("UI");
 
 	if (!map)
 	{
 		auto tempMapPtr = std::make_unique<dae::InputMap>();
 		map = tempMapPtr.get();
-		device->SetInputMap(std::move(tempMapPtr));
+
+		map->CreateActionBinding("press", SDL_SCANCODE_RETURN, dae::InputState::Pressed);
+		map->CreateAxis2DBinding("navigation", SDL_SCANCODE_LEFT, SDL_SCANCODE_RIGHT, SDL_SCANCODE_DOWN, SDL_SCANCODE_UP);
+
+		device->AddInputMap("UI", std::move(tempMapPtr));
 	}
 
-	map->BindAxis2D("NavigateUI",
-		SDL_SCANCODE_A, SDL_SCANCODE_D, SDL_SCANCODE_S, SDL_SCANCODE_W, *m_navigateCommand);
+	map->AddCommandToAxis2DBinding("navigation", *m_navigateCommand);
+	map->AddCommandToActionBinding("press", *m_pressCommand);
 
-	map->BindAction("PressButton", SDL_SCANCODE_RETURN, dae::InputState::Pressed, *m_pressCommand);
+	device->SetActiveInputMap("UI");
 }
 
 std::vector<dae::ParamDefinition> UINavigator::GetExpectedParams() const

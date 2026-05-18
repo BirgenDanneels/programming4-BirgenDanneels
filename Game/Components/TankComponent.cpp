@@ -82,13 +82,14 @@ TankComponent::~TankComponent()
 {
 	if (m_pInputDevice)
 	{
-		dae::InputMap* inputMap = m_pInputDevice->GetInputMap();
+		dae::InputMap* inputMap = m_pInputDevice->GetInputMap("TankControls");
 		if (inputMap)
 		{
-			inputMap->UnbindAxis2D("Move");
-			inputMap->UnbindAction("Damage");
-			inputMap->UnbindAction("FirePickUpEvent");
-			inputMap->UnbindAction("FireKillEvent");
+			inputMap->RemoveCommandFromAxis2DBinding("move", *m_pMoveCommand);
+			inputMap->RemoveCommandFromAxisBinding("aim", *m_pRotateBarrelCommand);
+			inputMap->RemoveCommandFromActionBinding("damage", *m_pDamageCommand);
+			inputMap->RemoveCommandFromActionBinding("firePickUpEvent", *m_pPickupCommand);
+			inputMap->RemoveCommandFromActionBinding("fire", *m_pShootCommand);
 		}
 	}
 }
@@ -129,32 +130,18 @@ void TankComponent::Start()
 	if (m_pInputDevice)
 	{
 		//Bind the input map to the device
-		auto inputMap = std::make_unique<dae::InputMap>();
+		auto inputMap = m_pInputDevice->GetInputMap("TankControls");
 
-		if (dynamic_cast<dae::Keyboard*>(m_pInputDevice))
-		{
-			using namespace dae;
+		inputMap->AddCommandToActionBinding("damage", *m_pDamageCommand);
+		inputMap->AddCommandToActionBinding("firePickUpEvent", *m_pPickupCommand);
+		inputMap->AddCommandToActionBinding("fire", *m_pShootCommand);
+		inputMap->AddCommandToAxis2DBinding("move", *m_pMoveCommand);
+		inputMap->AddCommandToAxisBinding("aim", *m_pRotateBarrelCommand);
 
-			inputMap->BindAxis2D("Move", SDL_SCANCODE_A, SDL_SCANCODE_D, SDL_SCANCODE_W, SDL_SCANCODE_S, *m_pMoveCommand);
-			inputMap->BindAxis("RotateBarrel", SDL_SCANCODE_B, SDL_SCANCODE_N, *m_pRotateBarrelCommand);
-			inputMap->BindAction("Damage", SDL_SCANCODE_C, InputState::Pressed, *m_pDamageCommand);
-			inputMap->BindAction("FirePickUpEvent", SDL_SCANCODE_Z, InputState::Pressed, *m_pPickupCommand);
-			inputMap->BindAction("FireKillEvent", SDL_SCANCODE_X, InputState::Pressed, *m_pShootCommand);
-		}
-		else
-		{
-			using namespace dae;
-
-			inputMap->BindAxis2D("Move", (int)GamepadInput::DPadLeft, (int)GamepadInput::DPadRight, (int)GamepadInput::DPadUp, (int)GamepadInput::DPadDown, *m_pMoveCommand);
-			inputMap->BindAxis2D("Move", (int)GamepadInput::LeftStickLeft, (int)GamepadInput::LeftStickRight, (int)GamepadInput::LeftStickUp, (int)GamepadInput::LeftStickDown, *m_pMoveCommand);
-			inputMap->BindAxis("RotateBarrel", (int)GamepadInput::LeftShoulder, (int)GamepadInput::RightShoulder, *m_pRotateBarrelCommand);
-			inputMap->BindAction("Damage", (int)GamepadInput::X, InputState::Pressed, *m_pDamageCommand);
-			inputMap->BindAction("FirePickUpEvent", (int)GamepadInput::A, InputState::Pressed, *m_pPickupCommand);
-			inputMap->BindAction("FireKillEvent", (int)GamepadInput::B, InputState::Pressed, *m_pShootCommand);
-		}
+		//inputMap->BindAxis2D("Move", (int)GamepadInput::DPadLeft, (int)GamepadInput::DPadRight, (int)GamepadInput::DPadUp, (int)GamepadInput::DPadDown, *m_pMoveCommand);
 
 
-		m_pInputDevice->SetInputMap(std::move(inputMap));
+		m_pInputDevice->SetActiveInputMap("TankControls");
 	}
 
 	//OnCollission

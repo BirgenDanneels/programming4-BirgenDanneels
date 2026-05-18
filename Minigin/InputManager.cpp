@@ -2,6 +2,7 @@
 #include <backends/imgui_impl_sdl3.h>
 #include "InputManager.h"
 #include "Input/InputMap.h"
+#include <fstream>
 
 dae::InputManager::InputManager()
 {
@@ -74,26 +75,26 @@ bool dae::InputManager::ProcessInput()
 	return true;
 }
 
-void dae::InputManager::BindMapToKeyboard(std::unique_ptr<InputMap> inputMap)
+void dae::InputManager::BindMapToKeyboard(std::string mapName, std::unique_ptr<InputMap> inputMap)
 {
-	m_keyboard->SetInputMap(std::move(inputMap));
+	m_keyboard->AddInputMap(mapName, std::move(inputMap));
 }
 
-void dae::InputManager::UnbindMapFromKeyboard()
+void dae::InputManager::UnbindMapFromKeyboard(std::string mapName)
 {
-	m_keyboard->SetInputMap(nullptr);
+	m_keyboard->RemoveInputMap(mapName);
 }
 
-void dae::InputManager::BindMapToGamepad(int controllerIdx, std::unique_ptr<InputMap> inputMap)
+void dae::InputManager::BindMapToGamepad(int controllerIdx, std::string mapName, std::unique_ptr<InputMap> inputMap)
 {
 	assert(controllerIdx >= 0 && controllerIdx < static_cast<int>(m_gamepads.size()));
 
-	m_gamepads[controllerIdx]->SetInputMap(std::move(inputMap));
+	m_gamepads[controllerIdx]->AddInputMap(mapName, std::move(inputMap));
 }
 
-void dae::InputManager::UnbindMapFromGamepad(int controllerIdx)
+void dae::InputManager::UnbindMapFromGamepad(int controllerIdx, std::string mapName)
 {
-	m_gamepads[controllerIdx]->SetInputMap(nullptr);
+	m_gamepads[controllerIdx]->RemoveInputMap(mapName);
 }
 
 dae::Gamepad* dae::InputManager::GetGamepad(int controllerIdx) const
@@ -109,5 +110,29 @@ dae::InputDevice* dae::InputManager::GetDeviceByName(const std::string& name) co
 	{
 		int controllerIdx = std::stoi(name.substr(8)); // Assuming the name is in the format "gamepad_X"
 		return GetGamepad(controllerIdx);
+	}
+}
+
+void dae::InputManager::LoadDeviceMapsFromFile(const std::string& filePath)
+{
+	std::ifstream file(filePath);
+	if (!file.is_open())
+		throw std::runtime_error("Could not open file: " + filePath);
+
+	Json root;
+	file >> root;
+
+	for (const auto& deviceJson : root["devices"])
+	{
+		std::string deviceName = deviceJson["name"];
+		auto device = GetDeviceByName(deviceName);
+		if (device)
+		{
+			device->LoadInputMaps(deviceJson["maps"]);
+		}
+		else
+		{
+			SDL_Log("Device '%s' not found while loading input maps from file.", deviceName.c_str());
+		}
 	}
 }

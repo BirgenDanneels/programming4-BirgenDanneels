@@ -2,12 +2,21 @@
 #include "InputDevice.h"
 #include <algorithm>
 
+dae::InputMap::InputMap() = default;
+
+dae::InputMap::~InputMap() = default;
+
 void dae::InputMap::Evaluate()
 {
 	for (auto& binding : m_ActionBindings)
 	{
 		if (m_pDevice->GetKeyState(binding->m_key, binding->m_InputState))
-			binding->m_pCommand->Execute();
+		{
+			for (auto& command : binding->m_commands)
+			{
+				command->Execute();
+			}
+		}
 	}
 
 	for (auto& binding : m_AxisBindings)
@@ -19,8 +28,11 @@ void dae::InputMap::Evaluate()
 
 		value = std::clamp(value, -1.f, 1.f);
 
-		binding->m_pCommand->SetAxisValue(value);
-		binding->m_pCommand->Execute();
+		for(auto& command : binding->m_commands)
+		{
+			command->SetAxisValue(value);
+			command->Execute();
+		}
 	}
 
 	for (auto& binding : m_Axis2DBindings)
@@ -34,34 +46,10 @@ void dae::InputMap::Evaluate()
 
 		value = glm::clamp(value, glm::vec3(-1.f), glm::vec3(1.f));
 
-		binding->m_pCommand->SetAxisValue(value);
-		binding->m_pCommand->Execute();
+		for (auto& command : binding->m_commands)
+		{
+			command->SetAxisValue(value);
+			command->Execute();
+		}
 	}
-}
-
-void dae::InputMap::UnbindAction(const std::string& name)
-{
-	m_ActionBindings.erase(
-		std::remove_if(m_ActionBindings.begin(), m_ActionBindings.end(),
-			[&name](const std::unique_ptr<ActionBinding>& binding) { return binding->m_name == name; }),
-		m_ActionBindings.end()
-	);
-}
-
-void dae::InputMap::UnbindAxis(const std::string& name)
-{
-	m_AxisBindings.erase(
-		std::remove_if(m_AxisBindings.begin(), m_AxisBindings.end(),
-			[&name](const std::unique_ptr<Axis1DBinding>& binding) { return binding->m_name == name; }),
-		m_AxisBindings.end()
-	);
-}
-
-void dae::InputMap::UnbindAxis2D(const std::string& name)
-{
-	m_Axis2DBindings.erase(
-		std::remove_if(m_Axis2DBindings.begin(), m_Axis2DBindings.end(),
-			[&name](const std::unique_ptr<Axis2DBinding>& binding) { return binding->m_name == name; }),
-		m_Axis2DBindings.end()
-	);
 }

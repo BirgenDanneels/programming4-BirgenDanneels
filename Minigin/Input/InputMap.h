@@ -8,34 +8,118 @@ namespace dae
 	class InputMap
 	{
 	public:
-		InputMap() = default;
-		~InputMap() = default;
+		InputMap();
+		~InputMap();
 
 		InputMap(const InputMap&) = delete;
 		InputMap& operator=(const InputMap&) = delete;
 		InputMap(InputMap&&) = delete;
 		InputMap& operator=(InputMap&&) = delete;
 
-		void BindAction(const std::string& name, int key, InputState state, Command& command)
+		void CreateActionBinding(const std::string& name, int key, InputState state)
 		{
-			m_ActionBindings.emplace_back(std::make_unique<ActionBinding>(name, key, state, command));
-		};
+			m_ActionBindings.emplace_back(std::make_unique<ActionBinding>(name, key, state));
+		}
 
-		void BindAxis(const std::string& name, int keyLeft, int keyRight, Axis1DCommand& command)
+		void CreateAxisBinding(const std::string& name, int keyLeft, int keyRight)
 		{
-			m_AxisBindings.emplace_back(std::make_unique<Axis1DBinding>(name, keyLeft, keyRight, command));
-		};
+			m_AxisBindings.emplace_back(std::make_unique<Axis1DBinding>(name, keyLeft, keyRight));
+		}
 
-		void BindAxis2D(const std::string& name, int keyLeft, int keyRight, int keyDown, int keyUp, Axis2DCommand& command)
+		void CreateAxis2DBinding(const std::string& name, int keyLeft, int keyRight, int keyDown, int keyUp)
 		{
-			m_Axis2DBindings.emplace_back(std::make_unique<Axis2DBinding>(name, keyLeft, keyRight, keyDown, keyUp, command));
-		};
+			m_Axis2DBindings.emplace_back(std::make_unique<Axis2DBinding>(name, keyLeft, keyRight, keyDown, keyUp));
+		}
 
+		void RemoveActionBinding(const std::string& name)
+		{
+			m_ActionBindings.erase(
+				std::remove_if(m_ActionBindings.begin(), m_ActionBindings.end(),
+					[&name](const std::unique_ptr<ActionBinding>& binding) { return binding->m_name == name; }),
+				m_ActionBindings.end()
+			);
+		}
 
-		//Unbinding should be just by name and its probably better if it just binded with a pointer or ref to an input action and then the user is responsible for the ownership and can unbind it using a string or the pointer. Still to be determined.
-		void UnbindAction(const std::string& name);
-		void UnbindAxis(const std::string& name);
-		void UnbindAxis2D(const std::string& name);
+		void RemoveAxisBinding(const std::string& name)
+		{
+			m_AxisBindings.erase(
+				std::remove_if(m_AxisBindings.begin(), m_AxisBindings.end(),
+					[&name](const std::unique_ptr<Axis1DBinding>& binding) { return binding->m_name == name; }),
+				m_AxisBindings.end()
+			);
+		}
+
+		void RemoveAxis2DBinding(const std::string& name)
+		{
+			m_Axis2DBindings.erase(
+				std::remove_if(m_Axis2DBindings.begin(), m_Axis2DBindings.end(),
+					[&name](const std::unique_ptr<Axis2DBinding>& binding) { return binding->m_name == name; }),
+				m_Axis2DBindings.end()
+			);
+		}
+		void AddCommandToActionBinding(const std::string& bindingName, Command& action)
+		{
+			auto it = std::find_if(m_ActionBindings.begin(), m_ActionBindings.end(),
+				[&bindingName](const std::unique_ptr<ActionBinding>& binding) { return binding->m_name == bindingName; });
+
+			if (it != m_ActionBindings.end())
+			{
+				(*it)->AddCommand(action);
+			}
+		}
+
+		void AddCommandToAxisBinding(const std::string& bindingName, Axis1DCommand& action)
+		{
+			auto it = std::find_if(m_AxisBindings.begin(), m_AxisBindings.end(),
+				[&bindingName](const std::unique_ptr<Axis1DBinding>& binding) { return binding->m_name == bindingName; });
+			if (it != m_AxisBindings.end())
+			{
+				(*it)->AddCommand(action);
+			}
+		}
+
+		void AddCommandToAxis2DBinding(const std::string& bindingName, Axis2DCommand& action)
+		{
+			auto it = std::find_if(m_Axis2DBindings.begin(), m_Axis2DBindings.end(),
+				[&bindingName](const std::unique_ptr<Axis2DBinding>& binding) { return binding->m_name == bindingName; });
+			if (it != m_Axis2DBindings.end())
+			{
+				(*it)->AddCommand(action);
+			}
+		}
+
+		void RemoveCommandFromActionBinding(const std::string& bindingName, Command& action)
+		{
+			auto it = std::find_if(m_ActionBindings.begin(), m_ActionBindings.end(),
+				[&bindingName](const std::unique_ptr<ActionBinding>& binding) { return binding->m_name == bindingName; });
+			if (it != m_ActionBindings.end())
+			{
+				auto& commands = (*it)->m_commands;
+				commands.erase(std::remove(commands.begin(), commands.end(), &action), commands.end());
+			}
+		}
+
+		void RemoveCommandFromAxisBinding(const std::string& bindingName, Axis1DCommand& action)
+		{
+			auto it = std::find_if(m_AxisBindings.begin(), m_AxisBindings.end(),
+				[&bindingName](const std::unique_ptr<Axis1DBinding>& binding) { return binding->m_name == bindingName; });
+			if (it != m_AxisBindings.end())
+			{
+				auto& commands = (*it)->m_commands;
+				commands.erase(std::remove(commands.begin(), commands.end(), &action), commands.end());
+			}
+		}
+
+		void RemoveCommandFromAxis2DBinding(const std::string& bindingName, Axis2DCommand& action)
+		{
+			auto it = std::find_if(m_Axis2DBindings.begin(), m_Axis2DBindings.end(),
+				[&bindingName](const std::unique_ptr<Axis2DBinding>& binding) { return binding->m_name == bindingName; });
+			if (it != m_Axis2DBindings.end())
+			{
+				auto& commands = (*it)->m_commands;
+				commands.erase(std::remove(commands.begin(), commands.end(), &action), commands.end());
+			}
+		}
 
 		void SetDevice(InputDevice* device) { m_pDevice = device; }
 

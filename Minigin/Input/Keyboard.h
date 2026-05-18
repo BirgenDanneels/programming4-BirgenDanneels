@@ -14,6 +14,8 @@ namespace dae
 		bool GetKeyState(int key, InputState state) const override;
 		float GetAxisValue(int key) const override;
 
+		void LoadInputMaps(const Json& mapsJson) override;
+
 	private:
 		const bool* m_pCurrentState{ nullptr };
 		bool  m_previousState[SDL_SCANCODE_COUNT]{ 0 };

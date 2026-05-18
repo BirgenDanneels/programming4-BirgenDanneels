@@ -18,16 +18,18 @@ namespace dae
 
 		// Currently only supports binding one map per device, but this can be easily changed in the future if needed
 
-		void BindMapToKeyboard(std::unique_ptr<InputMap> inputMap);
-		void UnbindMapFromKeyboard();
+		void BindMapToKeyboard(std::string mapName, std::unique_ptr<InputMap> inputMap);
+		void UnbindMapFromKeyboard(std::string mapName);
 
-		void BindMapToGamepad(int controllerIdx, std::unique_ptr<InputMap> inputMap);
-		void UnbindMapFromGamepad(int controllerIdx);
+		void BindMapToGamepad(int controllerIdx, std::string mapName, std::unique_ptr<InputMap> inputMap);
+		void UnbindMapFromGamepad(int controllerIdx, std::string mapName);
 
 		Keyboard* GetKeyboard() const { return m_keyboard.get(); }
 		Gamepad* GetGamepad(int controllerIdx) const;
 
 		InputDevice* GetDeviceByName(const std::string& name) const;
+
+		void LoadDeviceMapsFromFile(const std::string& filePath);
 
 	private:
 

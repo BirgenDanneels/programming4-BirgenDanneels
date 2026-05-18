@@ -1,0 +1,138 @@
+{
+  "devices": [
+    {
+      "name": "keyboard",
+      "maps": [
+        {
+          "name": "UI",
+          "bindings": [
+            {
+              "name": "navigation",
+              "type": "axis2D",
+              "upKey": "w",
+              "downKey": "s",
+              "leftKey": "a",
+              "rightKey": "d"
+            },
+            {
+              "name": "press",
+              "type": "action",
+              "state": "pressed",
+              "key": "enter"
+            },
+            {
+              "name": "cancel",
+              "type": "action",
+              "state": "pressed",
+              "key": "escape"
+            }
+          ]
+        },
+        {
+          "name": "TankControls",
+          "bindings": [
+            {
+              "name": "move",
+              "type": "axis2D",
+              "upKey": "w",
+              "downKey": "s",
+              "leftKey": "a",
+              "rightKey": "d"
+            },
+            {
+              "name": "fire",
+              "type": "action",
+              "state": "pressed",
+              "key": "x"
+            },
+            {
+              "name": "aim",
+              "type": "axis",
+              "negativeKey": "b",
+              "positiveKey": "n"
+            },
+            {
+              "name": "Damage",
+              "type": "action",
+              "state": "pressed",
+              "key": "c"
+            },
+            {
+              "name": "firePickUpEvent",
+              "type": "action",
+              "state": "pressed",
+              "key": "z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "gamepad_0",
+      "maps": [
+        {
+          "name": "UI",
+          "bindings": [
+            {
+              "name": "navigation",
+              "type": "axis2D",
+              "upKey": "dpadUp",
+              "downKey": "dpadDown",
+              "leftKey": "dpadLeft",
+              "rightKey": "dpadRight"
+            },
+            {
+              "name": "press",
+              "type": "action",
+              "state": "pressed",
+              "key": "a"
+            },
+            {
+              "name": "cancel",
+              "type": "action",
+              "state": "pressed",
+              "key": "b"
+            }
+          ]
+        },
+        {
+          "name": "TankControls",
+          "bindings": [
+            {
+              "name": "move",
+              "type": "axis2D",
+              "upKey": "leftStickDown",
+              "downKey": "leftStickUp",
+              "leftKey": "leftStickLeft",
+              "rightKey": "leftStickRight"
+            },
+            {
+              "name": "fire",
+              "type": "action",
+              "state": "pressed",
+              "key": "b"
+            },
+            {
+              "name": "aim",
+              "type": "axis",
+              "negativeKey": "leftShoulder",
+              "positiveKey": "rightShoulder"
+            },
+            {
+              "name": "damage",
+              "type": "action",
+              "state": "pressed",
+              "key": "x"
+            },
+            {
+              "name": "firePickUpEvent",
+              "type": "action",
+              "state": "pressed",
+              "key": "a"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

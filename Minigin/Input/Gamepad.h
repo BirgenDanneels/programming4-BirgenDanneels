@@ -21,6 +21,8 @@ namespace dae
 		void SetDeadzone(float deadzone);
 		void SetAnalogToButtonThreshold(float threshold);
 
+		void LoadInputMaps(const Json& mapsJson) override;
+
 	private:
 		std::unique_ptr<GamepadImpl> m_pImpl;
 	};

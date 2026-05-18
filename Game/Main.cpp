@@ -156,8 +156,12 @@ int main(int, char*[]) {
 	factory.Register<ButtonComponent>("ButtonComponent");
 	factory.Register<UINavigator>("UINavigator");
 
+	// Load input maps
+	dae::InputManager& inputManager = dae::InputManager::GetInstance();
+	inputManager.LoadDeviceMapsFromFile((data_location / "InputMaps.json").string());
+
 	//engine.Run(load);
-	engine.Run("Level.json");
+	engine.Run("AssignmentLevel.json");
 
     return 0;
 }
