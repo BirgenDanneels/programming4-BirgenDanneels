@@ -27,7 +27,8 @@
               "height": 50.0,
               "color": [ 255, 0, 0, 255 ],
               "text": "Start",
-              "down": "GO_quitButton"
+              "down": "GO_quitButton",
+              "eventName": "StartButtonPressed"
             }
           }
         ]
@@ -58,12 +59,12 @@
               "height": 50.0,
               "color": [ 255, 0, 255, 255 ],
               "text": "Quit",
-              "up": "GO_startButton"
+              "up": "GO_startButton",
+              "eventName": "ExitButtonPressed"
             }
           }
         ]
       }
-    ],
-    "sounds":["Shot.wav", "PlayerDead.wav"]
+    ]
   }
 }

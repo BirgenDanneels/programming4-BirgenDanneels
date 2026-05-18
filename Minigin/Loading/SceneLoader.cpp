@@ -18,8 +18,14 @@ void dae::SceneLoader::LoadFromFile(const std::string& path, Scene& scene)
 void dae::SceneLoader::ParseScene(const Json& root, Scene& scene)
 {
     auto& objects = root["scene"]["objects"];
-    auto& sounds = root["scene"]["sounds"];
-    LoadSounds(sounds);
+
+	if (root["scene"].contains("sounds"))
+    {
+        auto& sounds = root["scene"]["sounds"];
+        LoadSounds(sounds);
+    }
+    else
+        m_soundsLoadedLatch.count_down(); // No sounds to load, immediately allow loading to continue.
 
     CreateObjects(objects, scene);
 

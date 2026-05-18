@@ -127,6 +127,7 @@ dae::Minigin::Minigin(const std::filesystem::path& dataPath)
 	Renderer::GetInstance().Init(g_window);
 	ResourceManager::GetInstance().Init(m_dataPath);
 	SceneManager::GetInstance().SetComponentFactory(m_componentFactory);
+	SceneManager::GetInstance().SetDataPath(m_dataPath.string());
 }
 
 dae::Minigin::~Minigin()

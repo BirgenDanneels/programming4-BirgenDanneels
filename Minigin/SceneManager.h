@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <unordered_map>
 #include "Scene.h"
 #include "Singleton.h"
 #include <thread>
@@ -11,11 +12,20 @@
 
 namespace dae
 {
+	struct OnSceneLoadedEvent final
+	{
+		Scene* loadedScene{};
+	};
+
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:
 		Scene& CreateScene();
+
 		void LoadScene(const std::string& sceneFile);
+		void SetActiveScene(Scene* scene);
+
+		GameObject* CreatePersistentObject();
 
 		void Update(float deltaTime);
 		void FixedUpdate(float fixedDeltaTime);
@@ -23,25 +33,32 @@ namespace dae
 		void RenderUI() const;
 		void DestroyAllScenes();
 
-		Subject<>& GetSceneLoadedSubject() { return m_sceneLoadedSubject; }
+		Subject<OnSceneLoadedEvent>& GetSceneLoadedSubject() { return m_sceneLoadedSubject; }
 
 		void SetComponentFactory(ComponentFactory& factory) { m_componentFactory = &factory; }
+		void SetDataPath(const std::string& path) { m_dataPath = path; }
 
 	private:
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
 		void LoadSceneAsync(const std::string& sceneFile);
+		void FlushPendingObjects();
 
-		std::vector<std::unique_ptr<Scene>> m_scenes{};
+		Scene& AddScene(std::unique_ptr<Scene> scene);
+		void RemoveScene(Scene* scene);
 
-		std::unique_ptr<Scene>m_pendingScene{};
-		std::mutex m_pendingMutex{};
+		std::vector<std::unique_ptr<GameObject>> m_persistentObjects{};
+		std::vector<std::unique_ptr<GameObject>> m_pendingPersistentObjects{};
+
+		std::unordered_map<Scene*, std::unique_ptr<Scene>> m_loadedScenes{};
+		std::unique_ptr<Scene> m_activeScene{};
+
+		std::mutex m_loadedScenesMutex{};
 		std::jthread m_loadingThread;
 
-		Subject<> m_sceneLoadedSubject{};
-
-		std::atomic<bool> m_sceneReady{ false };
+		Subject<OnSceneLoadedEvent> m_sceneLoadedSubject{};
 
 		ComponentFactory* m_componentFactory{};
+		std::string m_dataPath{};
 	};
 }

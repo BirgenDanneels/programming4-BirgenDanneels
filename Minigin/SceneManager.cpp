@@ -3,57 +3,64 @@
 
 void dae::SceneManager::Update(float deltaTime)
 {
-	if (m_sceneReady.load())
+	FlushPendingObjects();
+
+	if (m_activeScene)
+		m_activeScene->Update(deltaTime);
+
+	for(auto& object : m_persistentObjects)
 	{
-		std::lock_guard lock(m_pendingMutex);
-
-		m_scenes.push_back(std::move(m_pendingScene));
-		m_sceneReady = false;
-
-		m_sceneLoadedSubject.NotifyObservers();
-	}
-
-	for(auto& scene : m_scenes)
-	{
-		scene->Update(deltaTime);
+		object->Update(deltaTime);
 	}
 }
 
 void dae::SceneManager::FixedUpdate(float fixedDeltaTime)
 {
-	for (const auto& scene : m_scenes)
+	if (m_activeScene)
+		m_activeScene->FixedUpdate(fixedDeltaTime);
+
+	for (auto& object : m_persistentObjects)
 	{
-		scene->FixedUpdate(fixedDeltaTime);
+		object->FixedUpdate(fixedDeltaTime);
 	}
 }
 
 void dae::SceneManager::Render() const
 {
-	for (const auto& scene : m_scenes)
+	if (m_activeScene)
+		m_activeScene->Render();
+
+	for (const auto& object : m_persistentObjects)
 	{
-		scene->Render();
+		object->Render();
 	}
 }
 
 void dae::SceneManager::RenderUI() const
 {
-	for (const auto& scene : m_scenes)
+	if (m_activeScene)
+		m_activeScene->RenderUI();
+
+	for (const auto& object : m_persistentObjects)
 	{
-		scene->RenderUI();
+		object->RenderUI();
 	}
 }
 
 void dae::SceneManager::DestroyAllScenes()
 {
-	m_scenes.clear();
-	std::lock_guard lock(m_pendingMutex);
-	m_pendingScene.reset();
+	std::scoped_lock lock(m_loadedScenesMutex);
+
+	m_pendingPersistentObjects.clear();
+	m_persistentObjects.clear();
+
+	m_activeScene.reset();
+	m_loadedScenes.clear();
 }
 
 dae::Scene& dae::SceneManager::CreateScene()
 {
-	m_scenes.emplace_back(new Scene());
-	return *m_scenes.back();
+	return AddScene(std::unique_ptr<Scene>(new Scene()));
 }
 
 void dae::SceneManager::LoadScene(const std::string& sceneFile)
@@ -66,12 +73,70 @@ void dae::SceneManager::LoadSceneAsync(const std::string& sceneFile)
 	auto newScene = std::unique_ptr<Scene>(new Scene());
 
 	SceneLoader loader{ *m_componentFactory };
-	loader.LoadFromFile(sceneFile, *newScene);
+	loader.LoadFromFile(m_dataPath + sceneFile, *newScene);
 
+	Scene* rawPtr = &AddScene(std::move(newScene));
+
+	m_sceneLoadedSubject.NotifyObservers({ rawPtr });
+}
+
+dae::GameObject* dae::SceneManager::CreatePersistentObject()
+{
+	auto temp = std::make_unique<dae::GameObject>();
+	GameObject* ptr = temp.get();
+
+	m_pendingPersistentObjects.emplace_back(std::move(temp));
+	return ptr;
+}
+
+void dae::SceneManager::FlushPendingObjects()
+{
+	if (m_pendingPersistentObjects.empty())
+		return;
+
+	m_persistentObjects.reserve(m_persistentObjects.size() + m_pendingPersistentObjects.size());
+	for (auto& object : m_pendingPersistentObjects)
 	{
-		std::lock_guard lock(m_pendingMutex);
-		m_pendingScene = std::move(newScene);
+		m_persistentObjects.emplace_back(std::move(object));
+	}
+	m_pendingPersistentObjects.clear();
+}
+
+void dae::SceneManager::SetActiveScene(Scene* scene)
+{
+	std::scoped_lock lock(m_loadedScenesMutex);
+
+	if (!m_loadedScenes.contains(scene))
+		return;
+
+	// Move current active scene back to map
+	if (m_activeScene)
+	{
+		Scene* oldPtr = m_activeScene.get();
+		m_loadedScenes[oldPtr] = std::move(m_activeScene);
 	}
 
-	m_sceneReady = true;
+	// Move new scene out of map and into active
+	m_activeScene = std::move(m_loadedScenes.at(scene));
+	m_loadedScenes.erase(scene);
+}
+
+dae::Scene& dae::SceneManager::AddScene(std::unique_ptr<Scene> scene)
+{
+	Scene* rawPtr = scene.get();
+	std::scoped_lock lock(m_loadedScenesMutex);
+	m_loadedScenes[rawPtr] = std::move(scene);
+	return *rawPtr;
+}
+
+void dae::SceneManager::RemoveScene(Scene* scene)
+{
+	std::scoped_lock lock(m_loadedScenesMutex);
+
+	if (m_activeScene.get() == scene)
+	{
+		m_activeScene.reset();
+	}
+
+	m_loadedScenes.erase(scene);
 }
