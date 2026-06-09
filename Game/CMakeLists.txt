@@ -18,7 +18,7 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   Components/LevelEditorComponent.cpp
   Components/UINavigator.cpp
   Components/ButtonComponent.cpp
-)
+ "State/GameStateMachine.cpp")
 
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_20)
 

@@ -106,7 +106,7 @@ void dae::SceneManager::SetActiveScene(Scene* scene)
 {
 	std::scoped_lock lock(m_loadedScenesMutex);
 
-	if (!m_loadedScenes.contains(scene))
+	if (!m_loadedScenes.contains(scene) && scene != nullptr)
 		return;
 
 	// Move current active scene back to map
@@ -117,8 +117,13 @@ void dae::SceneManager::SetActiveScene(Scene* scene)
 	}
 
 	// Move new scene out of map and into active
-	m_activeScene = std::move(m_loadedScenes.at(scene));
-	m_loadedScenes.erase(scene);
+	if(scene)
+	{
+		m_activeScene = std::move(m_loadedScenes.at(scene));
+		m_loadedScenes.erase(scene);
+	}
+	else 
+		m_activeScene.reset();
 }
 
 dae::Scene& dae::SceneManager::AddScene(std::unique_ptr<Scene> scene)
