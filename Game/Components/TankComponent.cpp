@@ -1,30 +1,13 @@
 #include "TankComponent.h"
 #include "HealthComponent.h"
 #include "PointsComponent.h"
+#include "NodeMovementComponent.h"
 #include "Minigin/GameObject.h"
 #include "Minigin/InputManager.h"
 #include "Minigin/Input/InputMap.h"
-#include "Game/Commands/MoveCommands.h"
-#include "Minigin/Physics/Rigidbody.h"
 #include "Minigin/Physics/Collider.h"
 #include "BarrelComponent.h"
 #include "Minigin/Loading/LoadingHelpers.h"
-
-class DamageCommand final : public dae::Command
-{
-public:
-	DamageCommand(TankComponent& tankComponent, int damage)
-		: m_tankComponent(tankComponent), m_damage(damage)
-	{
-	}
-	void Execute() override
-	{
-		m_tankComponent.TakeDamage(m_damage);
-	}
-private:
-	TankComponent& m_tankComponent;
-	int m_damage;
-};
 
 class ShootCommand final : public dae::Command
 {
@@ -39,21 +22,6 @@ public:
 	}
 private:
 	BarrelComponent& m_barrelComponent;
-};
-
-class FirePickupEventCommand final : public dae::Command
-{
-public:
-	FirePickupEventCommand(TankComponent& tankComponent)
-		: m_tankComponent(tankComponent)
-	{
-	}
-	void Execute() override
-	{
-		m_tankComponent.RequestOrbPickUp();
-	}
-private:
-	TankComponent& m_tankComponent;
 };
 
 class RotateBarrelCommand final : public dae::Axis1DCommand
@@ -71,44 +39,54 @@ private:
 	BarrelComponent& m_barrelComponent;
 };
 
-TankComponent::TankComponent(dae::GameObject& pOwner)
-	: Component(pOwner)
+class TankMoveCommand final : public dae::Axis2DCommand
 {
-	GetOwner()->AddComponent<dae::Rigidbody>()->Initialize(false, true); //SHOULD BE REMOVED AND FIXED THAT OBJECTS CAN BE CONSTRUCTED DURING START bc now the vector gets cleared at the end of start which means the constructed objects get removed from said vector!
-	
+public:
+	TankMoveCommand(TankComponent& tankComponent)
+		: m_tankComponent(tankComponent)
+	{
+	}
+
+	void Execute() override
+	{
+		m_tankComponent.SetHeldMoveInput(GetAxisValue());
+	}
+
+private:
+	TankComponent& m_tankComponent;
+};
+
+TankComponent::TankComponent(dae::GameObject& owner)
+	: Component(owner)
+{
+	// TODO: Remove this
+	if (!GetOwner()->GetComponent<NodeMovementComponent>())
+	{
+		GetOwner()->AddComponent<NodeMovementComponent>();
+	}
 }
 
 TankComponent::~TankComponent()
 {
-	if (m_pInputDevice)
-	{
-		dae::InputMap* inputMap = m_pInputDevice->GetInputMap("TankControls");
-		if (inputMap)
-		{
-			inputMap->RemoveCommandFromAxis2DBinding("move", *m_pMoveCommand);
-			inputMap->RemoveCommandFromAxisBinding("aim", *m_pRotateBarrelCommand);
-			inputMap->RemoveCommandFromActionBinding("damage", *m_pDamageCommand);
-			inputMap->RemoveCommandFromActionBinding("firePickUpEvent", *m_pPickupCommand);
-			inputMap->RemoveCommandFromActionBinding("fire", *m_pShootCommand);
-		}
-	}
+	if (!m_pInputDevice)
+		return;
+
+	dae::InputMap* inputMap = m_pInputDevice->GetInputMap("TankControls");
+	if (!inputMap)
+		return;
+
+	inputMap->RemoveCommandFromAxis2DBinding("move", *m_pMoveCommand);
+	inputMap->RemoveCommandFromAxisBinding("aim", *m_pRotateBarrelCommand);
+	inputMap->RemoveCommandFromActionBinding("fire", *m_pShootCommand);
 }
 
 void TankComponent::Start()
 {
 	m_shotSound = dae::ServiceLocator::GetSoundSystem().GetSoundId("Shot.wav");
 
-	m_pRigidbody = GetOwner()->GetComponent<dae::Rigidbody>();
 	m_pHealthComponent = GetOwner()->GetComponent<HealthComponent>();
 	m_pPointsComponent = GetOwner()->GetComponent<PointsComponent>();
-
-	if (!m_pRigidbody)
-	{
-		m_pRigidbody = GetOwner()->AddComponent<dae::Rigidbody>();
-		m_pRigidbody->Initialize(false, true);
-	}
-
-	m_pRigidbody->SetDrag(0.1f);
+	m_pNodeMovementComponent = GetOwner()->GetComponent<NodeMovementComponent>();
 
 	if (!m_pHealthComponent)
 		m_pHealthComponent = GetOwner()->AddComponent<HealthComponent>();
@@ -116,30 +94,35 @@ void TankComponent::Start()
 	if (!m_pPointsComponent)
 		m_pPointsComponent = GetOwner()->AddComponent<PointsComponent>();
 
+	if (!m_pNodeMovementComponent)
+		m_pNodeMovementComponent = GetOwner()->AddComponent<NodeMovementComponent>();
 
+	m_pHealthComponent->Initialize(m_Lives);
+	m_pNodeMovementComponent->Initialize(m_Speed, m_pStartNode, m_NodeReachDistance);
 
-	m_pMoveCommand = std::make_unique<Move2DCommand>(*m_pRigidbody, m_Speed);
-	m_pDamageCommand = std::make_unique<DamageCommand>(*this, 1);
-	m_pPickupCommand = std::make_unique<FirePickupEventCommand>(*this);
-	m_pShootCommand = std::make_unique<ShootCommand>(*m_pBarrel->GetComponent<BarrelComponent>());
-	m_pRotateBarrelCommand = std::make_unique<RotateBarrelCommand>(*m_pBarrel->GetComponent<BarrelComponent>());
+	BarrelComponent* barrelComponent = m_pBarrel->GetComponent<BarrelComponent>();
+	if (!barrelComponent)
+		return;
 
-	//Bind add pointsystems to events
+	m_pMoveCommand = std::make_unique<TankMoveCommand>(*this);
+	m_pShootCommand = std::make_unique<ShootCommand>(*barrelComponent);
+	m_pRotateBarrelCommand = std::make_unique<RotateBarrelCommand>(*barrelComponent);
+
 	m_pointObserverHandle = OnTankEvent().AddObserver(m_pPointsComponent);
 
 	if (m_pInputDevice)
 	{
-		//Bind the input map to the device
-		auto inputMap = m_pInputDevice->GetInputMap("TankControls");
+		dae::InputMap* inputMap = m_pInputDevice->GetInputMap("TankControls");
 
-		inputMap->AddCommandToActionBinding("damage", *m_pDamageCommand);
-		inputMap->AddCommandToActionBinding("firePickUpEvent", *m_pPickupCommand);
-		inputMap->AddCommandToActionBinding("fire", *m_pShootCommand);
-		inputMap->AddCommandToAxis2DBinding("move", *m_pMoveCommand);
-		inputMap->AddCommandToAxisBinding("aim", *m_pRotateBarrelCommand);
-
-		//inputMap->BindAxis2D("Move", (int)GamepadInput::DPadLeft, (int)GamepadInput::DPadRight, (int)GamepadInput::DPadUp, (int)GamepadInput::DPadDown, *m_pMoveCommand);
-
+		if (inputMap)
+		{
+			// TODO: Remove binds from input map
+			// inputMap->AddCommandToActionBinding("damage", *m_pDamageCommand);
+			// inputMap->AddCommandToActionBinding("firePickUpEvent", *m_pPickupCommand);
+			inputMap->AddCommandToActionBinding("fire", *m_pShootCommand);
+			inputMap->AddCommandToAxis2DBinding("move", *m_pMoveCommand);
+			inputMap->AddCommandToAxisBinding("aim", *m_pRotateBarrelCommand);
+		}
 
 		m_pInputDevice->SetActiveInputMap("TankControls");
 	}
@@ -152,44 +135,55 @@ void TankComponent::Start()
 	}
 }
 
-void TankComponent::Update(float)
-{	
-	glm::vec2 v = m_pRigidbody->GetVelocity();
-	float angleDeg = glm::degrees(atan2(v.y, v.x));
-
-	GetOwner()->GetTransform().SetLocalRotation(angleDeg);
-}
-
-void TankComponent::RequestEnemyKill()
+void TankComponent::SetHeldMoveInput(const glm::vec3& input)
 {
-	m_onTankEventSubject.NotifyObservers(TankEvents::KillEnemy);
-	dae::ServiceLocator::GetSoundSystem().Play(m_shotSound, 0.2f);
-}
-
-void TankComponent::RequestOrbPickUp()
-{
-	m_onTankEventSubject.NotifyObservers(TankEvents::PickupOrb);
+	if (m_pNodeMovementComponent)
+	{
+		m_pNodeMovementComponent->SetHeldMoveInput(input);
+	}
 }
 
 void TankComponent::TakeDamage(int damage)
 {
-	m_pHealthComponent->TakeDamage(damage);
+	if (m_pHealthComponent)
+	{
+		m_pHealthComponent->TakeDamage(damage);
+	}
 }
 
-void TankComponent::Initialize(const std::string& device, float speed, int lives, dae::GameObject& barrel)
+void TankComponent::Initialize(const std::string& device, float speed, int lives, dae::GameObject& barrel, dae::GameObject* startNode)
 {
-	m_pHealthComponent = GetOwner()->GetComponent<HealthComponent>();
-	m_pHealthComponent->Initialize(lives);
 	m_Speed = speed;
-	m_pInputDevice = dae::InputManager::GetInstance().GetDeviceByName(device);
+	m_Lives = lives;
 	m_pBarrel = &barrel;
+	m_pStartNode = startNode;
+
+	m_pInputDevice = dae::InputManager::GetInstance().GetDeviceByName(device);
+
+	if (m_pHealthComponent)
+	{
+		m_pHealthComponent->Initialize(lives);
+	}
+
+	if (m_pNodeMovementComponent)
+	{
+		m_pNodeMovementComponent->Initialize(m_Speed, m_pStartNode, m_NodeReachDistance);
+	}
 }
 
 std::vector<dae::ParamDefinition> TankComponent::GetExpectedParams() const
 {
 	dae::GameObject* nullPtr{ nullptr };
 
-	return { { "speed", 100.0f }, { "lives", 3 }, { "barrel", nullPtr }, { "device", "" } };
+	return
+	{
+		{ "speed", 100.0f },
+		{ "lives", 3 },
+		{ "barrel", nullPtr },
+		{ "device", "" },
+		{ "startNode", nullPtr },
+		{ "nodeReachDistance", 1.0f }
+	};
 }
 
 void TankComponent::Load(const dae::ParamMap& params)
@@ -198,7 +192,10 @@ void TankComponent::Load(const dae::ParamMap& params)
 	int lives = GetRequiredParam<int>(params, "lives");
 	dae::GameObject* barrel = GetRequiredParam<dae::GameObject*>(params, "barrel");
 	const std::string& device = GetRequiredParam<std::string>(params, "device");
-	Initialize(device, speed, lives, *barrel);
+	dae::GameObject* startNode = GetRequiredParam<dae::GameObject*>(params, "startNode");
+	m_NodeReachDistance = GetRequiredParam<float>(params, "nodeReachDistance");
+
+	Initialize(device, speed, lives, *barrel, startNode);
 }
 
 void TankComponent::OnNotify(dae::HitEvent)

@@ -8,3 +8,5 @@
 #include "BarrelComponent.h"
 #include "ButtonComponent.h"
 #include "UINavigator.h"
+#include "TankNodeComponent.h"
+#include "NodeMovementComponent.h"

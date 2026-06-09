@@ -36,6 +36,8 @@ namespace dae
 
 		void AddForce(const glm::vec2& force);
 
+		void MoveTowards(const glm::vec2& targetPosition, float speed, float fixedDeltaTime, float arriveEpsilon = 0.5f);
+
 		// Properties
 		void SetGravityScale(float scale) { m_gravityScale = scale; }
 		float GetGravityScale() const { return m_gravityScale; }

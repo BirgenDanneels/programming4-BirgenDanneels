@@ -8,12 +8,14 @@
 
 namespace dae
 {
-	class CharacterController;
 	class InputDevice;
+	class Rigidbody;
+	class GameObject;
 }
 
 class HealthComponent;
 class PointsComponent;
+class NodeMovementComponent;
 
 enum class TankEvents
 {
@@ -30,16 +32,13 @@ public:
 
 	virtual void Start() override;
 	virtual void FixedUpdate(float) override {};
-	virtual void Update(float) override;
+	virtual void Update(float) override {};
 	virtual void Render() const override {};
-
-	//These are functions to demonstrate how this component can broadcast events. This isnt a realistic example of how these events would be triggered.
-	void RequestEnemyKill();
-	void RequestOrbPickUp();
 		
 	void TakeDamage(int damage);
 
-	void Initialize(const std::string& device, float speed, int lives, dae::GameObject& barrel);
+	void Initialize(const std::string& device, float speed, int lives, dae::GameObject& barrel, dae::GameObject* startNode);
+
 	//Loading functions
 	virtual std::vector<dae::ParamDefinition> GetExpectedParams() const override;
 	virtual void Load(const dae::ParamMap& params) override;
@@ -48,16 +47,15 @@ public:
 
 	virtual void OnNotify(dae::HitEvent hit) override;
 
-private:
+	void SetHeldMoveInput(const glm::vec3& input);
 
-	dae::Rigidbody* m_pRigidbody;
-	HealthComponent* m_pHealthComponent;
-	PointsComponent* m_pPointsComponent;
+private:
+	HealthComponent* m_pHealthComponent{ nullptr };
+	PointsComponent* m_pPointsComponent{ nullptr };
+	NodeMovementComponent* m_pNodeMovementComponent{ nullptr };
 
 	std::unique_ptr<dae::Axis2DCommand> m_pMoveCommand;
 	std::unique_ptr<dae::Axis1DCommand> m_pRotateBarrelCommand;
-	std::unique_ptr<dae::Command> m_pDamageCommand;
-	std::unique_ptr<dae::Command> m_pPickupCommand;
 	std::unique_ptr<dae::Command> m_pShootCommand;
 
 	dae::Subject<TankEvents> m_onTankEventSubject;
@@ -70,4 +68,8 @@ private:
 	dae::InputDevice* m_pInputDevice{ nullptr };
 	dae::GameObject* m_pBarrel{ nullptr };
 	float m_Speed{ 100.0f };
+	float m_NodeReachDistance{ 1.0f };
+	int m_Lives{ 3 };
+
+	dae::GameObject* m_pStartNode{ nullptr };
 };

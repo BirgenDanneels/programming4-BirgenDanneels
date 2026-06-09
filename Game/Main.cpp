@@ -14,6 +14,8 @@
 #include "Minigin/InputManager.h"
 #include "Minigin/Physics/Collider.h"
 
+#include "Game/State/GameStateMachine.h"
+
 
 #include <filesystem>
 namespace fs = std::filesystem;
@@ -21,6 +23,7 @@ namespace fs = std::filesystem;
 inline void load()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene();
+	dae::SceneManager::GetInstance().SetActiveScene(&scene);
 
 	auto background = scene.CreateGameObject();
 	background->GetTransform().SetLocalPosition(0, 0);
@@ -106,12 +109,36 @@ inline void load()
 	blueBarrelComp->Initialize(0.5f, *bulletSpawnPoint1, 1, 5, 20);
 
 
+	//add nodes
+	auto node1 = scene.CreateGameObject();
+	node1->GetTransform().SetLocalPosition(200, 280);
+	node1->AddComponent<TankNodeComponent>();
+
+	auto node2 = scene.CreateGameObject();
+	node2->GetTransform().SetLocalPosition(200, 100);
+	node2->AddComponent<TankNodeComponent>();
+
+	auto node3 = scene.CreateGameObject();
+	node3->GetTransform().SetLocalPosition(400, 100);
+	node3->AddComponent<TankNodeComponent>();
+
+	auto node4 = scene.CreateGameObject();
+	node4->GetTransform().SetLocalPosition(100, 100);
+	node4->AddComponent<TankNodeComponent>();
+
+	node1->GetComponent<TankNodeComponent>()->SetNeighbour(TankDirection::Up, node2);
+	node2->GetComponent<TankNodeComponent>()->SetNeighbour(TankDirection::Down, node1);
+	node2->GetComponent<TankNodeComponent>()->SetNeighbour(TankDirection::Right, node3);
+	node2->GetComponent<TankNodeComponent>()->SetNeighbour(TankDirection::Left, node4);
+	node3->GetComponent<TankNodeComponent>()->SetNeighbour(TankDirection::Left, node2);
+	node4->GetComponent<TankNodeComponent>()->SetNeighbour(TankDirection::Right, node2);
+
 	//Init tanks
 	blueTank->AddComponent<dae::Collider>()->InitializeBoxCollider(30, 30);
 	//blueTank->AddComponent<TankComponent>()->Initialize(dae::InputManager::GetInstance().GetKeyboard(), 100.f, 3);
 
 	redTank->AddComponent<dae::Collider>()->InitializeBoxCollider(30, 30);
-	redTank->AddComponent<TankComponent>()->Initialize("gamepad_0", 200.f, 3, *playerBarrel);
+	redTank->AddComponent<TankComponent>()->Initialize("gamepad_0", 200.f, 3, *playerBarrel, node1);
 	redTank->SetTag(dae::make_sdbm_hash("Player"));
 	
 
@@ -127,6 +154,9 @@ inline void load()
 	auto worldRight = scene.CreateGameObject();
 	worldRight->GetTransform().SetLocalPosition(1024, 288);
 	worldRight->AddComponent<dae::Collider>()->InitializeBoxCollider(10, 576);
+
+	// Load sounds
+	dae::ServiceLocator::GetSoundSystem().LoadSound("Shot.wav");
 }
 
 int main(int, char*[]) {
@@ -155,13 +185,16 @@ int main(int, char*[]) {
 	factory.Register<dae::AnimatedSpriteComponent>("AnimatedSpriteComponent");
 	factory.Register<ButtonComponent>("ButtonComponent");
 	factory.Register<UINavigator>("UINavigator");
+	factory.Register<TankNodeComponent>("TankNodeComponent");
 
 	// Load input maps
 	dae::InputManager& inputManager = dae::InputManager::GetInstance();
 	inputManager.LoadDeviceMapsFromFile((data_location / "InputMaps.json").string());
 
-	//engine.Run(load);
-	engine.Run("AssignmentLevel.json");
+	engine.Run(load);
+	//auto& sceneManager = dae::SceneManager::GetInstance();
+	//sceneManager.CreatePersistentObject()->AddComponent<GameStateMachine>()->SetEngine(&engine);
+	//engine.Run("AssignmentLevel.json");
 
     return 0;
 }

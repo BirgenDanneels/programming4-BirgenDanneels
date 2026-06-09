@@ -89,3 +89,36 @@ void dae::Rigidbody::AddForce(const glm::vec2& force)
 {
 	m_acceleration += force;
 }
+
+void dae::Rigidbody::MoveTowards(const glm::vec2& targetPosition, float speed, float fixedDeltaTime, float arriveEpsilon)
+{
+	if (fixedDeltaTime <= 0.0f || speed <= 0.0f)
+	{
+		SetVelocity({ 0.0f, 0.0f });
+		return;
+	}
+
+	const glm::vec3 worldPos3 = GetOwner()->GetTransform().GetWorldPosition();
+	const glm::vec2 currentPosition{ worldPos3.x, worldPos3.y };
+
+	const glm::vec2 toTarget = targetPosition - currentPosition;
+	const float distance = glm::length(toTarget);
+
+	if (distance <= arriveEpsilon)
+	{
+		SetVelocity({ 0.0f, 0.0f });
+		return;
+	}
+
+	const float maxStep = speed * fixedDeltaTime;
+
+	if (distance <= maxStep)
+	{
+		// Exact arrival this physics step
+		SetVelocity(toTarget / fixedDeltaTime);
+	}
+	else
+	{
+		SetVelocity(glm::normalize(toTarget) * speed);
+	}
+}
