@@ -69,8 +69,8 @@ std::vector<dae::ParamDefinition> TankNodeComponent::GetExpectedParams() const
 
 void TankNodeComponent::Load(const dae::ParamMap& params)
 {
-	m_pUpNode = GetRequiredParam<dae::GameObject*>(params, "up");
-	m_pDownNode = GetRequiredParam<dae::GameObject*>(params, "down");
-	m_pLeftNode = GetRequiredParam<dae::GameObject*>(params, "left");
-	m_pRightNode = GetRequiredParam<dae::GameObject*>(params, "right");
+	m_pUpNode = GetOptionalParam<dae::GameObject*>(params, "up", nullptr);
+	m_pDownNode = GetOptionalParam<dae::GameObject*>(params, "down", nullptr);
+	m_pLeftNode = GetOptionalParam<dae::GameObject*>(params, "left", nullptr);
+	m_pRightNode = GetOptionalParam<dae::GameObject*>(params, "right", nullptr);
 }

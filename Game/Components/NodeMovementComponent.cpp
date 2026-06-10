@@ -29,7 +29,7 @@ void NodeMovementComponent::Start()
 
 	if (m_pCurrentNode)
 	{
-		GetOwner()->GetTransform().SetLocalPosition(m_pCurrentNode->GetTransform().GetLocalPosition());
+		GetOwner()->GetTransform().SetWorldPosition(m_pCurrentNode->GetTransform().GetLocalPosition());
 	}
 }
 
@@ -41,15 +41,15 @@ void NodeMovementComponent::FixedUpdate(float fixedDeltaTime)
 	if (!m_IsMovingBetweenNodes || !m_pTargetNode)
 		return;
 
-	const glm::vec3 targetPosition = m_pTargetNode->GetTransform().GetLocalPosition();
+	const glm::vec3 targetPosition = m_pTargetNode->GetTransform().GetWorldPosition();
 
 	m_pRigidbody->MoveTowards(targetPosition, m_Speed, fixedDeltaTime);
 
-	const glm::vec3 currentPosition = GetOwner()->GetTransform().GetLocalPosition();
+	const glm::vec3 currentPosition = GetOwner()->GetTransform().GetWorldPosition();
 
 	if (glm::distance(currentPosition, targetPosition) <= m_NodeReachDistance)
 	{
-		GetOwner()->GetTransform().SetLocalPosition(targetPosition);
+		GetOwner()->GetTransform().SetWorldPosition(targetPosition);
 
 		m_pCurrentNode = m_pTargetNode;
 		m_pTargetNode = nullptr;
@@ -67,7 +67,7 @@ void NodeMovementComponent::Initialize(float speed, dae::GameObject* startNode, 
 
 	if (m_pCurrentNode)
 	{
-		GetOwner()->GetTransform().SetLocalPosition(m_pCurrentNode->GetTransform().GetLocalPosition());
+		GetOwner()->GetTransform().SetWorldPosition(m_pCurrentNode->GetTransform().GetWorldPosition());
 	}
 }
 
@@ -145,7 +145,7 @@ void NodeMovementComponent::SetCurrentNode(dae::GameObject* node, bool snapToNod
 
 	if (snapToNode && m_pCurrentNode)
 	{
-		GetOwner()->GetTransform().SetLocalPosition(m_pCurrentNode->GetTransform().GetLocalPosition());
+		GetOwner()->GetTransform().SetWorldPosition(m_pCurrentNode->GetTransform().GetWorldPosition());
 	}
 }
 

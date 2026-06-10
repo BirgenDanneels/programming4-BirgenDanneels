@@ -1,0 +1,3171 @@
+{
+  "scene": {
+    "objects": [
+      {
+        "components": [
+          {
+            "params": {
+              "centered": false,
+              "texture": "SampleMap.png"
+            },
+            "type": "TextureComponent"
+          }
+        ],
+        "name": "MapObject",
+        "parent": "",
+        "position": [
+          0.0,
+          250.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [],
+        "name": "Nodes",
+        "parent": "",
+        "position": [
+          0.0,
+          250.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node3",
+              "left": "",
+              "right": "GO_Node2",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node",
+        "parent": "Nodes",
+        "position": [
+          35.0,
+          20.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node10",
+              "left": "GO_Node",
+              "right": "GO_Node5",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node2",
+        "parent": "Nodes",
+        "position": [
+          85.0,
+          20.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node27",
+              "left": "",
+              "right": "GO_Node4",
+              "texture": "SampleMap.png",
+              "up": "GO_Node"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node3",
+        "parent": "Nodes",
+        "position": [
+          35.0,
+          90.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node19",
+              "left": "GO_Node3",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": "GO_Node10"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node4",
+        "parent": "Nodes",
+        "position": [
+          85.0,
+          90.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node12",
+              "left": "GO_Node2",
+              "right": "GO_Node6",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node5",
+        "parent": "Nodes",
+        "position": [
+          186.0,
+          20.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node13",
+              "left": "GO_Node5",
+              "right": "GO_Node7",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node6",
+        "parent": "Nodes",
+        "position": [
+          236.0,
+          20.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node14",
+              "left": "GO_Node6",
+              "right": "GO_Node8",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node7",
+        "parent": "Nodes",
+        "position": [
+          285.0,
+          20.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node17",
+              "left": "GO_Node7",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node8",
+        "parent": "Nodes",
+        "position": [
+          420.0,
+          20.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node18",
+              "left": "",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node9",
+        "parent": "Nodes",
+        "position": [
+          470.0,
+          20.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node4",
+              "left": "",
+              "right": "GO_Node11",
+              "texture": "SampleMap.png",
+              "up": "GO_Node2"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node10",
+        "parent": "Nodes",
+        "position": [
+          85.0,
+          72.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node20",
+              "left": "GO_Node10",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node11",
+        "parent": "Nodes",
+        "position": [
+          135.0,
+          72.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node21",
+              "left": "",
+              "right": "GO_Node13",
+              "texture": "SampleMap.png",
+              "up": "GO_Node5"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node12",
+        "parent": "Nodes",
+        "position": [
+          186.0,
+          72.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node22",
+              "left": "GO_Node12",
+              "right": "GO_Node14",
+              "texture": "SampleMap.png",
+              "up": "GO_Node6"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node13",
+        "parent": "Nodes",
+        "position": [
+          236.0,
+          72.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "GO_Node13",
+              "right": "GO_Node15",
+              "texture": "SampleMap.png",
+              "up": "GO_Node7"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node14",
+        "parent": "Nodes",
+        "position": [
+          285.0,
+          72.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node23",
+              "left": "GO_Node14",
+              "right": "GO_Node16",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node15",
+        "parent": "Nodes",
+        "position": [
+          319.0,
+          72.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node24",
+              "left": "GO_Node15",
+              "right": "GO_Node17",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node16",
+        "parent": "Nodes",
+        "position": [
+          369.0,
+          72.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node25",
+              "left": "GO_Node16",
+              "right": "GO_Node18",
+              "texture": "SampleMap.png",
+              "up": "GO_Node8"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node17",
+        "parent": "Nodes",
+        "position": [
+          420.0,
+          72.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node26",
+              "left": "GO_Node17",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": "GO_Node9"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node18",
+        "parent": "Nodes",
+        "position": [
+          470.0,
+          72.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node28",
+              "left": "",
+              "right": "GO_Node20",
+              "texture": "SampleMap.png",
+              "up": "GO_Node4"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node19",
+        "parent": "Nodes",
+        "position": [
+          85.0,
+          123.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node29",
+              "left": "GO_Node19",
+              "right": "GO_Node21",
+              "texture": "SampleMap.png",
+              "up": "GO_Node11"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node20",
+        "parent": "Nodes",
+        "position": [
+          135.0,
+          123.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node30",
+              "left": "GO_Node20",
+              "right": "GO_Node22",
+              "texture": "SampleMap.png",
+              "up": "GO_Node12"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node21",
+        "parent": "Nodes",
+        "position": [
+          186.0,
+          123.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node31",
+              "left": "GO_Node21",
+              "right": "GO_Node23",
+              "texture": "SampleMap.png",
+              "up": "GO_Node13"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node22",
+        "parent": "Nodes",
+        "position": [
+          236.0,
+          123.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node33",
+              "left": "GO_Node22",
+              "right": "GO_Node24",
+              "texture": "SampleMap.png",
+              "up": "GO_Node15"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node23",
+        "parent": "Nodes",
+        "position": [
+          319.0,
+          123.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "GO_Node23",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": "GO_Node16"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node24",
+        "parent": "Nodes",
+        "position": [
+          369.0,
+          123.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node35",
+              "left": "",
+              "right": "GO_Node26",
+              "texture": "SampleMap.png",
+              "up": "GO_Node17"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node25",
+        "parent": "Nodes",
+        "position": [
+          420.0,
+          123.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node41",
+              "left": "GO_Node25",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": "GO_Node18"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node26",
+        "parent": "Nodes",
+        "position": [
+          470.0,
+          123.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node43",
+              "left": "",
+              "right": "GO_Node28",
+              "texture": "SampleMap.png",
+              "up": "GO_Node3"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node27",
+        "parent": "Nodes",
+        "position": [
+          35.0,
+          173.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node37",
+              "left": "GO_Node27",
+              "right": "GO_Node29",
+              "texture": "SampleMap.png",
+              "up": "GO_Node19"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node28",
+        "parent": "Nodes",
+        "position": [
+          85.0,
+          173.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node38",
+              "left": "GO_Node28",
+              "right": "GO_Node30",
+              "texture": "SampleMap.png",
+              "up": "GO_Node20"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node29",
+        "parent": "Nodes",
+        "position": [
+          135.0,
+          173.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node46",
+              "left": "GO_Node29",
+              "right": "GO_Node31",
+              "texture": "SampleMap.png",
+              "up": "GO_Node21"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node30",
+        "parent": "Nodes",
+        "position": [
+          186.0,
+          173.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "GO_Node30",
+              "right": "GO_Node32",
+              "texture": "SampleMap.png",
+              "up": "GO_Node22"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node31",
+        "parent": "Nodes",
+        "position": [
+          236.0,
+          173.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node36",
+              "left": "GO_Node31",
+              "right": "GO_Node33",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node32",
+        "parent": "Nodes",
+        "position": [
+          252.0,
+          173.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node49",
+              "left": "GO_Node32",
+              "right": "GO_Node34",
+              "texture": "SampleMap.png",
+              "up": "GO_Node23"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node33",
+        "parent": "Nodes",
+        "position": [
+          319.0,
+          173.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node39",
+              "left": "GO_Node33",
+              "right": "GO_Node35",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node34",
+        "parent": "Nodes",
+        "position": [
+          369.0,
+          173.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node40",
+              "left": "GO_Node34",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": "GO_Node25"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node35",
+        "parent": "Nodes",
+        "position": [
+          420.0,
+          173.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": "GO_Node32"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node36",
+        "parent": "Nodes",
+        "position": [
+          252.0,
+          188.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node44",
+              "left": "",
+              "right": "GO_Node38",
+              "texture": "SampleMap.png",
+              "up": "GO_Node28"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node37",
+        "parent": "Nodes",
+        "position": [
+          85.0,
+          223.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node45",
+              "left": "GO_Node37",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": "GO_Node29"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node38",
+        "parent": "Nodes",
+        "position": [
+          135.0,
+          223.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node50",
+              "left": "",
+              "right": "GO_Node40",
+              "texture": "SampleMap.png",
+              "up": "GO_Node34"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node39",
+        "parent": "Nodes",
+        "position": [
+          369.0,
+          223.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node51",
+              "left": "GO_Node39",
+              "right": "GO_Node41",
+              "texture": "SampleMap.png",
+              "up": "GO_Node35"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node40",
+        "parent": "Nodes",
+        "position": [
+          420.0,
+          223.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node52",
+              "left": "GO_Node40",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": "GO_Node26"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node41",
+        "parent": "Nodes",
+        "position": [
+          470.0,
+          223.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node48",
+              "left": "",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node42",
+        "parent": "Nodes",
+        "position": [
+          252.0,
+          257.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node61",
+              "left": "",
+              "right": "GO_Node44",
+              "texture": "SampleMap.png",
+              "up": "GO_Node27"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node43",
+        "parent": "Nodes",
+        "position": [
+          35.0,
+          274.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "GO_Node43",
+              "right": "GO_Node45",
+              "texture": "SampleMap.png",
+              "up": "GO_Node37"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node44",
+        "parent": "Nodes",
+        "position": [
+          85.0,
+          274.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node54",
+              "left": "GO_Node44",
+              "right": "GO_Node46",
+              "texture": "SampleMap.png",
+              "up": "GO_Node38"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node45",
+        "parent": "Nodes",
+        "position": [
+          135.0,
+          274.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node55",
+              "left": "GO_Node45",
+              "right": "GO_Node47",
+              "texture": "SampleMap.png",
+              "up": "GO_Node30"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node46",
+        "parent": "Nodes",
+        "position": [
+          186.0,
+          274.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node56",
+              "left": "GO_Node46",
+              "right": "GO_Node48",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node47",
+        "parent": "Nodes",
+        "position": [
+          236.0,
+          274.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "GO_Node47",
+              "right": "GO_Node49",
+              "texture": "SampleMap.png",
+              "up": "GO_Node42"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node48",
+        "parent": "Nodes",
+        "position": [
+          252.0,
+          274.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node57",
+              "left": "GO_Node48",
+              "right": "GO_Node50",
+              "texture": "SampleMap.png",
+              "up": "GO_Node33"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node49",
+        "parent": "Nodes",
+        "position": [
+          319.0,
+          274.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "GO_Node49",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": "GO_Node39"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node50",
+        "parent": "Nodes",
+        "position": [
+          369.0,
+          274.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node59",
+              "left": "",
+              "right": "GO_Node52",
+              "texture": "SampleMap.png",
+              "up": "GO_Node40"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node51",
+        "parent": "Nodes",
+        "position": [
+          420.0,
+          274.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node60",
+              "left": "GO_Node51",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": "GO_Node41"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node52",
+        "parent": "Nodes",
+        "position": [
+          470.0,
+          274.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node62",
+              "left": "",
+              "right": "GO_Node54",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node53",
+        "parent": "Nodes",
+        "position": [
+          85.0,
+          324.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node63",
+              "left": "GO_Node53",
+              "right": "GO_Node55",
+              "texture": "SampleMap.png",
+              "up": "GO_Node45"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node54",
+        "parent": "Nodes",
+        "position": [
+          135.0,
+          324.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "GO_Node54",
+              "right": "GO_Node56",
+              "texture": "SampleMap.png",
+              "up": "GO_Node46"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node55",
+        "parent": "Nodes",
+        "position": [
+          186.0,
+          324.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node65",
+              "left": "GO_Node55",
+              "right": "GO_Node57",
+              "texture": "SampleMap.png",
+              "up": "GO_Node47"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node56",
+        "parent": "Nodes",
+        "position": [
+          236.0,
+          324.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node66",
+              "left": "GO_Node56",
+              "right": "GO_Node58",
+              "texture": "SampleMap.png",
+              "up": "GO_Node49"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node57",
+        "parent": "Nodes",
+        "position": [
+          319.0,
+          324.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node67",
+              "left": "GO_Node57",
+              "right": "GO_Node59",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node58",
+        "parent": "Nodes",
+        "position": [
+          369.0,
+          324.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node68",
+              "left": "GO_Node58",
+              "right": "GO_Node60",
+              "texture": "SampleMap.png",
+              "up": "GO_Node51"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node59",
+        "parent": "Nodes",
+        "position": [
+          420.0,
+          324.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node74",
+              "left": "GO_Node59",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": "GO_Node52"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node60",
+        "parent": "Nodes",
+        "position": [
+          470.0,
+          324.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "",
+              "right": "GO_Node62",
+              "texture": "SampleMap.png",
+              "up": "GO_Node43"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node61",
+        "parent": "Nodes",
+        "position": [
+          35.0,
+          374.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node70",
+              "left": "GO_Node61",
+              "right": "GO_Node63",
+              "texture": "SampleMap.png",
+              "up": "GO_Node53"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node62",
+        "parent": "Nodes",
+        "position": [
+          85.0,
+          374.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "GO_Node62",
+              "right": "GO_Node64",
+              "texture": "SampleMap.png",
+              "up": "GO_Node54"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node63",
+        "parent": "Nodes",
+        "position": [
+          135.0,
+          374.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node71",
+              "left": "GO_Node63",
+              "right": "GO_Node65",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node64",
+        "parent": "Nodes",
+        "position": [
+          169.0,
+          374.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node72",
+              "left": "GO_Node64",
+              "right": "GO_Node66",
+              "texture": "SampleMap.png",
+              "up": "GO_Node56"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node65",
+        "parent": "Nodes",
+        "position": [
+          236.0,
+          374.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "GO_Node73",
+              "left": "GO_Node65",
+              "right": "GO_Node67",
+              "texture": "SampleMap.png",
+              "up": "GO_Node57"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node66",
+        "parent": "Nodes",
+        "position": [
+          319.0,
+          374.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "GO_Node66",
+              "right": "GO_Node68",
+              "texture": "SampleMap.png",
+              "up": "GO_Node58"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node67",
+        "parent": "Nodes",
+        "position": [
+          369.0,
+          374.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "GO_Node67",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": "GO_Node59"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node68",
+        "parent": "Nodes",
+        "position": [
+          420.0,
+          374.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "",
+              "right": "GO_Node70",
+              "texture": "SampleMap.png",
+              "up": ""
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node69",
+        "parent": "Nodes",
+        "position": [
+          35.0,
+          425.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "GO_Node69",
+              "right": "GO_Node71",
+              "texture": "SampleMap.png",
+              "up": "GO_Node62"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node70",
+        "parent": "Nodes",
+        "position": [
+          85.0,
+          425.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "GO_Node70",
+              "right": "GO_Node72",
+              "texture": "SampleMap.png",
+              "up": "GO_Node64"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node71",
+        "parent": "Nodes",
+        "position": [
+          169.0,
+          425.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "GO_Node71",
+              "right": "GO_Node73",
+              "texture": "SampleMap.png",
+              "up": "GO_Node65"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node72",
+        "parent": "Nodes",
+        "position": [
+          236.0,
+          425.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "GO_Node72",
+              "right": "GO_Node74",
+              "texture": "SampleMap.png",
+              "up": "GO_Node66"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node73",
+        "parent": "Nodes",
+        "position": [
+          319.0,
+          425.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "down": "",
+              "left": "GO_Node73",
+              "right": "",
+              "texture": "SampleMap.png",
+              "up": "GO_Node60"
+            },
+            "type": "TankNodeComponent"
+          }
+        ],
+        "name": "Node74",
+        "parent": "Nodes",
+        "position": [
+          470.0,
+          425.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "texture": "RedTank.png"
+            },
+            "type": "TextureComponent"
+          },
+          {
+            "params": {
+              "health": 3
+            },
+            "type": "HealthComponent"
+          },
+          {
+            "params": {},
+            "type": "PointsComponent"
+          },
+          {
+            "params": {
+              "height": 25.0,
+              "width": 25.0,
+              "xOffset": 0.0,
+              "yOffset": 0.0
+            },
+            "type": "Collider"
+          },
+          {
+            "params": {
+              "barrel": "GO_playerBarrel",
+              "device": "gamepad_0",
+              "lives": 3,
+              "nodeReachDistance": 1.0,
+              "speed": 200.0,
+              "startNode": "GO_Node"
+            },
+            "type": "TankComponent"
+          }
+        ],
+        "name": "redTank",
+        "parent": "",
+        "position": [
+          300.0,
+          100.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "bulletSpawn": "GO_bulletSpawnPoint1",
+              "damage": 1,
+              "fireRate": 0.5,
+              "maxBounces": 5,
+              "rotationSpeed": 180.0
+            },
+            "type": "BarrelComponent"
+          }
+        ],
+        "name": "playerBarrel",
+        "parent": "redTank",
+        "position": [
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [],
+        "name": "bulletSpawnPoint1",
+        "parent": "playerBarrel",
+        "position": [
+          25.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [],
+        "name": "Walls",
+        "parent": "",
+        "position": [
+          0.0,
+          250.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 18.0,
+              "width": 503.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "OuterWall_Top",
+        "parent": "Walls",
+        "position": [
+          251.5,
+          -4.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 18.0,
+              "width": 503.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "OuterWall_Bottom",
+        "parent": "Walls",
+        "position": [
+          251.5,
+          450.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 440.0,
+              "width": 18.0,
+              "xOffset": 0.0,
+              "yOffset": 0.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "OuterWall_Left",
+        "parent": "Walls",
+        "position": [
+          9.0,
+          223.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 435.0,
+              "width": 18.0,
+              "xOffset": 0.0,
+              "yOffset": 0.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "OuterWall_Right",
+        "parent": "Walls",
+        "position": [
+          494.0,
+          223.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 37.0,
+              "width": 18.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_01",
+        "parent": "Walls",
+        "position": [
+          444.0,
+          36.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 33.0,
+              "width": 14.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_02",
+        "parent": "Walls",
+        "position": [
+          58.0,
+          54.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 67.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_03",
+        "parent": "Walls",
+        "position": [
+          134.5,
+          46.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 50.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_04",
+        "parent": "Walls",
+        "position": [
+          159.5,
+          80.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_05",
+        "parent": "Walls",
+        "position": [
+          210.5,
+          46.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_06",
+        "parent": "Walls",
+        "position": [
+          259.5,
+          46.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 101.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_07",
+        "parent": "Walls",
+        "position": [
+          351.5,
+          46.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_08",
+        "parent": "Walls",
+        "position": [
+          109.5,
+          96.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_09",
+        "parent": "Walls",
+        "position": [
+          209.5,
+          96.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 51.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_10",
+        "parent": "Walls",
+        "position": [
+          276.5,
+          96.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_11",
+        "parent": "Walls",
+        "position": [
+          343.5,
+          96.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 67.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_12",
+        "parent": "Walls",
+        "position": [
+          393.5,
+          121.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 15.0,
+              "width": 50.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_13",
+        "parent": "Walls",
+        "position": [
+          360.0,
+          145.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 18.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_14",
+        "parent": "Walls",
+        "position": [
+          444.0,
+          96.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 51.0,
+              "width": 18.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_15",
+        "parent": "Walls",
+        "position": [
+          59.0,
+          130.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 10.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_16",
+        "parent": "Walls",
+        "position": [
+          159.5,
+          146.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 18.0,
+              "width": 51.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_17",
+        "parent": "Walls",
+        "position": [
+          276.5,
+          147.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 68.0,
+              "width": 18.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_18",
+        "parent": "Walls",
+        "position": [
+          444.0,
+          172.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 67.0,
+              "width": 18.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_19",
+        "parent": "Walls",
+        "position": [
+          59.0,
+          222.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 67.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_20",
+        "parent": "Walls",
+        "position": [
+          159.5,
+          222.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 67.0,
+              "width": 16.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_21",
+        "parent": "Walls",
+        "position": [
+          210.0,
+          222.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 16.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_22",
+        "parent": "Walls",
+        "position": [
+          226.5,
+          197.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 16.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_23",
+        "parent": "Walls",
+        "position": [
+          226.5,
+          248.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 67.0,
+              "width": 16.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_24",
+        "parent": "Walls",
+        "position": [
+          293.0,
+          222.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 16.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_25",
+        "parent": "Walls",
+        "position": [
+          276.5,
+          248.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 15.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_26",
+        "parent": "Walls",
+        "position": [
+          277.5,
+          197.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 67.0,
+              "width": 18.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_27",
+        "parent": "Walls",
+        "position": [
+          343.0,
+          222.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_28",
+        "parent": "Walls",
+        "position": [
+          393.5,
+          197.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 67.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_29",
+        "parent": "Walls",
+        "position": [
+          393.5,
+          272.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 50.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_30",
+        "parent": "Walls",
+        "position": [
+          360.0,
+          297.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 66.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_31",
+        "parent": "Walls",
+        "position": [
+          84.0,
+          297.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 51.0,
+              "width": 16.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_32",
+        "parent": "Walls",
+        "position": [
+          59.0,
+          331.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_33",
+        "parent": "Walls",
+        "position": [
+          159.5,
+          297.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 18.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_34",
+        "parent": "Walls",
+        "position": [
+          210.5,
+          298.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 14.0,
+              "width": 49.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_35",
+        "parent": "Walls",
+        "position": [
+          276.5,
+          299.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_36",
+        "parent": "Walls",
+        "position": [
+          109.5,
+          348.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 68.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_37",
+        "parent": "Walls",
+        "position": [
+          185.0,
+          348.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 49.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_38",
+        "parent": "Walls",
+        "position": [
+          276.5,
+          348.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 117.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_39",
+        "parent": "Walls",
+        "position": [
+          393.5,
+          398.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 53.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_40",
+        "parent": "Walls",
+        "position": [
+          443.5,
+          366.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 50.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_42",
+        "parent": "Walls",
+        "position": [
+          43.0,
+          398.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 51.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_43",
+        "parent": "Walls",
+        "position": [
+          126.5,
+          398.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 34.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_44",
+        "parent": "Walls",
+        "position": [
+          202.0,
+          398.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 50.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "GreenWall_45",
+        "parent": "Walls",
+        "position": [
+          277.0,
+          398.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "BlueBlock_01",
+        "parent": "Walls",
+        "position": [
+          109.5,
+          146.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 16.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "BlueBlock_02",
+        "parent": "Walls",
+        "position": [
+          210.0,
+          146.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "BlueBlock_03",
+        "parent": "Walls",
+        "position": [
+          109.5,
+          197.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "BlueBlock_04",
+        "parent": "Walls",
+        "position": [
+          109.5,
+          247.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "BlueBlock_05",
+        "parent": "Walls",
+        "position": [
+          443.5,
+          247.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "BlueBlock_06",
+        "parent": "Walls",
+        "position": [
+          443.5,
+          297.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "BlueBlock_07",
+        "parent": "Walls",
+        "position": [
+          343.5,
+          348.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "height": 17.0,
+              "width": 17.0
+            },
+            "type": "Collider"
+          }
+        ],
+        "name": "BlueBlock_08",
+        "parent": "Walls",
+        "position": [
+          393.5,
+          348.5
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      }
+    ]
+  }
+}
