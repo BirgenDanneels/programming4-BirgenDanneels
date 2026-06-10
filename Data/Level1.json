@@ -43,7 +43,6 @@
               "down": "GO_Node3",
               "left": "",
               "right": "GO_Node2",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -68,7 +67,6 @@
               "down": "GO_Node10",
               "left": "GO_Node",
               "right": "GO_Node5",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -93,7 +91,6 @@
               "down": "GO_Node27",
               "left": "",
               "right": "GO_Node4",
-              "texture": "SampleMap.png",
               "up": "GO_Node"
             },
             "type": "TankNodeComponent"
@@ -118,7 +115,6 @@
               "down": "GO_Node19",
               "left": "GO_Node3",
               "right": "",
-              "texture": "SampleMap.png",
               "up": "GO_Node10"
             },
             "type": "TankNodeComponent"
@@ -143,7 +139,6 @@
               "down": "GO_Node12",
               "left": "GO_Node2",
               "right": "GO_Node6",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -168,7 +163,6 @@
               "down": "GO_Node13",
               "left": "GO_Node5",
               "right": "GO_Node7",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -193,7 +187,6 @@
               "down": "GO_Node14",
               "left": "GO_Node6",
               "right": "GO_Node8",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -218,7 +211,6 @@
               "down": "GO_Node17",
               "left": "GO_Node7",
               "right": "",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -243,7 +235,6 @@
               "down": "GO_Node18",
               "left": "",
               "right": "",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -268,7 +259,6 @@
               "down": "GO_Node4",
               "left": "",
               "right": "GO_Node11",
-              "texture": "SampleMap.png",
               "up": "GO_Node2"
             },
             "type": "TankNodeComponent"
@@ -293,7 +283,6 @@
               "down": "GO_Node20",
               "left": "GO_Node10",
               "right": "",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -318,7 +307,6 @@
               "down": "GO_Node21",
               "left": "",
               "right": "GO_Node13",
-              "texture": "SampleMap.png",
               "up": "GO_Node5"
             },
             "type": "TankNodeComponent"
@@ -343,7 +331,6 @@
               "down": "GO_Node22",
               "left": "GO_Node12",
               "right": "GO_Node14",
-              "texture": "SampleMap.png",
               "up": "GO_Node6"
             },
             "type": "TankNodeComponent"
@@ -368,7 +355,6 @@
               "down": "",
               "left": "GO_Node13",
               "right": "GO_Node15",
-              "texture": "SampleMap.png",
               "up": "GO_Node7"
             },
             "type": "TankNodeComponent"
@@ -393,7 +379,6 @@
               "down": "GO_Node23",
               "left": "GO_Node14",
               "right": "GO_Node16",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -418,7 +403,6 @@
               "down": "GO_Node24",
               "left": "GO_Node15",
               "right": "GO_Node17",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -443,7 +427,6 @@
               "down": "GO_Node25",
               "left": "GO_Node16",
               "right": "GO_Node18",
-              "texture": "SampleMap.png",
               "up": "GO_Node8"
             },
             "type": "TankNodeComponent"
@@ -468,7 +451,6 @@
               "down": "GO_Node26",
               "left": "GO_Node17",
               "right": "",
-              "texture": "SampleMap.png",
               "up": "GO_Node9"
             },
             "type": "TankNodeComponent"
@@ -493,7 +475,6 @@
               "down": "GO_Node28",
               "left": "",
               "right": "GO_Node20",
-              "texture": "SampleMap.png",
               "up": "GO_Node4"
             },
             "type": "TankNodeComponent"
@@ -518,7 +499,6 @@
               "down": "GO_Node29",
               "left": "GO_Node19",
               "right": "GO_Node21",
-              "texture": "SampleMap.png",
               "up": "GO_Node11"
             },
             "type": "TankNodeComponent"
@@ -543,7 +523,6 @@
               "down": "GO_Node30",
               "left": "GO_Node20",
               "right": "GO_Node22",
-              "texture": "SampleMap.png",
               "up": "GO_Node12"
             },
             "type": "TankNodeComponent"
@@ -568,7 +547,6 @@
               "down": "GO_Node31",
               "left": "GO_Node21",
               "right": "GO_Node23",
-              "texture": "SampleMap.png",
               "up": "GO_Node13"
             },
             "type": "TankNodeComponent"
@@ -593,7 +571,6 @@
               "down": "GO_Node33",
               "left": "GO_Node22",
               "right": "GO_Node24",
-              "texture": "SampleMap.png",
               "up": "GO_Node15"
             },
             "type": "TankNodeComponent"
@@ -618,7 +595,6 @@
               "down": "",
               "left": "GO_Node23",
               "right": "",
-              "texture": "SampleMap.png",
               "up": "GO_Node16"
             },
             "type": "TankNodeComponent"
@@ -643,7 +619,6 @@
               "down": "GO_Node35",
               "left": "",
               "right": "GO_Node26",
-              "texture": "SampleMap.png",
               "up": "GO_Node17"
             },
             "type": "TankNodeComponent"
@@ -668,7 +643,6 @@
               "down": "GO_Node41",
               "left": "GO_Node25",
               "right": "",
-              "texture": "SampleMap.png",
               "up": "GO_Node18"
             },
             "type": "TankNodeComponent"
@@ -693,7 +667,6 @@
               "down": "GO_Node43",
               "left": "",
               "right": "GO_Node28",
-              "texture": "SampleMap.png",
               "up": "GO_Node3"
             },
             "type": "TankNodeComponent"
@@ -718,7 +691,6 @@
               "down": "GO_Node37",
               "left": "GO_Node27",
               "right": "GO_Node29",
-              "texture": "SampleMap.png",
               "up": "GO_Node19"
             },
             "type": "TankNodeComponent"
@@ -743,7 +715,6 @@
               "down": "GO_Node38",
               "left": "GO_Node28",
               "right": "GO_Node30",
-              "texture": "SampleMap.png",
               "up": "GO_Node20"
             },
             "type": "TankNodeComponent"
@@ -768,7 +739,6 @@
               "down": "GO_Node46",
               "left": "GO_Node29",
               "right": "GO_Node31",
-              "texture": "SampleMap.png",
               "up": "GO_Node21"
             },
             "type": "TankNodeComponent"
@@ -793,7 +763,6 @@
               "down": "",
               "left": "GO_Node30",
               "right": "GO_Node32",
-              "texture": "SampleMap.png",
               "up": "GO_Node22"
             },
             "type": "TankNodeComponent"
@@ -818,7 +787,6 @@
               "down": "GO_Node36",
               "left": "GO_Node31",
               "right": "GO_Node33",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -843,7 +811,6 @@
               "down": "GO_Node49",
               "left": "GO_Node32",
               "right": "GO_Node34",
-              "texture": "SampleMap.png",
               "up": "GO_Node23"
             },
             "type": "TankNodeComponent"
@@ -868,7 +835,6 @@
               "down": "GO_Node39",
               "left": "GO_Node33",
               "right": "GO_Node35",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -893,7 +859,6 @@
               "down": "GO_Node40",
               "left": "GO_Node34",
               "right": "",
-              "texture": "SampleMap.png",
               "up": "GO_Node25"
             },
             "type": "TankNodeComponent"
@@ -918,7 +883,6 @@
               "down": "",
               "left": "",
               "right": "",
-              "texture": "SampleMap.png",
               "up": "GO_Node32"
             },
             "type": "TankNodeComponent"
@@ -943,7 +907,6 @@
               "down": "GO_Node44",
               "left": "",
               "right": "GO_Node38",
-              "texture": "SampleMap.png",
               "up": "GO_Node28"
             },
             "type": "TankNodeComponent"
@@ -968,7 +931,6 @@
               "down": "GO_Node45",
               "left": "GO_Node37",
               "right": "",
-              "texture": "SampleMap.png",
               "up": "GO_Node29"
             },
             "type": "TankNodeComponent"
@@ -993,7 +955,6 @@
               "down": "GO_Node50",
               "left": "",
               "right": "GO_Node40",
-              "texture": "SampleMap.png",
               "up": "GO_Node34"
             },
             "type": "TankNodeComponent"
@@ -1018,7 +979,6 @@
               "down": "GO_Node51",
               "left": "GO_Node39",
               "right": "GO_Node41",
-              "texture": "SampleMap.png",
               "up": "GO_Node35"
             },
             "type": "TankNodeComponent"
@@ -1043,7 +1003,6 @@
               "down": "GO_Node52",
               "left": "GO_Node40",
               "right": "",
-              "texture": "SampleMap.png",
               "up": "GO_Node26"
             },
             "type": "TankNodeComponent"
@@ -1068,7 +1027,6 @@
               "down": "GO_Node48",
               "left": "",
               "right": "",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -1093,7 +1051,6 @@
               "down": "GO_Node61",
               "left": "",
               "right": "GO_Node44",
-              "texture": "SampleMap.png",
               "up": "GO_Node27"
             },
             "type": "TankNodeComponent"
@@ -1118,7 +1075,6 @@
               "down": "",
               "left": "GO_Node43",
               "right": "GO_Node45",
-              "texture": "SampleMap.png",
               "up": "GO_Node37"
             },
             "type": "TankNodeComponent"
@@ -1143,7 +1099,6 @@
               "down": "GO_Node54",
               "left": "GO_Node44",
               "right": "GO_Node46",
-              "texture": "SampleMap.png",
               "up": "GO_Node38"
             },
             "type": "TankNodeComponent"
@@ -1168,7 +1123,6 @@
               "down": "GO_Node55",
               "left": "GO_Node45",
               "right": "GO_Node47",
-              "texture": "SampleMap.png",
               "up": "GO_Node30"
             },
             "type": "TankNodeComponent"
@@ -1193,7 +1147,6 @@
               "down": "GO_Node56",
               "left": "GO_Node46",
               "right": "GO_Node48",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -1218,7 +1171,6 @@
               "down": "",
               "left": "GO_Node47",
               "right": "GO_Node49",
-              "texture": "SampleMap.png",
               "up": "GO_Node42"
             },
             "type": "TankNodeComponent"
@@ -1243,7 +1195,6 @@
               "down": "GO_Node57",
               "left": "GO_Node48",
               "right": "GO_Node50",
-              "texture": "SampleMap.png",
               "up": "GO_Node33"
             },
             "type": "TankNodeComponent"
@@ -1268,7 +1219,6 @@
               "down": "",
               "left": "GO_Node49",
               "right": "",
-              "texture": "SampleMap.png",
               "up": "GO_Node39"
             },
             "type": "TankNodeComponent"
@@ -1293,7 +1243,6 @@
               "down": "GO_Node59",
               "left": "",
               "right": "GO_Node52",
-              "texture": "SampleMap.png",
               "up": "GO_Node40"
             },
             "type": "TankNodeComponent"
@@ -1318,7 +1267,6 @@
               "down": "GO_Node60",
               "left": "GO_Node51",
               "right": "",
-              "texture": "SampleMap.png",
               "up": "GO_Node41"
             },
             "type": "TankNodeComponent"
@@ -1343,7 +1291,6 @@
               "down": "GO_Node62",
               "left": "",
               "right": "GO_Node54",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -1368,7 +1315,6 @@
               "down": "GO_Node63",
               "left": "GO_Node53",
               "right": "GO_Node55",
-              "texture": "SampleMap.png",
               "up": "GO_Node45"
             },
             "type": "TankNodeComponent"
@@ -1393,7 +1339,6 @@
               "down": "",
               "left": "GO_Node54",
               "right": "GO_Node56",
-              "texture": "SampleMap.png",
               "up": "GO_Node46"
             },
             "type": "TankNodeComponent"
@@ -1418,7 +1363,6 @@
               "down": "GO_Node65",
               "left": "GO_Node55",
               "right": "GO_Node57",
-              "texture": "SampleMap.png",
               "up": "GO_Node47"
             },
             "type": "TankNodeComponent"
@@ -1443,7 +1387,6 @@
               "down": "GO_Node66",
               "left": "GO_Node56",
               "right": "GO_Node58",
-              "texture": "SampleMap.png",
               "up": "GO_Node49"
             },
             "type": "TankNodeComponent"
@@ -1468,7 +1411,6 @@
               "down": "GO_Node67",
               "left": "GO_Node57",
               "right": "GO_Node59",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -1493,7 +1435,6 @@
               "down": "GO_Node68",
               "left": "GO_Node58",
               "right": "GO_Node60",
-              "texture": "SampleMap.png",
               "up": "GO_Node51"
             },
             "type": "TankNodeComponent"
@@ -1518,7 +1459,6 @@
               "down": "GO_Node74",
               "left": "GO_Node59",
               "right": "",
-              "texture": "SampleMap.png",
               "up": "GO_Node52"
             },
             "type": "TankNodeComponent"
@@ -1543,7 +1483,6 @@
               "down": "",
               "left": "",
               "right": "GO_Node62",
-              "texture": "SampleMap.png",
               "up": "GO_Node43"
             },
             "type": "TankNodeComponent"
@@ -1568,7 +1507,6 @@
               "down": "GO_Node70",
               "left": "GO_Node61",
               "right": "GO_Node63",
-              "texture": "SampleMap.png",
               "up": "GO_Node53"
             },
             "type": "TankNodeComponent"
@@ -1593,7 +1531,6 @@
               "down": "",
               "left": "GO_Node62",
               "right": "GO_Node64",
-              "texture": "SampleMap.png",
               "up": "GO_Node54"
             },
             "type": "TankNodeComponent"
@@ -1618,7 +1555,6 @@
               "down": "GO_Node71",
               "left": "GO_Node63",
               "right": "GO_Node65",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -1643,7 +1579,6 @@
               "down": "GO_Node72",
               "left": "GO_Node64",
               "right": "GO_Node66",
-              "texture": "SampleMap.png",
               "up": "GO_Node56"
             },
             "type": "TankNodeComponent"
@@ -1668,7 +1603,6 @@
               "down": "GO_Node73",
               "left": "GO_Node65",
               "right": "GO_Node67",
-              "texture": "SampleMap.png",
               "up": "GO_Node57"
             },
             "type": "TankNodeComponent"
@@ -1693,7 +1627,6 @@
               "down": "",
               "left": "GO_Node66",
               "right": "GO_Node68",
-              "texture": "SampleMap.png",
               "up": "GO_Node58"
             },
             "type": "TankNodeComponent"
@@ -1718,7 +1651,6 @@
               "down": "",
               "left": "GO_Node67",
               "right": "",
-              "texture": "SampleMap.png",
               "up": "GO_Node59"
             },
             "type": "TankNodeComponent"
@@ -1743,7 +1675,6 @@
               "down": "",
               "left": "",
               "right": "GO_Node70",
-              "texture": "SampleMap.png",
               "up": ""
             },
             "type": "TankNodeComponent"
@@ -1768,7 +1699,6 @@
               "down": "",
               "left": "GO_Node69",
               "right": "GO_Node71",
-              "texture": "SampleMap.png",
               "up": "GO_Node62"
             },
             "type": "TankNodeComponent"
@@ -1793,7 +1723,6 @@
               "down": "",
               "left": "GO_Node70",
               "right": "GO_Node72",
-              "texture": "SampleMap.png",
               "up": "GO_Node64"
             },
             "type": "TankNodeComponent"
@@ -1818,7 +1747,6 @@
               "down": "",
               "left": "GO_Node71",
               "right": "GO_Node73",
-              "texture": "SampleMap.png",
               "up": "GO_Node65"
             },
             "type": "TankNodeComponent"
@@ -1843,7 +1771,6 @@
               "down": "",
               "left": "GO_Node72",
               "right": "GO_Node74",
-              "texture": "SampleMap.png",
               "up": "GO_Node66"
             },
             "type": "TankNodeComponent"
@@ -1868,7 +1795,6 @@
               "down": "",
               "left": "GO_Node73",
               "right": "",
-              "texture": "SampleMap.png",
               "up": "GO_Node60"
             },
             "type": "TankNodeComponent"
@@ -1926,6 +1852,7 @@
           }
         ],
         "name": "redTank",
+        "tag": "Player",
         "parent": "",
         "position": [
           300.0,
@@ -1964,6 +1891,136 @@
         "components": [],
         "name": "bulletSpawnPoint1",
         "parent": "playerBarrel",
+        "position": [
+          25.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "texture": "BlueTank.png"
+            },
+            "type": "TextureComponent"
+          },
+          {
+            "params": {
+              "health": 1
+            },
+            "type": "HealthComponent"
+          },
+          {
+            "params": {
+              "height": 25.0,
+              "width": 25.0,
+              "xOffset": 0.0,
+              "yOffset": 0.0
+            },
+            "type": "Collider"
+          },
+          {
+            "params": {
+              "bulletSpawn": "GO_enemyBulletSpawnPoint01",
+              "damage": 1,
+              "fireRate": 1.25,
+              "lives": 1,
+              "maxBounces": 0,
+              "nodeReachDistance": 1.0,
+              "player": "GO_redTank",
+              "speed": 120.0,
+              "startNode": "GO_Node74",
+              "visionLength": 1000.0
+            },
+            "type": "EnemyTankComponent"
+          }
+        ],
+        "name": "enemyTank01",
+        "tag": "Enemy",
+        "parent": "",
+        "position": [
+          470.0,
+          425.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [],
+        "name": "enemyBulletSpawnPoint01",
+        "parent": "enemyTank01",
+        "position": [
+          25.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+            {
+        "components": [
+          {
+            "params": {
+              "centered": true,
+              "texture": "BlueTank.png"
+            },
+            "type": "TextureComponent"
+          },
+          {
+            "params": {
+              "health": 1
+            },
+            "type": "HealthComponent"
+          },
+          {
+            "params": {
+              "height": 25.0,
+              "width": 25.0,
+              "xOffset": 0.0,
+              "yOffset": 0.0
+            },
+            "type": "Collider"
+          },
+          {
+            "params": {
+              "bulletSpawn": "GO_enemyBulletSpawnPoint02",
+              "damage": 1,
+              "fireRate": 1.25,
+              "lives": 1,
+              "maxBounces": 0,
+              "nodeReachDistance": 1.0,
+              "player": "GO_redTank",
+              "speed": 120.0,
+              "startNode": "GO_Node54",
+              "visionLength": 1000.0
+            },
+            "type": "EnemyTankComponent"
+          }
+        ],
+        "name": "enemyTank02",
+        "tag": "Enemy",
+        "parent": "",
+        "position": [
+          470.0,
+          425.0
+        ],
+        "scale": [
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "components": [],
+        "name": "enemyBulletSpawnPoint02",
+        "parent": "enemyTank02",
         "position": [
           25.0,
           0.0

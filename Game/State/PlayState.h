@@ -3,7 +3,7 @@
 class PlayState final : public GameState
 {
 public:
-	std::string GetSceneFile() override { return "AssignmentLevel.json"; }
+	std::string GetSceneFile() override { return "Level1.json"; }
 	void OnEnter() override
 	{
 	}

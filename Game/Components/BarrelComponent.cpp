@@ -57,7 +57,7 @@ void BarrelComponent::Shoot()
 	bullet->GetTransform().SetWorldRotation(rotation);
 	bullet->AddComponent<dae::TextureComponent>()->Initialize("PlayerBullet.png", true);
 	bullet->AddComponent<dae::Collider>()->InitializeBoxCollider(8, 8);
-	bullet->AddComponent<Bullet>()->Initialize(m_damage, m_maxBounces);
+	bullet->AddComponent<Bullet>()->Initialize(m_damage, m_maxBounces, "Enemy");
 	auto rb  = bullet->AddComponent<dae::Rigidbody>();
 
 	rb->Initialize(false, false, true);

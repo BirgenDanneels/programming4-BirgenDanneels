@@ -10,7 +10,7 @@ public:
 	Bullet(dae::GameObject& pOwner);
 	~Bullet() override;
 
-	void Initialize(int damage, int bounces);
+	void Initialize(int damage, int bounces, std::string targetTag);
 	//Loading functions
 	virtual std::vector<dae::ParamDefinition> GetExpectedParams() const override;
 	virtual void Load(const dae::ParamMap& params) override;
@@ -29,6 +29,7 @@ private:
 
 	int m_damage{ 1 };
 	int m_bouncesRemaining{ 5 };
+	std::string m_targetTag{"Default"};
 
 	short int m_shotSoundId{-1};
 };

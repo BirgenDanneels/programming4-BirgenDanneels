@@ -2,6 +2,7 @@
 
 #include "Minigin/Components/Component.h"
 #include "TankNodeComponent.h"
+#include "Minigin/Events/Subject.h"
 
 namespace dae
 {
@@ -43,6 +44,8 @@ public:
 	virtual std::vector<dae::ParamDefinition> GetExpectedParams() const override;
 	virtual void Load(const dae::ParamMap& params) override;
 
+	dae::Subject<dae::GameObject*>& OnNodeReached() { return m_NodeReachedSubject; }
+
 private:
 	TankDirection InputToDirection(const glm::vec3& input) const;
 
@@ -52,6 +55,8 @@ private:
 	void StartMovingToNode(dae::GameObject* nextNode, TankDirection direction);
 
 	float GetRotationForDirection(TankDirection direction) const;
+
+	void NotifyNodeReached();
 
 	dae::Rigidbody* m_pRigidbody{ nullptr };
 
@@ -65,4 +70,6 @@ private:
 	TankDirection m_HeldDirection{ TankDirection::None };
 
 	bool m_IsMovingBetweenNodes{ false };
+
+	dae::Subject<dae::GameObject*> m_NodeReachedSubject;
 };

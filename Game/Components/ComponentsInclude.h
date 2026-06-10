@@ -10,3 +10,4 @@
 #include "UINavigator.h"
 #include "TankNodeComponent.h"
 #include "NodeMovementComponent.h"
+#include "EnemyTankComponent.h"

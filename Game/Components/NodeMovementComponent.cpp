@@ -55,6 +55,8 @@ void NodeMovementComponent::FixedUpdate(float fixedDeltaTime)
 		m_pTargetNode = nullptr;
 		m_IsMovingBetweenNodes = false;
 
+		NotifyNodeReached();
+
 		TryChooseNextNode();
 	}
 }
@@ -267,6 +269,11 @@ float NodeMovementComponent::GetRotationForDirection(TankDirection direction) co
 	default:
 		return 0.f;
 	}
+}
+
+void NodeMovementComponent::NotifyNodeReached()
+{
+	m_NodeReachedSubject.NotifyObservers(m_pCurrentNode);
 }
 
 std::vector<dae::ParamDefinition> NodeMovementComponent::GetExpectedParams() const
