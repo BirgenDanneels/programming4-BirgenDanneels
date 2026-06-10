@@ -123,12 +123,12 @@ void dae::PhysicsManager::HandleResponse(const InternalHit& hit, Collider* colli
     rb->GetOwner()->GetTransform().SetWorldPosition({ pos.x, pos.y, rb->GetOwner()->GetTransform().GetWorldPosition().z });
 }
 
-dae::AABB dae::PhysicsManager::BoxAt(const Collider& col)
+dae::AABB dae::PhysicsManager::BoxAt(const Collider& col) const
 {
     return BoxAt(col, col.GetOwner()->GetTransform().GetWorldPosition());
 }
 
-dae::AABB dae::PhysicsManager::BoxAt(const Collider& col, const glm::vec2& pos)
+dae::AABB dae::PhysicsManager::BoxAt(const Collider& col, const glm::vec2& pos) const
 {
     AABB box{col.GetBounds()};
     box.min += pos;
@@ -225,6 +225,121 @@ bool dae::PhysicsManager::IsResolvable(const ColliderPair& pair) const
         return false;
 
     return true;
+}
+
+bool dae::PhysicsManager::Raycast(const glm::vec2& origin, const glm::vec2& direction, float maxDistance, RaycastHit& outHit, const Collider* ignoreCollider) const
+{
+    outHit = {};
+
+    if (maxDistance <= 0.0f)
+        return false;
+
+    const float dirLength = glm::length(direction);
+    if (dirLength <= 0.0001f)
+        return false;
+
+    const glm::vec2 dir = direction / dirLength;
+
+    bool foundHit = false;
+    float closestDistance = maxDistance;
+
+    for (Collider* collider : m_colliders)
+    {
+        if (!collider || collider == ignoreCollider)
+            continue;
+
+        float distance{};
+        glm::vec2 normal{};
+
+        if (!RayIntersectsAABB(origin, dir, BoxAt(*collider), maxDistance, distance, normal))
+            continue;
+
+        if (distance < closestDistance)
+        {
+            closestDistance = distance;
+            foundHit = true;
+
+            outHit.collider = collider;
+            outHit.distance = distance;
+            outHit.t = distance / maxDistance;
+            outHit.point = origin + dir * distance;
+            outHit.normal = normal;
+        }
+    }
+
+    return foundHit;
+}
+
+bool dae::PhysicsManager::RayIntersectsAABB(const glm::vec2& origin, const glm::vec2& direction, const AABB& box, float maxDistance, float& outDistance, glm::vec2& outNormal) const
+{
+    float tMin = 0.0f;
+    float tMax = maxDistance;
+    glm::vec2 hitNormal{ 0.0f, 0.0f };
+
+    for (int axis = 0; axis < 2; ++axis)
+    {
+        const float originAxis = axis == 0 ? origin.x : origin.y;
+        const float dirAxis = axis == 0 ? direction.x : direction.y;
+        const float minAxis = axis == 0 ? box.min.x : box.min.y;
+        const float maxAxis = axis == 0 ? box.max.x : box.max.y;
+
+        if (std::abs(dirAxis) < 0.0001f)
+        {
+            if (originAxis < minAxis || originAxis > maxAxis)
+                return false;
+
+            continue;
+        }
+
+        float t1 = (minAxis - originAxis) / dirAxis;
+        float t2 = (maxAxis - originAxis) / dirAxis;
+
+        glm::vec2 normal1{ 0.0f, 0.0f };
+        glm::vec2 normal2{ 0.0f, 0.0f };
+
+        if (axis == 0)
+        {
+            normal1 = { -1.0f, 0.0f };
+            normal2 = { 1.0f, 0.0f };
+        }
+        else
+        {
+            normal1 = { 0.0f, -1.0f };
+            normal2 = { 0.0f, 1.0f };
+        }
+
+        if (t1 > t2)
+        {
+            std::swap(t1, t2);
+            std::swap(normal1, normal2);
+        }
+
+        if (t1 > tMin)
+        {
+            tMin = t1;
+            hitNormal = normal1;
+        }
+
+        tMax = std::min(tMax, t2);
+
+        if (tMin > tMax)
+            return false;
+    }
+
+    outDistance = tMin;
+
+    // Ray starts inside the box
+    if (outDistance <= 0.0f)
+    {
+        outDistance = 0.0f;
+        outNormal = { 0.0f, 0.0f };
+    }
+    else
+    {
+        outNormal = hitNormal;
+    }
+
+    return outDistance <= maxDistance;
 }
 
 dae::PhysicsManager::InternalHit dae::PhysicsManager::ResolvePair(const ColliderPair& pair, float remainingDeltaTime)

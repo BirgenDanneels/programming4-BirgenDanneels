@@ -17,6 +17,15 @@ namespace dae
 		glm::vec2 normal;
 	};
 
+	struct RaycastHit
+	{
+		Collider* collider{ nullptr };
+		glm::vec2 point{};
+		glm::vec2 normal{};
+		float distance{ 0.0f };
+		float t{ 0.0f };
+	};
+
 	class PhysicsManager final
 	{
 	public:
@@ -41,6 +50,9 @@ namespace dae
 
 		void FixedUpdate(float fixedDeltaTime);
 
+		// Raycast
+		bool Raycast(const glm::vec2& origin, const glm::vec2& direction, float maxDistance, RaycastHit& outHit, const Collider* ignoreCollider = nullptr) const;
+
 	private:
 
 		struct ColliderPair {
@@ -56,13 +68,16 @@ namespace dae
 			glm::vec2 normal;
 		};
 
-		AABB BoxAt(const Collider& col);
-		AABB BoxAt(const Collider& col, const glm::vec2& pos);
+		AABB BoxAt(const Collider& col) const;
+		AABB BoxAt(const Collider& col, const glm::vec2& pos) const;
 
 		InternalHit SweepAABB(const AABB& moving, const glm::vec2& velocity, const AABB& target);
 		std::vector<ColliderPair> GetColliderPairs();
 		bool IsResolvable(const ColliderPair& pair) const;
 		InternalHit ResolvePair(const ColliderPair& pair, float deltaTime);
+
+		// Raycast
+		bool RayIntersectsAABB(const glm::vec2& origin, const glm::vec2& direction, const AABB& box, float maxDistance, float& outDistance, glm::vec2& outNormal) const;
 
 		void HandleResponse(const InternalHit& hit, Collider* collider, const glm::vec2& normal, float fixedDeltaTime);
 
