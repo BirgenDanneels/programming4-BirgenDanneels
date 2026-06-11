@@ -21,7 +21,9 @@ add_executable(${TARGET_NAME} ${TARGET_PARAM}
   State/GameStateMachine.cpp
   Components/TankNodeComponent.cpp
   Components/NodeMovementComponent.cpp
-)
+  Components/TankSpawnerComponent.cpp
+  Components/EnemyTankComponent.cpp
+ )
 
 target_compile_features(${TARGET_NAME} PUBLIC cxx_std_20)
 

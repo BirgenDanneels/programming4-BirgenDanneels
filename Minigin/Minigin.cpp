@@ -171,11 +171,9 @@ void dae::Minigin::Run(const std::function<void()>& load)
 #endif
 }
 
-void dae::Minigin::Run(const std::string& sceneFile)
+void dae::Minigin::Run(const std::string&)
 {
-	const auto scenePath = m_dataPath / sceneFile;
 
-	SceneManager::GetInstance().LoadScene(scenePath.string());
 
 #ifndef __EMSCRIPTEN__
 

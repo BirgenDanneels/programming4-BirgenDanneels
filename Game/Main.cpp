@@ -186,15 +186,18 @@ int main(int, char*[]) {
 	factory.Register<ButtonComponent>("ButtonComponent");
 	factory.Register<UINavigator>("UINavigator");
 	factory.Register<TankNodeComponent>("TankNodeComponent");
+	factory.Register<NodeMovementComponent>("NodeMovementComponent");
+	factory.Register<EnemyTankComponent>("EnemyTankComponent");
+	factory.Register<TankSpawnerComponent>("TankSpawnerComponent");
 
 	// Load input maps
 	dae::InputManager& inputManager = dae::InputManager::GetInstance();
 	inputManager.LoadDeviceMapsFromFile((data_location / "InputMaps.json").string());
 
-	engine.Run(load);
-	//auto& sceneManager = dae::SceneManager::GetInstance();
-	//sceneManager.CreatePersistentObject()->AddComponent<GameStateMachine>()->SetEngine(&engine);
-	//engine.Run("AssignmentLevel.json");
+	//engine.Run(load);
+	auto& sceneManager = dae::SceneManager::GetInstance();
+	sceneManager.CreatePersistentObject()->AddComponent<GameStateMachine>()->SetEngine(&engine);
+	engine.Run("Level1.json");
 
     return 0;
 }

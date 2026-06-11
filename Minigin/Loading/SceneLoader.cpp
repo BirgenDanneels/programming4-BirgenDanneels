@@ -163,7 +163,16 @@ dae::ParamMap dae::SceneLoader::ParseParams(const Json& params)
         else if (value.is_boolean())
             out[key] = value.get<bool>();
         else if (value.is_array())
-            out[key] = value.get<std::vector<int>>();
+        {
+            if (std::all_of(value.begin(), value.end(), [](const Json& item) { return item.is_string(); }))
+            {
+                out[key] = value.get<std::vector<std::string>>();
+            }
+            else
+            {
+                out[key] = value.get<std::vector<int>>();
+            }
+        }
     }
 
     return out;
@@ -188,6 +197,41 @@ void dae::SceneLoader::FinalizeParams(ParamMap& params)
                     throw std::runtime_error("GameObject '" + goName + "' not found for parameter '" + key + "'.");
                 }
             }
+        }
+        else if (std::holds_alternative<std::vector<std::string>>(param))
+        {
+            // Check for any GO references
+            const std::vector<std::string>& strings = std::get<std::vector<std::string>>(param);
+            const bool containsGameObjectReference = std::any_of(
+                strings.begin(),
+                strings.end(),
+                [](const std::string& str) { return str.starts_with("GO_"); });
+
+            if (!containsGameObjectReference)
+                continue;
+
+            std::vector<dae::GameObject*> gameObjects;
+
+            for (const std::string& str : strings)
+            {
+                if (str.empty())
+                    continue;
+
+                if (!str.starts_with("GO_"))
+                    throw std::runtime_error("Invalid GameObject reference '" + str + "' for parameter '" + key + "'.");
+
+                std::string goName = str.substr(3);
+                if (m_gameObjectByName.find(goName) != m_gameObjectByName.end())
+                {
+                    gameObjects.push_back(m_gameObjectByName[goName]);
+                }
+                else
+                {
+                    throw std::runtime_error("GameObject '" + goName + "' not found for parameter '" + key + "'.");
+                }
+            }
+
+            param = gameObjects;
         }
     }
 }

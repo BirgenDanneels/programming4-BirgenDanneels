@@ -11,3 +11,4 @@
 #include "TankNodeComponent.h"
 #include "NodeMovementComponent.h"
 #include "EnemyTankComponent.h"
+#include "TankSpawnerComponent.h"

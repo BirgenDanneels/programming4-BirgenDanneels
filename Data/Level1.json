@@ -1815,214 +1815,44 @@
         "components": [
           {
             "params": {
-              "centered": true,
-              "texture": "RedTank.png"
-            },
-            "type": "TextureComponent"
-          },
-          {
-            "params": {
-              "health": 3
-            },
-            "type": "HealthComponent"
-          },
-          {
-            "params": {},
-            "type": "PointsComponent"
-          },
-          {
-            "params": {
-              "height": 25.0,
-              "width": 25.0,
-              "xOffset": 0.0,
-              "yOffset": 0.0
-            },
-            "type": "Collider"
-          },
-          {
-            "params": {
-              "barrel": "GO_playerBarrel",
-              "device": "gamepad_0",
-              "lives": 3,
+              "colliderHeight": 25.0,
+              "colliderWidth": 25.0,
+              "enemyCount": 2,
+              "enemyDamage": 1,
+              "enemyFireRate": 1.25,
+              "enemyLives": 1,
+              "enemyMaxBounces": 0,
+              "enemySpawnNodes": [
+                "GO_Node74",
+                "GO_Node54"
+              ],
+              "enemySpeed": 120.0,
+              "enemyVisionLength": 1000.0,
               "nodeReachDistance": 1.0,
-              "speed": 200.0,
-              "startNode": "GO_Node"
+              "playerBarrelRotationSpeed": 180.0,
+              "playerCount": 2,
+              "playerDamage": 1,
+              "playerDevices": [
+                "gamepad_0",
+                "keyboard"
+              ],
+              "playerFireRate": 0.5,
+              "playerLives": 3,
+              "playerMaxBounces": 5,
+              "playerSpawnNodes": [
+                "GO_Node",
+                "GO_Node3",
+                "GO_Node2"
+              ],
+              "playerSpeed": 200.0
             },
-            "type": "TankComponent"
+            "type": "TankSpawnerComponent"
           }
         ],
-        "name": "redTank",
-        "tag": "Player",
+        "name": "TankSpawner",
         "parent": "",
-        "position": [
-          300.0,
-          100.0
-        ],
-        "scale": [
-          1.0,
-          1.0
-        ]
-      },
-      {
-        "components": [
-          {
-            "params": {
-              "bulletSpawn": "GO_bulletSpawnPoint1",
-              "damage": 1,
-              "fireRate": 0.5,
-              "maxBounces": 5,
-              "rotationSpeed": 180.0
-            },
-            "type": "BarrelComponent"
-          }
-        ],
-        "name": "playerBarrel",
-        "parent": "redTank",
         "position": [
           0.0,
-          0.0
-        ],
-        "scale": [
-          1.0,
-          1.0
-        ]
-      },
-      {
-        "components": [],
-        "name": "bulletSpawnPoint1",
-        "parent": "playerBarrel",
-        "position": [
-          25.0,
-          0.0
-        ],
-        "scale": [
-          1.0,
-          1.0
-        ]
-      },
-      {
-        "components": [
-          {
-            "params": {
-              "centered": true,
-              "texture": "BlueTank.png"
-            },
-            "type": "TextureComponent"
-          },
-          {
-            "params": {
-              "health": 1
-            },
-            "type": "HealthComponent"
-          },
-          {
-            "params": {
-              "height": 25.0,
-              "width": 25.0,
-              "xOffset": 0.0,
-              "yOffset": 0.0
-            },
-            "type": "Collider"
-          },
-          {
-            "params": {
-              "bulletSpawn": "GO_enemyBulletSpawnPoint01",
-              "damage": 1,
-              "fireRate": 1.25,
-              "lives": 1,
-              "maxBounces": 0,
-              "nodeReachDistance": 1.0,
-              "player": "GO_redTank",
-              "speed": 120.0,
-              "startNode": "GO_Node74",
-              "visionLength": 1000.0
-            },
-            "type": "EnemyTankComponent"
-          }
-        ],
-        "name": "enemyTank01",
-        "tag": "Enemy",
-        "parent": "",
-        "position": [
-          470.0,
-          425.0
-        ],
-        "scale": [
-          1.0,
-          1.0
-        ]
-      },
-      {
-        "components": [],
-        "name": "enemyBulletSpawnPoint01",
-        "parent": "enemyTank01",
-        "position": [
-          25.0,
-          0.0
-        ],
-        "scale": [
-          1.0,
-          1.0
-        ]
-      },
-            {
-        "components": [
-          {
-            "params": {
-              "centered": true,
-              "texture": "BlueTank.png"
-            },
-            "type": "TextureComponent"
-          },
-          {
-            "params": {
-              "health": 1
-            },
-            "type": "HealthComponent"
-          },
-          {
-            "params": {
-              "height": 25.0,
-              "width": 25.0,
-              "xOffset": 0.0,
-              "yOffset": 0.0
-            },
-            "type": "Collider"
-          },
-          {
-            "params": {
-              "bulletSpawn": "GO_enemyBulletSpawnPoint02",
-              "damage": 1,
-              "fireRate": 1.25,
-              "lives": 1,
-              "maxBounces": 0,
-              "nodeReachDistance": 1.0,
-              "player": "GO_redTank",
-              "speed": 120.0,
-              "startNode": "GO_Node54",
-              "visionLength": 1000.0
-            },
-            "type": "EnemyTankComponent"
-          }
-        ],
-        "name": "enemyTank02",
-        "tag": "Enemy",
-        "parent": "",
-        "position": [
-          470.0,
-          425.0
-        ],
-        "scale": [
-          1.0,
-          1.0
-        ]
-      },
-      {
-        "components": [],
-        "name": "enemyBulletSpawnPoint02",
-        "parent": "enemyTank02",
-        "position": [
-          25.0,
           0.0
         ],
         "scale": [
