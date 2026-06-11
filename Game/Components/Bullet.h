@@ -30,6 +30,4 @@ private:
 	int m_damage{ 1 };
 	int m_bouncesRemaining{ 5 };
 	std::string m_targetTag{"Default"};
-
-	short int m_shotSoundId{-1};
 };

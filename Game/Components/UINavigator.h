@@ -4,7 +4,6 @@
 
 namespace dae
 {
-	class InputDevice;
 	class Axis2DCommand;
 	class Command;
 }
@@ -31,8 +30,6 @@ private:
 
 	std::unique_ptr<dae::Axis2DCommand> m_navigateCommand;
 	std::unique_ptr<dae::Command> m_pressCommand;
-
-	dae::InputDevice* m_pInputDevice = nullptr;
 
 	ButtonComponent* m_pCurrentFocusedButton = nullptr;
 };

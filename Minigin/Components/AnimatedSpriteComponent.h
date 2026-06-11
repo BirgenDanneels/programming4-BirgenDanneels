@@ -40,7 +40,7 @@ namespace dae
         bool m_canLoop{ true };
         
         float m_currentTime{ 0.f };
-        int m_currentFrameIndex{ 0 };
+        size_t m_currentFrameIndex{ 0 };
         bool m_animationFinished{ false };
 
         float m_xOffset{ 0 };

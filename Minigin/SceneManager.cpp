@@ -65,7 +65,11 @@ dae::Scene& dae::SceneManager::CreateScene()
 
 void dae::SceneManager::LoadScene(const std::string& sceneFile)
 {
+#ifdef __EMSCRIPTEN__
+	LoadSceneAsync(sceneFile);
+#else
 	m_loadingThread = std::jthread(&SceneManager::LoadSceneAsync, this, sceneFile);
+#endif
 }
 
 void dae::SceneManager::LoadSceneAsync(const std::string& sceneFile)	

@@ -18,15 +18,15 @@ namespace dae
 		{
 		}
 
-		virtual void UnloadSound(const sound_id)
+		void UnloadSound(const sound_id) override
 		{
 		}
 
-		virtual void UnloadAll()
+		void UnloadAll() override
 		{
 		}
 
-		virtual sound_id GetSoundId(const std::string&) const
+		sound_id GetSoundId(const std::string&) const override
 		{
 			return 0;
 		}

@@ -102,7 +102,7 @@ void dae::AnimatedSpriteComponent::Update(float deltaTime)
 			}
 			else
 			{
-				m_currentFrameIndex = static_cast<int>(m_frames.size()) - 1;
+				m_currentFrameIndex = m_frames.size() - 1;
 				m_animationFinished = true;
 				m_animationEndedEvent.NotifyObservers();
 			}

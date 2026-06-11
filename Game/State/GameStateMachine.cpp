@@ -64,8 +64,9 @@ void GameStateMachine::Update(float deltaTime)
 				m_currentState->OnExit();
 			}
 			m_currentState = std::move(m_nextState);
-			StartCreatingNewScene();
+
 			m_transitionPhase = TransitionPhase::Loading;
+			StartCreatingNewScene();
 		}
 
 		break;
