@@ -13,6 +13,7 @@ add_library(${ENGINE_TARGET} STATIC
   Texture2D.cpp
   Transform.cpp
   Events/GameEventQueue.cpp
+  Loading/PrefabManager.cpp
   Loading/SceneLoader.cpp
   Input/InputDevice.cpp
   Input/Keyboard.cpp

@@ -1,0 +1,81 @@
+{
+  "objects": [
+    {
+      "components": [
+        {
+          "params": {
+            "centered": true,
+            "texture": "RedTank.png"
+          },
+          "type": "TextureComponent"
+        },
+        {
+          "params": {
+            "health": 3
+          },
+          "type": "HealthComponent"
+        },
+        {
+          "params": {},
+          "type": "PointsComponent"
+        },
+        {
+          "params": {
+            "height": 25.0,
+            "width": 25.0,
+            "xOffset": 0.0,
+            "yOffset": 0.0
+          },
+          "type": "Collider"
+        },
+        {
+          "params": {
+            "barrel": "GO_Barrel",
+            "device": "$device",
+            "lives": 3,
+            "nodeReachDistance": 1.0,
+            "speed": 200.0,
+            "startNode": "$startNode"
+          },
+          "type": "TankComponent"
+        }
+      ],
+      "name": "Tank",
+      "tag": "Player",
+      "parent": "",
+      "position": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "components": [
+        {
+          "params": {
+            "bulletSpawn": "GO_BulletSpawn",
+            "damage": 1,
+            "fireRate": 0.5,
+            "maxBounces": 5,
+            "rotationSpeed": 180.0
+          },
+          "type": "BarrelComponent"
+        }
+      ],
+      "name": "Barrel",
+      "parent": "Tank",
+      "position": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "components": [],
+      "name": "BulletSpawn",
+      "parent": "Barrel",
+      "position": [
+        25.0,
+        0.0
+      ]
+    }
+  ]
+}

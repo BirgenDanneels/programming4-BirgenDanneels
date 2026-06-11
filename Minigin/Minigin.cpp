@@ -104,6 +104,7 @@ dae::Minigin::Minigin(const std::filesystem::path& dataPath)
 
 	// Set up physics system
 	dae::ServiceLocator::RegisterPhysicsManager(std::make_unique<dae::PhysicsManager>());
+	dae::ServiceLocator::RegisterPrefabManager(std::make_unique<dae::PrefabManager>());
 
 	g_window = SDL_CreateWindow(
 		"Programming 4 assignment",
@@ -146,6 +147,8 @@ dae::Minigin::~Minigin()
 #endif
 
 	// Ensure SDL_mixer teardown happens before SDL_Quit
+	dae::ServiceLocator::UnregisterPrefabManager();
+	dae::ServiceLocator::UnregisterPhysicsManager();
 	dae::ServiceLocator::UnregisterSoundSystem();
 
 	SDL_DestroyWindow(g_window);

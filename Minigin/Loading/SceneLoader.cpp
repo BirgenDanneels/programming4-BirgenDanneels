@@ -3,6 +3,8 @@
 #include <Minigin/Sound/ServiceLocator.h>
 #include "SceneManager.h"
 #include "LoadingHelpers.h"
+#include <algorithm>
+#include <filesystem>
 
 dae::SceneLoader::SceneLoader(ComponentFactory& factory)
 	: m_factory(factory)
@@ -11,6 +13,7 @@ dae::SceneLoader::SceneLoader(ComponentFactory& factory)
 
 void dae::SceneLoader::LoadFromFile(const std::string& path, Scene& scene)
 {
+    ServiceLocator::GetPrefabManager().SetDataPath(std::filesystem::path(path).parent_path());
     Json root = LoadJsonFile(path);
     ParseScene(root, scene);
 }
@@ -18,6 +21,7 @@ void dae::SceneLoader::LoadFromFile(const std::string& path, Scene& scene)
 void dae::SceneLoader::ParseScene(const Json& root, Scene& scene)
 {
     auto& objects = root["scene"]["objects"];
+    ServiceLocator::GetPrefabManager().SetComponentFactory(m_factory);
 
 	if (root["scene"].contains("sounds"))
     {

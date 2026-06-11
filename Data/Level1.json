@@ -1815,36 +1815,23 @@
         "components": [
           {
             "params": {
-              "colliderHeight": 25.0,
-              "colliderWidth": 25.0,
               "enemyCount": 2,
-              "enemyDamage": 1,
-              "enemyFireRate": 1.25,
-              "enemyLives": 1,
-              "enemyMaxBounces": 0,
+              "enemyPrefab": "enemyTank.prefab",
               "enemySpawnNodes": [
                 "GO_Node74",
                 "GO_Node54"
               ],
-              "enemySpeed": 120.0,
-              "enemyVisionLength": 1000.0,
-              "nodeReachDistance": 1.0,
-              "playerBarrelRotationSpeed": 180.0,
               "playerCount": 2,
-              "playerDamage": 1,
               "playerDevices": [
                 "gamepad_0",
                 "keyboard"
               ],
-              "playerFireRate": 0.5,
-              "playerLives": 3,
-              "playerMaxBounces": 5,
+              "playerPrefab": "playerTank.prefab",
               "playerSpawnNodes": [
                 "GO_Node",
                 "GO_Node3",
                 "GO_Node2"
-              ],
-              "playerSpeed": 200.0
+              ]
             },
             "type": "TankSpawnerComponent"
           }
